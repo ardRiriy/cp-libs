@@ -15,8 +15,6 @@
 
 **/.idea
 
-contests/template-cargo-lock.toml
-
 contests/abc*/
 contests/arc*/
 contests/agc*/

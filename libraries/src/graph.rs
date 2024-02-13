@@ -1,8 +1,7 @@
 use std::cmp::Reverse;
-use std::collections::BinaryHeap;
+use std::collections::{BinaryHeap, VecDeque};
 use num_traits::Num;
 
-#[derive(Clone)]
 struct Edge<T> where T: Num {
     to: usize,
     cost: T
@@ -21,6 +20,50 @@ impl<T> Graph<T> where T: From<usize> + Num + Clone + Ord {
     // 1-index で与えられることを想定
     fn add(&mut self, from: usize, to: usize, cost: T) {
         self.graph[from - 1].push(Edge{to: to - 1, cost});
+    }
+
+    fn dfs(&self, start: usize) {
+        let mut que = VecDeque::new();
+        que.push_back(start as isize - 1);
+
+        let mut checked = vec![false; self.graph.len()];
+        checked[start-1] = true;
+
+        while let Some(pos) = que.pop_back() {
+            if pos >= 0 {
+                // 行きがけの処理
+                que.push_back(!pos);
+
+                let p = pos as usize;
+                for next in &self.graph[p] {
+                    if !checked[next.to] {
+                        que.push_back(next.to as isize);
+                        checked[next.to] = true;
+                    }
+                }
+            }else{
+                // 帰りがけの処理
+                let p = !pos as usize;
+
+            }
+        }
+    }
+
+    fn bfs(&self, start: usize) {
+        let mut que = VecDeque::new();
+        que.push_back(start - 1);
+
+        let mut checked = vec![false; self.graph.len()];
+        checked[start-1] = true;
+
+        while let Some(pos) = que.pop_front() {
+            for next in &self.graph[pos] {
+                if !checked[next.to] {
+                    que.push_back(next.to);
+                    checked[next.to] = true;
+                }
+            }
+        }
     }
 
     fn dijkstra(&mut self, start: usize) -> Vec<T> {
