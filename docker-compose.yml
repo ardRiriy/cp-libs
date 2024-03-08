@@ -1,8 +1,8 @@
 services:
-  rust_container:
+  ac-rust:
     build: .
     restart: always
     tty: true
     volumes:
-      - ../:/work
+      - ./contests:/work
     working_dir: /work

@@ -1,6 +1,0 @@
-{
-  "name": "Competitive Programing",
-  "dockerComposeFile": ["docker-compose.yml"],
-  "service": "rust_container",
-  "workspaceFolder": "/work"
-}
