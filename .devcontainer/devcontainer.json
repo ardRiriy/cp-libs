@@ -1,0 +1,6 @@
+{
+  "name": "atcoder rust devcontainer",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "ac-rust",
+  "workspaceFolder": "/work"
+}

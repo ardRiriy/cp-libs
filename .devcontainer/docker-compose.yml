@@ -4,5 +4,5 @@ services:
     restart: always
     tty: true
     volumes:
-      - ./contests:/work
+      - ../contests:/work
     working_dir: /work
