@@ -1,0 +1,8 @@
+services:
+  rust_devcontainer:
+    build: .
+    restart: always
+    tty: true
+    volumes:
+      - ../:/work
+    working_dir: /work
