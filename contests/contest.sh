@@ -6,4 +6,4 @@ echo '
 [profile.dev]
 opt-level = 3' >> Cargo.toml
 
-cargo compete test a
+# cargo compete test a

@@ -25,3 +25,27 @@ fn prime_factorization(n: usize) -> BTreeMap<usize, usize> {
 
     res
 }
+
+fn create_primes() -> Vec<usize> {
+    // nが上限値
+    let mut res = vec![];
+
+    let n = 1e6 as usize + 2;
+    let mut ck = vec![false; n];
+
+    let mut i = 2usize;
+    while i < n {
+        if !ck[i] {
+            res.push(i);
+            let mut j = i;
+            while j < n {
+                ck[j] = true;
+                j += i;
+            }
+        }
+        i += 1;
+    }
+
+    res.sort();
+    res
+}
