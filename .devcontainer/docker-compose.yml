@@ -1,8 +1,0 @@
-services:
-  ac-rust:
-    build: .
-    restart: always
-    tty: true
-    volumes:
-      - ../:/work
-    working_dir: /work

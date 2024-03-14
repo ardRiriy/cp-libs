@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+    "abc*",
+    "ahc*",
+    "arc*",
+    "syo-jin"
+]
