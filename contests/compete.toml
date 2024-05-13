@@ -22,55 +22,59 @@ test-suite = "{{ manifest_dir }}/testcases/{{ bin_alias }}.yml"
 
 [template]
 src = '''
-// -*- coding:utf-8-unix -*-
+use proconio::input;
+
+fn solve() {
+    input! {
+    }
+
+}
+
 /*
-このコード、と～おれ!
-  ∧＿∧　
-（｡･ω･｡)つ━☆・*。
-⊂    ノ       ・゜+.
- しーＪ       °。+ *´¨)
-                  .· ´¸.·*´¨) ¸.·*¨)
-                                      (¸.·´ (¸.·'* ☆
+
+            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
+     ▄▄██▌█            宅急便です！
+▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
+███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
+▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
+
 */
 
-#[allow(unused_imports)]
-use ac_library::*;
-use itertools::Itertools;
-use proconio::input;
-use proconio::marker::Chars;
-use std::collections::{BinaryHeap, VecDeque};
 
+static INF: u64 = 1e18 as u64;
 
-static INF: usize = 1e18 as usize;
-
-trait Vector<T> {
-    fn insertion_sort(&mut self, elem: T);
-    fn print_continuous(&self);
-    fn print_space_separate(&self);
-    fn print_linebreak(&self);
+trait ChLibs<T: std::cmp::Ord> {
+    fn chmin(&mut self, elm: T) -> bool;
+    fn chmax(&mut self, elm: T) -> bool;
 }
 
-impl<T: std::cmp::Ord  + std::fmt::Display> Vector<T> for Vec<T> {
-    fn insertion_sort(&mut self, elem: T) { let idx = self.binary_search(&elem).unwrap_or_else(|x| x); self.insert(idx, elem); }
-    fn print_continuous(&self) { for i in 0..self.len() { print!("{}", self[i]); } println!() }
-    fn print_space_separate(&self) { for i in 0..self.len() { print!("{}", self[i]); if i != self.len()-1 { print!(" ") } } println!() }
-    fn print_linebreak(&self) { for i in 0..self.len() { println!("{}", self[i]); } }
-}
+impl<T: std::cmp::Ord> ChLibs<T> for T {
+    fn chmin(&mut self, elm: T) -> bool {
+        return
+            if *self > elm {
+                *self = elm;
+                true
+            } else { false };
+    }
 
-fn solve(){
-    input! {
-
+    fn chmax(&mut self, elm: T) -> bool {
+        return
+            if *self < elm {
+                *self = elm;
+                true
+            } else { false };
     }
 }
+
 
 fn main() {
     // input! { i: usize }
     let mut i = 1;
-    while i != 0 { solve(); i -= 1; }
+    while i != 0 {
+        solve();
+        i -= 1;
+    }
 }
-
-
-
 '''
 
 [template.new]

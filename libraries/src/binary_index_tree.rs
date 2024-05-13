@@ -4,6 +4,8 @@ struct BIT<T> {
     bit: Vec<Vec<T>>, // データを持つ。1-indexedで、初期値は0となる。
 }
 
+// all 1-indexed
+
 impl<T> BIT<T> where T: Num + Clone + std::ops::Neg<Output = T> + NumCast + FromPrimitive {
     fn new(size: usize) -> BIT<T>{
         let v = vec![vec![T::zero(); size+1]; 2];
