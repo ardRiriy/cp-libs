@@ -6,25 +6,24 @@ fn solve() {
         n: usize
     }
 
-    let mut ans = 0usize;
-    let mut l = 1;
-    let mut r = 1;
-    let mut n2 = n * n;
-
+    let mut ans = 0u64;
     for i in 1..=n {
-        while r * r <= n2 / i {
-            r += 1;
-            if 
+        let mut k = i;
+        let mut j = 2;
+        while j * j <= n {
+            while k % (j * j) == 0 {
+                k /= (j * j);
+            }
+            j += 1;
         }
-
-        while l * l < i {
-            l += 1;
+        let mut d = 1;
+        while k * d * d <= n {
+            ans += 1;
+            d += 1;
         }
-
-        ans += r - l;
-        println!("{} {} {}", i, l, r);
     }
     println!("{}", ans);
+
 
 }
 
