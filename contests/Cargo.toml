@@ -2,6 +2,5 @@
 
 members = [
     "abc*",
-    "adt*",
     "arc*",
 ]
