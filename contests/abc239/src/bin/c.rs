@@ -1,22 +1,40 @@
+use itertools::Itertools;
 use std::io::BufRead;
 use std::str::{self, FromStr};
 
-fn solve(reader: &mut StdinReader<impl BufRead>) {
-    let n = reader.r::<usize>();
-    let m = reader.r::<usize>();
-    let h = reader.rv::<u64>(n);
+fn solve(rdr: &mut StdinReader<impl BufRead>) {
+    let pos1: (i64, i64) = (rdr.r(), rdr.r());
+    let pos2: (i64, i64) = (rdr.r(), rdr.r());
 
-    let mut k = m as u64;
-    let mut ans = 0;
-    for &i in &h {
-        if k >= i {
-            k -= i;
-            ans += 1;
-        } else {
-            break;
-        }
+    eprintln!("{:?}", pos1);
+    eprintln!("{:?}", pos2);
+    let adder: &[(i64, i64)] = &[
+        (1, 2),
+        (2, 1),
+        (-1, 2),
+        (-2, 1),
+        (1, -2),
+        (2, -1),
+        (-1, -2),
+        (-2, -1),
+    ];
+
+    if adder
+        .iter()
+        .map(|p| {
+            adder
+                .iter()
+                .map(|pp| (pp.0 + p.0 + pos1.0, pp.1 + p.1 + pos1.1))
+                .collect_vec()
+        })
+        .flatten()
+        .collect_vec()
+        .contains(&pos2)
+    {
+        println!("Yes");
+    } else {
+        println!("No");
     }
-    println!("{}", ans);
 }
 
 /*
@@ -117,7 +135,7 @@ impl<R: BufRead> StdinReader<R> {
 }
 
 fn main() {
-    // input! { i: usize }
+    // input! { mut i: usize }
     let mut i = 1;
     let mut reader = StdinReader::new(std::io::stdin().lock());
     while i != 0 {

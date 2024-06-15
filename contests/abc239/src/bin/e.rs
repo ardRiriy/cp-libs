@@ -1,22 +1,61 @@
+use std::collections::BinaryHeap;
 use std::io::BufRead;
 use std::str::{self, FromStr};
+use itertools::Itertools;
 
-fn solve(reader: &mut StdinReader<impl BufRead>) {
-    let n = reader.r::<usize>();
-    let m = reader.r::<usize>();
-    let h = reader.rv::<u64>(n);
+fn solve(rdr: &mut StdinReader<impl BufRead>) {
+    let n :usize = rdr.r();
+    let q :usize = rdr.r();
+    let x :Vec<u64> = rdr.rv(n);
+    let g = (0..n-1).into_iter().fold(
+        vec![vec![]; n],
+        |mut g, _| {
+            let u :usize = rdr.r();
+            let v :usize = rdr.r();
+            g[u-1].push(v-1);
+            g[v-1].push(u-1);
+            g
+        }
+    );
 
-    let mut k = m as u64;
-    let mut ans = 0;
-    for &i in &h {
-        if k >= i {
-            k -= i;
-            ans += 1;
-        } else {
-            break;
+    let mut ans = vec![vec![]; n];
+    let mut seen = vec![false; n];
+    seen[0] = true;
+    create(&g, &mut seen, &x, 0, &mut ans);
+    eprintln!("{}", ans.iter().map(|v| v.iter().join(" ")).join("\n"));
+    println!("{}",
+             (0..q)
+                 .into_iter()
+                 .map(|_|
+                     {
+                         let v: usize = rdr.r();
+                         let k: usize = rdr.r();
+                         ans[v - 1][k - 1]
+                     })
+                 .join("\n")
+    );
+
+}
+
+fn create(g: &Vec<Vec<usize>>, seen: &mut Vec<bool> ,x: &Vec<u64>, pos: usize, ans: &mut Vec<Vec<u64>>) {
+    let mut pq = BinaryHeap::new();
+    pq.push(x[pos]);
+    for &next in g[pos].iter() {
+        if seen[next] { continue; }
+        seen[next] = true;
+
+        create(g, seen ,x, next, ans);
+        for &val in ans[next].iter() {
+            pq.push(val);
         }
     }
-    println!("{}", ans);
+
+    while let Some(val) = pq.pop() {
+        if ans[pos].len() > 20 {
+            break;
+        }
+        ans[pos].push(val);
+    }
 }
 
 /*
@@ -117,7 +156,7 @@ impl<R: BufRead> StdinReader<R> {
 }
 
 fn main() {
-    // input! { i: usize }
+    // input! { mut i: usize }
     let mut i = 1;
     let mut reader = StdinReader::new(std::io::stdin().lock());
     while i != 0 {

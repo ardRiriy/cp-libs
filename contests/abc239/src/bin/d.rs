@@ -1,22 +1,27 @@
 use std::io::BufRead;
 use std::str::{self, FromStr};
 
-fn solve(reader: &mut StdinReader<impl BufRead>) {
-    let n = reader.r::<usize>();
-    let m = reader.r::<usize>();
-    let h = reader.rv::<u64>(n);
+fn solve(rdr: &mut StdinReader<impl BufRead>) {
+    let a: u64 = rdr.r();
+    let b: u64 = rdr.r();
+    let c: u64 = rdr.r();
+    let d: u64 = rdr.r();
 
-    let mut k = m as u64;
-    let mut ans = 0;
-    for &i in &h {
-        if k >= i {
-            k -= i;
-            ans += 1;
-        } else {
-            break;
+    let primes: &[u64] = &[
+        2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
+        97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
+        191, 193, 197, 199,
+    ];
+    't: for t_choose in a..=b {
+        for a_choose in c..=d {
+            if primes.contains(&(t_choose + a_choose)) {
+                continue 't;
+            }
         }
+        println!("Takahashi");
+        return;
     }
-    println!("{}", ans);
+    println!("Aoki");
 }
 
 /*
@@ -117,7 +122,7 @@ impl<R: BufRead> StdinReader<R> {
 }
 
 fn main() {
-    // input! { i: usize }
+    // input! { mut i: usize }
     let mut i = 1;
     let mut reader = StdinReader::new(std::io::stdin().lock());
     while i != 0 {

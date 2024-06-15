@@ -1,22 +1,14 @@
 use std::io::BufRead;
 use std::str::{self, FromStr};
 
-fn solve(reader: &mut StdinReader<impl BufRead>) {
-    let n = reader.r::<usize>();
-    let m = reader.r::<usize>();
-    let h = reader.rv::<u64>(n);
+fn solve(rdr: &mut StdinReader<impl BufRead>) {
+    let x: i64 = rdr.r();
 
-    let mut k = m as u64;
-    let mut ans = 0;
-    for &i in &h {
-        if k >= i {
-            k -= i;
-            ans += 1;
-        } else {
-            break;
-        }
+    if x >= 0 {
+        println!("{}", x / 10);
+    } else {
+        println!("{}", x / 10 - if x % 10 == 0 { 0 } else { 1 });
     }
-    println!("{}", ans);
 }
 
 /*
@@ -117,7 +109,7 @@ impl<R: BufRead> StdinReader<R> {
 }
 
 fn main() {
-    // input! { i: usize }
+    // input! { mut i: usize }
     let mut i = 1;
     let mut reader = StdinReader::new(std::io::stdin().lock());
     while i != 0 {
