@@ -1,35 +1,97 @@
+use std::collections::VecDeque;
 use std::io::BufRead;
 use std::str::{self, FromStr};
-use ac_library::ModInt998244353;
+use std::vec;
 
-fn solve(rdr: &mut StdinReader<impl BufRead>) {
-    let n: usize = rdr.r();
-    let m: usize = rdr.r();
-    let k: i64 = rdr.r();
+use itertools::iproduct;
+use proconio::input;
 
-    let mut dp = vec![vec![ModInt998244353::new(0); m]; n];
-    let mut sum = vec![ModInt998244353::new(0); m+1];
-    for i in 0..m {
-        dp[0][i] = ModInt998244353::new(1);
-        sum[i + 1] = ModInt998244353::new(1) + sum[i];    
+fn solve() {
+    // let h: usize = rdr.r();
+    // let w: usize = rdr.r();
+    // let k: usize = rdr.r();
+    // let (si, sj): (usize, usize) = (rdr.r(), rdr.r());
+    // let a: Vec<Vec<u64>> = (0..h).map(|_| rdr.rv(w)).collect();
+
+
+    input! {
+        h: usize,
+        w: usize,
+        k: usize,
+        si: usize,
+        sj: usize,
+        a: [[u64; w]; h]
     }
 
+    let di :&[usize] = &[0, 1, 0, !0, 0];
+    let dj :&[usize] = &[1, 0, !0, 0, 0];
 
-    for i in 1..n {
-        eprintln!("sum: {:?}", sum);
+    let n = 50000;
+    if k >= n {
+        
+        let mut dp = vec![vec![vec![INF; w]; h]; n+1];
+        dp[0][si - 1][sj - 1] = 0;
 
-        let mut v = vec![ModInt998244353::new(0); m+1];
-        for j in 0..m {
-            dp[i][j] += sum[((j + 1) as i64 - k).max(0) as usize] - sum[0];
-            dp[i][j] += sum[m] - sum[((j + 1) as i64 + k - 1) as usize]; 
-            v[j+1] = v[j] + dp[i][j];
+        for i in 0..n {
+            for (hi, wi) in iproduct!(0..h, 0..w) {
+                if dp[i][hi][wi] == INF {
+                    continue;
+                }
+
+                for r in 0..5 {
+                    let ni = hi.wrapping_add(di[r]);
+                    let nj = wi.wrapping_add(dj[r]);
+
+                    if ni >= h || nj >= w {
+                        continue;
+                    }
+
+                    if dp[i + 1][ni][nj] == INF {
+                        dp[i + 1][ni][nj] = dp[i][hi][wi] + a[ni][nj];
+                    } else {
+                        let next = dp[i][hi][wi] + a[ni][nj];
+                        dp[i+1][ni][nj].chmax(next);
+                    }
+                }
+            } 
         }
-        sum = v.clone();
-        eprintln!("dp[{}]: {:?}",i ,dp[i]);
+
+        let ans = dp[n].iter().flatten().filter_map(|x| if *x == INF { None } else { Some(*x) }).max().unwrap();
+        println!("{}", ans + (k - n) as u64 * a.iter().flatten().max().unwrap());
+
+        return;
     }
 
-    println!("{}", dp[n-1].iter().sum::<ModInt998244353>());
+    let mut dp = vec![vec![vec![INF; w]; h]; k + 1];
+    dp[0][si - 1][sj - 1] = 0;
 
+    for i in 0..k {
+        for (hi, wi) in iproduct!(0..h, 0..w) {
+            if dp[i][hi][wi] == INF {
+                continue;
+            }
+
+            for r in 0..5 {
+                let ni = hi.wrapping_add(di[r]);
+                let nj = wi.wrapping_add(dj[r]);
+
+                if ni >= h || nj >= w {
+                    continue;
+                }
+
+
+                if dp[i + 1][ni][nj] == INF {
+                    dp[i + 1][ni][nj] = dp[i][hi][wi] + a[ni][nj];
+                } else {
+                    let next = dp[i][hi][wi] + a[ni][nj];
+                    dp[i+1][ni][nj].chmax(next);
+                }
+            }
+        } 
+    }
+
+    let ans = dp[k].iter().flatten().filter_map(|x| if *x == INF { None } else { Some(*x) }).max().unwrap();
+    println!("{}", ans);
 
 }
 
@@ -133,9 +195,9 @@ impl<R: BufRead> StdinReader<R> {
 fn main() {
     // input! { mut i: usize }
     let mut i = 1;
-    let mut reader = StdinReader::new(std::io::stdin().lock());
     while i != 0 {
-        solve(&mut reader);
+        solve();
         i -= 1;
     }
 }
+

@@ -1,37 +1,68 @@
+use std::collections::BTreeMap;
 use std::io::BufRead;
 use std::str::{self, FromStr};
-use ac_library::ModInt998244353;
 
-fn solve(rdr: &mut StdinReader<impl BufRead>) {
-    let n: usize = rdr.r();
-    let m: usize = rdr.r();
-    let k: i64 = rdr.r();
+use ac_library::{Mod998244353, ModInt998244353, StaticModInt};
+use proconio::input;
 
-    let mut dp = vec![vec![ModInt998244353::new(0); m]; n];
-    let mut sum = vec![ModInt998244353::new(0); m+1];
-    for i in 0..m {
-        dp[0][i] = ModInt998244353::new(1);
-        sum[i + 1] = ModInt998244353::new(1) + sum[i];    
-    }
-
-
-    for i in 1..n {
-        eprintln!("sum: {:?}", sum);
-
-        let mut v = vec![ModInt998244353::new(0); m+1];
-        for j in 0..m {
-            dp[i][j] += sum[((j + 1) as i64 - k).max(0) as usize] - sum[0];
-            dp[i][j] += sum[m] - sum[((j + 1) as i64 + k - 1) as usize]; 
-            v[j+1] = v[j] + dp[i][j];
-        }
-        sum = v.clone();
-        eprintln!("dp[{}]: {:?}",i ,dp[i]);
-    }
-
-    println!("{}", dp[n-1].iter().sum::<ModInt998244353>());
-
-
+struct Loop {
+    memo: BTreeMap<Vec<u64>, StaticModInt<Mod998244353>>,
+    max: Vec<u64>,
+    max_dpt: usize
 }
+
+impl Loop {
+    fn new(k: usize, c: &Vec<u64>) -> Self {
+        Loop {
+            memo: BTreeMap::new(),
+            max: c.clone(),
+            max_dpt: k
+        }
+    }
+
+    fn exec(&mut self, cnt: &mut Vec<u64>, dpt: usize) -> StaticModInt<Mod998244353> {
+        if let Some(&res) = self.memo.get(cnt) {
+            return res;
+        }
+
+        if dpt == self.max_dpt + 1 {
+            return ModInt998244353::new(0);
+        }
+
+        let mut res = ModInt998244353::new(0);
+        if dpt != 0 {
+            // 空文字列でなければカウント
+            res += 1;
+        }
+
+        for i in 0..26 {
+            if cnt[i] < self.max[i] {
+                cnt[i] += 1;
+                res += self.exec(cnt, dpt + 1);
+                cnt[i] -= 1;
+            }
+        }
+
+        self.memo.insert(cnt.clone(), res);
+
+        res
+    } 
+}
+
+fn solve() {
+
+    input! {
+        k: usize,
+        c: [u64; 26]
+    }
+
+    let mut memo = Loop::new(k, &c);
+    let ans = memo.exec(&mut vec![0; 26], 0);
+
+    println!("{}", ans);
+}
+
+
 
 /*
 
@@ -133,9 +164,9 @@ impl<R: BufRead> StdinReader<R> {
 fn main() {
     // input! { mut i: usize }
     let mut i = 1;
-    let mut reader = StdinReader::new(std::io::stdin().lock());
     while i != 0 {
-        solve(&mut reader);
+        solve();
         i -= 1;
     }
 }
+

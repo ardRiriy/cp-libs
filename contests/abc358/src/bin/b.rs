@@ -1,35 +1,21 @@
 use std::io::BufRead;
 use std::str::{self, FromStr};
-use ac_library::ModInt998244353;
 
 fn solve(rdr: &mut StdinReader<impl BufRead>) {
-    let n: usize = rdr.r();
-    let m: usize = rdr.r();
-    let k: i64 = rdr.r();
+    let n :usize = rdr.r();
+    let a: u64 = rdr.r();
+    let t: Vec<u64> = rdr.rv(n);
 
-    let mut dp = vec![vec![ModInt998244353::new(0); m]; n];
-    let mut sum = vec![ModInt998244353::new(0); m+1];
-    for i in 0..m {
-        dp[0][i] = ModInt998244353::new(1);
-        sum[i + 1] = ModInt998244353::new(1) + sum[i];    
-    }
-
-
-    for i in 1..n {
-        eprintln!("sum: {:?}", sum);
-
-        let mut v = vec![ModInt998244353::new(0); m+1];
-        for j in 0..m {
-            dp[i][j] += sum[((j + 1) as i64 - k).max(0) as usize] - sum[0];
-            dp[i][j] += sum[m] - sum[((j + 1) as i64 + k - 1) as usize]; 
-            v[j+1] = v[j] + dp[i][j];
+    let mut current = 0;
+    for &x in &t {
+        if current < x {
+            current = x + a;
+        } else {
+            current += a;
         }
-        sum = v.clone();
-        eprintln!("dp[{}]: {:?}",i ,dp[i]);
+      println!("{}", current);
+
     }
-
-    println!("{}", dp[n-1].iter().sum::<ModInt998244353>());
-
 
 }
 
@@ -139,3 +125,4 @@ fn main() {
         i -= 1;
     }
 }
+
