@@ -1,34 +1,11 @@
-use ac_library::ModInt1000000007;
-use itertools::Itertools;
 use proconio::{input, marker::Chars};
-
 fn solve() {
-    input! {
+    input!{
         n: usize,
         s: Chars
     }
 
-    let atcoder = "atcoder".chars().collect_vec();
-    let mut dp = vec![vec![ModInt1000000007::new(0); atcoder.len()]; n+1];
-
-    for (idx, c) in s.iter().enumerate() {
-        match atcoder.iter().enumerate().find(|(_, &d)| *c == d) {
-            Some((j, c)) => {
-                if *c == 'a' {
-                    dp[idx][0] += 1;
-                } else {
-                    let tmp = dp[idx][j-1];
-                    dp[idx][j] += tmp;
-                }
-            },
-            None => { }
-        }
-        dp[idx+1] = dp[idx].clone();
-    }
-
-    // println!("{:?}", dp);
-    println!("{}", dp[n][atcoder.len()-1]);
-
+    println!("{}", if s[n-1] == 'o' { "Yes" } else { "No" })
 }
 
 /*
@@ -41,7 +18,6 @@ fn solve() {
 
 */
 
-
 static INF: u64 = 1e18 as u64;
 
 trait ChLibs<T: std::cmp::Ord> {
@@ -51,28 +27,30 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
-                *self = elm;
-                true
-            } else { false };
+        return if *self > elm {
+            *self = elm;
+            true
+        } else {
+            false
+        };
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
-                *self = elm;
-                true
-            } else { false };
+        return if *self < elm {
+            *self = elm;
+            true
+        } else {
+            false
+        };
     }
 }
 
-
 fn main() {
-    // input! { i: usize }
+    // input! { mut i: usize }
     let mut i = 1;
     while i != 0 {
         solve();
         i -= 1;
     }
 }
+

@@ -1,41 +1,28 @@
-use proconio::input;
-
+use itertools::Itertools;
+use proconio::{input, marker::Chars};
 fn solve() {
-    input! {
-        n: usize,
-        a: [u64; n]
+    input!{
+        s: Chars,
+        t: Chars
     }
 
-    let sum = a.iter().sum::<u64>();
-    let target = if sum % 10 == 0 {
-        sum / 10
-    } else {
-        println!("No");
-        return;
-    };
-    
-    let mut l = 0;
-    let mut r = 0;
-    let mut size = 0;
+    let tv = t.iter().map(|c| *c).collect_vec();
+    for w in 1..s.len() {
+        for c in 0..w {
+            let mut a = vec![];
+            for i in 0.. {
+                if i * w + c >= s.len() {
+                    break;
+                } else {
+                    a.push(s[i * w + c]);
+                }
+            }
 
-    loop {
-        if size < target {
-            size += a[r];
-            r += 1;
-            if r >= n {
-                r %= n;
-            }
-        } else if size == target {
-            println!("Yes");
-            return;
-        } else {
-            size -= a[l];
-            l += 1;
-            if l >= n {
-                break;
-            }
-        }
-        // println!("{} {} {}", l, r, size);
+            if tv == a {
+                println!("Yes");
+                return;
+            } 
+        }        
     }
     println!("No");
 }
@@ -50,7 +37,6 @@ fn solve() {
 
 */
 
-
 static INF: u64 = 1e18 as u64;
 
 trait ChLibs<T: std::cmp::Ord> {
@@ -60,28 +46,30 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
-                *self = elm;
-                true
-            } else { false };
+        return if *self > elm {
+            *self = elm;
+            true
+        } else {
+            false
+        };
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
-                *self = elm;
-                true
-            } else { false };
+        return if *self < elm {
+            *self = elm;
+            true
+        } else {
+            false
+        };
     }
 }
 
-
 fn main() {
-    // input! { i: usize }
+    // input! { mut i: usize }
     let mut i = 1;
     while i != 0 {
         solve();
         i -= 1;
     }
 }
+
