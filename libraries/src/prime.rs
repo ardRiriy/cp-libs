@@ -1,9 +1,8 @@
 // 素因数分解
 
-use std::collections::BTreeMap;
-
-fn prime_factorization(n: usize) -> BTreeMap<usize, usize> {
-    let mut res = BTreeMap::new();
+/* n = 1e12ぐらいまでじゃないとTLEするので注意 */
+fn prime_factorization(n: usize) -> std::collections::BTreeMap<usize, usize> {
+    let mut res = std::collections::BTreeMap::new();
 
     let mut i = 2usize;
     let mut k = n;
