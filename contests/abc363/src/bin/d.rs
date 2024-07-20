@@ -14,10 +14,6 @@ fn solve() {
         let mid = ok.wrapping_add(ng) / 2;
         let cnt = count(mid);
 
-        // if cnt < n as u128 + 1000 {
-        //     // eprintln!("mid: {}, cnt: {}", mid, cnt);
-        // }
-
         if cnt < n as u128 {
             ng = mid;
         } else {
@@ -25,7 +21,6 @@ fn solve() {
         }
     }
 
-    // eprintln!("{}", ng);
     println!("{}", ok);
 }
 
@@ -39,8 +34,6 @@ fn count(n: u128) -> u128 {
             return res;
         }
     }
-    // eprintln!("res: {}", res);
-
     // S = str(X)rev(X)について、Xとしてあり得るものを二分探索で求める
     let mut ok = 1u128;
     let mut ng = 1u128 << 61;
@@ -58,8 +51,6 @@ fn count(n: u128) -> u128 {
     }
 
     res += ok;
-    // eprintln!("res: {}", res);
-
     // S = str(X)(i)rev(X)について、Xとしてあり得るものを二分探索で求める
     for i in 0..=9 {
         let mut ok = 1u128;
@@ -79,8 +70,6 @@ fn count(n: u128) -> u128 {
 
         res += ok;
     }
-    // eprintln!("res: {}", res);
-
     res
 }
 
