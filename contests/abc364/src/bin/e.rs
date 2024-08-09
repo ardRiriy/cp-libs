@@ -1,38 +1,43 @@
-use proconio::{input, marker::Usize1};
+use std::collections::BTreeMap;
+
+use itertools::iproduct;
+use proconio::{input};
 fn solve() {
     input!{
         n: usize,
-        m: usize,
+        x: usize,
+        y: u64,
+        mut v: [(usize, u64); n]
     }
-    let g = (0..m).into_iter().fold(vec![vec![];n], |mut acc, _| {
-        input!{ a: Usize1, b: Usize1 };
-        acc[a].push(b);
-        acc[b].push(a);
-        acc
-    });
 
-    let mut seen = vec![false; n];
-    let ans = dfs(&g, &mut seen, 0);
-    println!("{}", ans.min(1e6 as u64));
+    v.sort_by_key(|(_, yi)| *yi);
 
-}
+    // dp[i][j] := i品食べて甘さの合計がjであるとき、しょっぱさの最小値
+    let mut dp = vec![vec![INF; x + 2]; n+1];
+    dp[0][0] = 0;
 
-fn dfs(g: &Vec<Vec<usize>>, seen: &mut Vec<bool>, pos: usize) -> u64 {
-    let mut res = 1;
-    seen[pos] = true;
+    for idx in 0..n {
+        let (xi, yi) = v[idx];
 
-    for &next in &g[pos] {
-        if seen[next] {
-            continue;
-        }
+        for (i, j) in iproduct!((0..=idx).rev(), (0..x+1).rev()) {
+            if dp[i][j] > y { continue; }
 
-        res += dfs(g, seen, next);
-        if res > 10e6 as u64 {
-            return res;
+            let val = dp[i][j] + yi;
+            dp[i+1][(j + xi).min(x+1)].chmin(val);
         }
     }
-    seen[pos] = false;
-    res
+
+    let mut ans = 0;
+    for i in 0..n+1 {
+        for j in 0..x+2 {
+            if dp[i][j] != INF {
+                ans = i;
+                break;
+            }
+        }
+    }
+    println!("{ans}");
+
 }
 
 /*

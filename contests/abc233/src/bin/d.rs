@@ -1,38 +1,41 @@
-use proconio::{input, marker::Usize1};
+use std::collections::{BTreeMap, BTreeSet};
+
+use proconio::{input};
 fn solve() {
     input!{
         n: usize,
-        m: usize,
+        mut k: i64,
+        a: [i64; n]
     }
-    let g = (0..m).into_iter().fold(vec![vec![];n], |mut acc, _| {
-        input!{ a: Usize1, b: Usize1 };
-        acc[a].push(b);
-        acc[b].push(a);
-        acc
-    });
 
-    let mut seen = vec![false; n];
-    let ans = dfs(&g, &mut seen, 0);
-    println!("{}", ans.min(1e6 as u64));
+    let mut sum = 0;
+    let mut set = BTreeSet::new();
+    let mut map = BTreeMap::new();
 
-}
+    for x in a.iter() {
+        sum += *x;
+        set.insert(sum);
+        *map.entry(sum).or_insert(0u64) += 1;
+    }
 
-fn dfs(g: &Vec<Vec<usize>>, seen: &mut Vec<bool>, pos: usize) -> u64 {
-    let mut res = 1;
-    seen[pos] = true;
-
-    for &next in &g[pos] {
-        if seen[next] {
-            continue;
+    let mut ans = 0;
+    sum = 0;
+    for x in a.iter() {
+        sum += *x;
+        if set.contains(&k) {
+            ans += map[&k];
         }
 
-        res += dfs(g, seen, next);
-        if res > 10e6 as u64 {
-            return res;
-        }
+        let t = map[&sum];
+        map.insert(sum, t-1);
+        if t == 1 { set.remove(&sum); }
+
+        k += *x;
     }
-    seen[pos] = false;
-    res
+
+    println!("{ans}");
+
+
 }
 
 /*

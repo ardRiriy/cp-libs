@@ -1,39 +1,41 @@
-use proconio::{input, marker::Usize1};
+use proconio::{input};
 fn solve() {
     input!{
         n: usize,
-        m: usize,
+        x: u64,
     }
-    let g = (0..m).into_iter().fold(vec![vec![];n], |mut acc, _| {
-        input!{ a: Usize1, b: Usize1 };
-        acc[a].push(b);
-        acc[b].push(a);
+    let l = (0..n).into_iter().fold(vec![], |mut acc, _| {
+        input! {
+            li: usize,
+            a: [u64; li]
+        }
+        acc.push(a);
         acc
     });
 
-    let mut seen = vec![false; n];
-    let ans = dfs(&g, &mut seen, 0);
-    println!("{}", ans.min(1e6 as u64));
+    println!("{}", dfs(&l, n, x));
 
 }
 
-fn dfs(g: &Vec<Vec<usize>>, seen: &mut Vec<bool>, pos: usize) -> u64 {
-    let mut res = 1;
-    seen[pos] = true;
+fn dfs(l: &Vec<Vec<u64>>, idx: usize, target: u64) -> u64 {
+    if idx == 0 {
+        return if target == 1 {
+            1
+        } else {
+            0
+        };
+    }
 
-    for &next in &g[pos] {
-        if seen[next] {
-            continue;
-        }
-
-        res += dfs(g, seen, next);
-        if res > 10e6 as u64 {
-            return res;
+    let mut res = 0;
+    for elem in l[idx-1].iter() {
+        if target % elem == 0 {
+            res += dfs(l, idx-1, target/elem);
         }
     }
-    seen[pos] = false;
+
     res
 }
+
 
 /*
 
