@@ -1,9 +1,38 @@
+use itertools::Itertools;
 use proconio::input;
 
 fn solve() {
     input! {
+        n: String,
+        k: usize
     }
 
+    let mut t = n;
+    for _ in 0..k {
+        t = operate(t);
+    }
+
+    println!("{}", t);
+}
+
+fn operate(x: String) -> String {
+    // 8 -> 10
+    let mut x_base_10 = u64::from_str_radix(&x, 8).unwrap();
+
+    let mut res = vec![];
+    loop {
+        let num = x_base_10 % 9;
+        res.push(num);
+        x_base_10 /= 9;
+        if x_base_10 == 0 {
+            break;
+        }
+    }
+
+    res.reverse();
+    res.iter()
+        .map(|&c| if c == 8 { 5 } else { c })
+        .join("")
 }
 
 /*

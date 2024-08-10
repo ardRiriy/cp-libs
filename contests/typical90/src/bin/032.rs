@@ -1,9 +1,46 @@
-use proconio::input;
+use core::slice;
+use std::collections::BTreeSet;
+use std::slice::Windows;
+
+use itertools::Itertools;
+use proconio::{input, marker::Usize1};
 
 fn solve() {
     input! {
+        n: usize,
+        a: [[i64; n]; n],
+        m: usize,
+        bad: [(Usize1, Usize1); m]
     }
 
+    let set = bad.iter().fold(BTreeSet::new(),
+        |mut acc, &c| {
+            acc.insert(c);
+            acc
+        }
+    );
+
+    let mut ans = INF as i64;
+    for v in (0..n).into_iter().permutations(n) {
+        if v.windows(2).any(|c| {
+            set.contains(&(c[0], c[1])) || set.contains(&(c[1], c[0]))
+        }) {
+            continue;
+        }
+
+        // println!("{:?}", v);
+        let sum = v.iter()
+            .enumerate()
+            .map(|(idx, &i)| a[i][idx])
+            .sum::<i64>();
+        // println!("{sum}");
+        ans.chmin(sum);
+    }
+
+    if ans == INF as i64 {
+        ans = -1;
+    }
+    println!("{ans}");
 }
 
 /*

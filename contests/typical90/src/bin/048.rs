@@ -1,9 +1,25 @@
+use itertools::Itertools;
 use proconio::input;
 
 fn solve() {
     input! {
+        n: usize,
+        k: usize,
+        quiz: [(u64, u64); n]
     }
 
+    let mut events = quiz.iter()
+        .map(|&(x, y)| vec![y, x-y])
+        .flatten()
+        .sorted()
+        .collect_vec();
+
+    let mut ans = 0;
+    for _ in 0..k {
+        ans += events.pop().unwrap();
+    }
+
+    println!("{ans}");
 }
 
 /*

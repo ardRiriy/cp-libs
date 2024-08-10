@@ -2,6 +2,31 @@ use proconio::input;
 
 fn solve() {
     input! {
+        n: usize,
+        q: usize,
+        mut a: [u64; n],
+    }
+    let mut idx = 0;
+
+    for _ in 0..q {
+        input! {
+            t: u32,
+            x: usize,
+            y: usize,
+        }
+
+        match t {
+            1 => {
+                a.swap((idx + (x - 1)) % n, (idx + (y - 1)) % n);
+            }
+            2 => {
+                idx = (idx + n - 1) % n;
+            }
+            3 => {
+                println!("{}", a[(idx + (x - 1)) % n]);
+            }
+            _ => { unreachable!(); }
+        }
     }
 
 }

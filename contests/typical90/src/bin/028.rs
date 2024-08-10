@@ -1,8 +1,44 @@
-use proconio::input;
+use itertools::Itertools;
+use proconio::{input, marker::Usize1};
 
 fn solve() {
     input! {
+        n: usize,
+        papers: [((usize, usize), (usize, usize)); n]
     }
+
+    let k = 1002;
+    let mut imos = vec![vec![0i64; k]; k];
+    for ((si, sj), (ei, ej)) in papers {
+        imos[si][sj] += 1;
+        imos[si][ej] -= 1;
+        imos[ei][sj] -= 1;
+        imos[ei][ej] += 1;
+    }
+
+    for i in 0..k {
+        for j in 1..k {
+            let val = imos[i][j] + imos[i][j-1];
+            imos[i][j] = val;
+        }
+    }
+
+    for j in 0..k {
+        for i in 1..k {
+            let val = imos[i][j] + imos[i-1][j];
+            imos[i][j] = val;
+        }
+    }
+
+    let mut ans = vec![0u64;n];
+    for i in 0..k {
+        for j in 0..k {
+            if imos[i][j] == 0 { continue; }
+            ans[imos[i][j] as usize - 1] += 1;
+        }
+    }
+
+    println!("{}", ans.iter().join("\n"));
 
 }
 
