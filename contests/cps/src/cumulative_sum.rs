@@ -1,5 +1,6 @@
+#[derive(Debug)]
 pub struct CumulativeSum<T> {
-    sum: Vec<T>
+    pub sum: Vec<T>
 }
 
 impl<T> CumulativeSum<T> where T: num_traits::Num + Clone {
