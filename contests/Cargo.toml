@@ -1,7 +1,8 @@
 [workspace]
-
+resolver = "1"
 members = [
     "abc*",
     "arc*",
+    "cps",
     "typical90",
 ]
