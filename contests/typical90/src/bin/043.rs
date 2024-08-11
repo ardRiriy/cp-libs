@@ -21,7 +21,7 @@ fn solve() {
     for r in 0.. 4 {
         pq.push_back((0, r, si, sj));
     }
-    
+
     while let Some((cost, r, pi, pj)) = pq.pop_front() {
         if seen[pi][pj].1 >> r & 1 == 1 {
             continue;
@@ -33,11 +33,11 @@ fn solve() {
         while ni < h && nj < w && s[ni][nj] == '.' {
             if seen[ni][nj].1 >> r & 1 == 1 {
                 break;
-            }~
+            }
 
             if seen[ni][nj].0 == INF {
                 seen[ni][nj].1 |= 1 << r;
-                seen[ni][nj].1 |= 1 << ((r + 2) % 4);~~
+                seen[ni][nj].1 |= 1 << ((r + 2) % 4);
                 pq.push_back((cost + 1, (r + 1) % 4, ni, nj));
                 pq.push_back((cost + 1, (r + 3) % 4, ni, nj));
                 seen[ni][nj].0 = cost;
