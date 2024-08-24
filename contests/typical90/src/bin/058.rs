@@ -1,53 +1,36 @@
+use itertools::Itertools;
 use proconio::input;
 
-fn solve() {
-    input! {
-    }
-
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-}
-
-
 fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        k: usize,
     }
+    let m = 1e5 as usize;
+    let op = (0..m)
+        .map(|num| {
+            (num.to_string()
+                .chars()
+                .map(|c| c.to_digit(10).unwrap() as usize)
+                .sum::<usize>() + num) % m
+        })
+        .collect_vec();
+
+    let mut doubling = vec![vec![0; m]; 60];
+    doubling[0] = op;
+
+    for i in 1..60 {
+        for j in 0..m as usize {
+            doubling[i][j] = doubling[i-1][doubling[i-1][j]];
+        }
+    }
+
+    let mut ans = n;
+    for i in 0..61 {
+        if k >> i & 1 == 1 {
+            ans = doubling[i][ans];
+        }
+    }
+
+    println!("{ans}");
 }
