@@ -1,53 +1,31 @@
+use itertools::Itertools;
 use proconio::input;
 
-fn solve() {
-    input! {
-    }
+fn solve(n: usize, v: &[i64]) -> i64 {
+    let half = v[n / 2];
+    let res = v.iter()
+        .map(|x| (*x - half).abs())
+        .sum::<i64>();
 
+    res
 }
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-}
-
 
 fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        pos: [(i64, i64); n]
     }
+    let pos_x = pos.iter()
+        .map(|(x, _)| *x)
+        .sorted()
+        .collect_vec();
+
+    let pos_y = pos.iter()
+        .map(|(_, y)| *y)
+        .sorted()
+        .collect_vec();
+
+    let ans = solve(n, &pos_x) + solve(n, &pos_y);
+
+    println!("{ans}");
 }
