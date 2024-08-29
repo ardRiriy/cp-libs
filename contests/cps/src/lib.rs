@@ -3,3 +3,4 @@ pub mod chlibs;
 pub mod consts;
 pub mod cumulative_sum;
 pub mod prime;
+pub mod veclibs;
