@@ -46,3 +46,19 @@ pub fn create_primes(n: usize) -> Vec<u64> {
 
     res
 }
+
+// 約数全列挙
+pub fn divisors(n: u64) -> Vec<u64> {
+    let mut res = vec![];
+    let mut i = 1;
+    while i * i <= n {
+        if n % i == 0 {
+            res.push(i);
+            if i != n / i && i != 1{
+                res.push(n / i);
+            }
+        }
+        i += 1;
+    }
+    res
+}
