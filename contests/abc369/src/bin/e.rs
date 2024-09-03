@@ -1,10 +1,11 @@
-use std::{cmp::Reverse, collections::BinaryHeap, io::{stdout, BufWriter}};
+use std::io::{stdout, BufWriter};
 use std::io::Write;
+use cps::graph::warshall_floyd;
+use cps::consts::INF;
+use cps::chlibs::ChLibs;
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
 
-// (800 * log_2(800))^2 = 59521225
-// 800^3                = 512000000
 fn main() {
     input!{
         n: usize,
@@ -25,9 +26,7 @@ fn main() {
             }
         );
 
-    let distances = (0..n)
-        .map(|x| dijkstra(&g, x))
-        .collect_vec();
+    let distances = warshall_floyd(&g);
 
     for _ in 0..q {
         input! {
@@ -71,57 +70,3 @@ fn main() {
         writeln!(out, "{}", ans + min).unwrap();
     }
 }
-
-fn dijkstra(g: &Vec<Vec<(usize, u64)>>, start: usize) -> Vec<u64> {
-    let n = g.len();
-    let mut dist = vec![INF; n];
-    let mut left = n;
-    let mut heap = BinaryHeap::new();
-    heap.push(Reverse((0, start)));
-
-    while let Some(Reverse((cost, pos))) = heap.pop() {
-        if dist[pos] != INF {
-            continue;
-        }
-        dist[pos] = cost;
-        left -= 1;
-        if left == 0 {
-            break;
-        }
-
-        for &(ni, w) in &g[pos] {
-            if dist[ni] == INF {
-                heap.push(Reverse((cost + w, ni)));
-            }
-        }
-    }
-    dist
-}
-pub trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        };
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        };
-    }
-}
-pub static INF: u64 = 1e18 as u64;
-pub static DI: &[usize] = &[0, !0, 0, 1];
-pub static DJ: &[usize] = &[!0, 0, 1, 0];
-pub static DC: &[char] = &['L', 'U', 'R', 'D'];
