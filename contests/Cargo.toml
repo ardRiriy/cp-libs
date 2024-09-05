@@ -1,5 +1,8 @@
 [workspace]
 resolver = "1"
+exclude=[
+    "abc228",
+]
 members = [
     "a*",
     "cps",

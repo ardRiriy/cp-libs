@@ -1,7 +1,9 @@
+root=$(git rev-parse --show-toplevel)
+
 acsub() {
-  python3 /Users/ardririy/Work/cp-libs/util/file_marger.py $1
+  python3 $root/util/file_marger.py $1
   cargo compete submit $1 || true
-  python3 /Users/ardririy/Work/cp-libs/util/after_submission.py $1
+  python3 $root/util/after_submission.py $1
 }
 
 actest() {

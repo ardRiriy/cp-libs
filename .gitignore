@@ -22,3 +22,8 @@
 **/.DS_Store
 
 **/temporaries/
+
+# 基本的にjsファイルはtsからのトランスパイル結果なので。
+**/*.js
+**/package-lock.json
+**/node_modules/
