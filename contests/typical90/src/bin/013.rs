@@ -1,53 +1,22 @@
-use proconio::input;
-
-fn solve() {
-    input! {
-    }
-
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-}
-
-
+use cps::graph::dijkstra;
+use itertools::Itertools;
+use proconio::{input, marker::Usize1};
 fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input!{
+        n: usize,
+        m: usize,
+        edges: [(Usize1, Usize1, u64); m]
     }
+
+    let g = edges.iter()
+        .fold(vec![vec![]; n], |mut acc, (u, v, w)| {
+            acc[*u].push((*v, *w));
+            acc[*v].push((*u, *w));
+            acc
+        });
+
+    let dist_from_zero = dijkstra(0, &g);
+    let dist_from_n = dijkstra(n-1, &g);
+
+    println!("{}", (0..n).map(|idx| dist_from_zero[idx] + dist_from_n[idx]).join("\n"));
 }
