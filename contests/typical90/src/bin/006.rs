@@ -1,53 +1,44 @@
-use proconio::input;
+use std::collections::BTreeMap;
 
-fn solve() {
-    input! {
-    }
-
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
-                *self = elm;
-                true
-            } else { false };
-    }
-}
-
-
+use itertools::Itertools;
+use proconio::{input, marker::Chars};
 fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        k: usize,
+        s: Chars
     }
+
+    let mut map = BTreeMap::new();
+    for i in 0..n-k {
+        *map.entry(s[i]).or_insert(0) += 1u64;
+    }
+
+    let mut l = 0;
+    let mut ans = vec![];
+    for i in n-k..n {
+        *map.entry(s[i]).or_insert(0) += 1;
+
+        // mapの最初を読む
+        let (&c, &val) = map.first_key_value().unwrap();
+        while s[l] != c {
+            let size = *map.get(&s[l]).unwrap();
+            if size == 1 {
+                map.remove(&s[l]);
+            } else {
+                map.insert(s[l], size-1);
+            }
+            l += 1;
+        }
+
+        ans.push(c);
+        if val == 1 {
+            map.remove(&c);
+        } else {
+            map.insert(c, val-1);
+        }
+        l += 1;
+    }
+
+    println!("{}", ans.iter().join(""));
 }
