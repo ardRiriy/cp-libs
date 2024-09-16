@@ -1,5 +1,5 @@
 use cps::cumulative_sum::CumulativeSum;
-use proconio::{input};
+use proconio::input;
 fn main() {
     input!{
         n: usize,
