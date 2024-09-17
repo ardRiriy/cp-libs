@@ -1,38 +1,26 @@
-use proconio::{input};
+use proconio::{input, marker::{Chars, Usize1}};
 fn main() {
     input!{
+        s: Chars,
+        q: usize,
+    }
 
+    for _ in 0..q {
+        input! {
+            t: usize,
+            k: Usize1,
+        }
+        println!("{}", r(&s, t, k));
     }
 }
 
-/*
-鹿のardririy, arDeeriy
-　　　　　　　　　　　　 　 　 　 　 　 　 ／
-　　　　　　　　　　　　　　　　　 　 　 //
-　　　　　　　　　 　 　 　 　 　 　 　 //　 　 　 　 |:
-　　　　　　　　　　　　　　　　　 　 // 　 　 　 　 .|i
-　　　　　　　　　 　 　 　 　 　 　 //　 　 　 　 　 ||
-　　　　　　　　　　　　　　　　　　l i　　　　　　 　 ||
-　　　　　.　´￣￣｀ｰ　、　　　　 | l　 　 　 　 　 ∥
-　　　 ／　 . 　 　 　_＞─- ､ 　 l |　　　　　　 .∥
-　　　i　 〆　 　 ／　 　 　 　 ＼.i | 　 　 　 　 ∥
-　　　| /　 　 ／ 　 　 　 　 　 　 l |　ﾊ　　　　.′
-　 　 ; :　 　 .′　　　　　　　　　 ヾゝi !　　　/.′
-　　 《　　　 :　　　 　 　 r─-､　　 i ﾘ:l　　 //　　　　 　 　 、
-　 　 |　　　　 　 　 　 　 ｀ヾ.　＼ r‐’:ﾚ=‐' .ゝ...ノ＿＿＼＿))
-　　 弋　 　 　 　 　 　 　 　 ∨ソ`ー''`ー---一　‐─‐-､)¨´
-　　 　 } 、　　　　　　　　　　 i_..ノ _,　　　　ハ'
-　　 　 ∨＞､　iゝ.. 　 　 　 　 　 弋);;,ゞ..ノ　.′
-　　　　 ∨::::| 7!:::..ヾ.　　　　.′ヽ.　` 　 　 /
-　　　　　∨::|.′::::::ixxr, 　 /　　　:　　　　 I.
-　 　 　 　 }:::|..:ｉ..::::::|　i,,　　"'' ´ヾ.i 　 　 　 ﾊ
-　　　　 　 ::::|:::|::::::/　 }ヾ.　　　　ﾐゝ.　 ,、..:::::)
-　　　　 　 i:::|ヾ:::::i　 /.::::|｀ヾ..,,　..ノ＼ヾ..＿/
-　 　 　 　 |:::l　}:. {　 |::::..′　　　　　　 `ー''
-　 　 　 　 |:::| /.:/l　 !.:::l
-　　　　　 ﾉ..:ﾚ.:::ｉ::l　ﾉ..::|
-　　　 　 (人7.::::|:::V.::::::|
-　　　　　`''/ .:::::!ｰ:::::::::ﾊ
-　　　　　 /..::::::::| (_/＼__)
-　　　 　 (__/(,＿)
-*/
+fn r(s: &[char], t: usize, k: usize) -> char {
+    if t == 0 {
+        return s[k];
+    } else if k == 0 {
+        let u = s[0] as usize - 'A' as usize;
+        return ('A' as u8 + ((u + t) % 3) as u8) as char;
+    }
+    let ret = r(s, t-1, if k % 2 == 0 { k / 2 } else { (k - 1) / 2}) as u8 - 'A' as u8;
+    return ((ret + if k % 2 == 0 { 1 } else { 2 }) % 3 + 'A' as u8) as char;
+}
