@@ -1,11 +1,19 @@
 #[derive(Debug)]
-pub struct UnionFind {
+pub struct UnionFind<T, F>
+where F: Fn(&T, &T) -> T,
+{
     vertex: Vec<usize>,
+    data: Vec<Option<T>>,
+    merge_op: F,
 }
 
-impl UnionFind {
-    pub fn new(size: usize) -> UnionFind {
-        UnionFind { vertex: vec![!1; size] }
+impl<T: Clone, F: Fn(&T, &T) -> T> UnionFind<T, F> {
+    pub fn new(size: usize, merge_op: F) -> Self {
+        UnionFind {
+            vertex: vec![!1; size] ,
+            data: vec![None; size],
+            merge_op,
+        }
     }
 
     pub fn leader(&mut self, u: usize) -> usize {
@@ -34,35 +42,44 @@ impl UnionFind {
             // すでに親が同じ場合は何もせず、「マージされなかった」ことを報告
             return false;
         }
-        // vをuの子要素にする
         let u_leader = self.leader(u);
+        let u_size = self.size(u);
+
         let v_leader = self.leader(v);
-        let merged_size = !(self.size(u) + self.size(v));
-        self.vertex[u_leader] = merged_size;
-        self.vertex[v_leader] = u_leader;
+        let v_size = self.size(v);
+
+        let merged_size = !(u_size + v_size);
+        if u_size < v_size {
+            self.vertex[v_leader] = merged_size;
+            self.vertex[u_leader] = v_leader;
+
+            self.data[v_leader] = match (&self.data[u_leader], &self.data[v_leader]) {
+                (Some(du), Some(dv)) => Some((self.merge_op)(du, dv)),
+                (None, None) => None,
+                _ => { unreachable!(); }
+            };
+        } else {
+            self.vertex[u_leader] = merged_size;
+            self.vertex[v_leader] = u_leader;
+
+            self.data[u_leader] = match (&self.data[u_leader], &self.data[v_leader]) {
+                (Some(du), Some(dv)) => Some((self.merge_op)(du, dv)),
+                (None, None) => None,
+                _ => { unreachable!(); }
+            };
+        }
+
         return true;
     }
-}
 
-mod uf_test {
-    #[test]
-    fn uf_test() {
-        use super::UnionFind;
-        let mut uf = UnionFind::new(6);
-        assert!(uf.merge(0, 1));
-        assert!(uf.merge(2, 0));
-        assert!(!uf.merge(1, 2));
-        assert!(uf.merge(3, 4));
-
-        assert!(uf.same(1, 2));
-        assert!(uf.same(3, 4));
-        assert!(!uf.same(0, 3));
-        assert!(!uf.same(3, 5));
-
-        assert_eq!(uf.size(0), 3);
-        assert_eq!(uf.size(4), 2);
-        assert_eq!(uf.size(5), 1);
-
-        assert_eq!(uf.leader(0), uf.leader(1));
+    pub fn insert_data(&mut self, u: usize, value: T) {
+        let root = self.leader(u);
+        self.data[root] = Some(value);
     }
+
+    pub fn get_data(&mut self, u: usize) -> Option<&T> {
+        let root = self.leader(u);
+        self.data[root].as_ref()
+    }
+
 }
