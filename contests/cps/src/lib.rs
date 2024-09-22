@@ -5,3 +5,4 @@ pub mod cumulative_sum;
 pub mod prime;
 pub mod veclibs;
 pub mod graph;
+pub mod unionfind;
