@@ -12,7 +12,6 @@ fn main() {
     }
 
     let cost = (1..n).rev()
-        .into_iter()
         .map(|i| {
             input! {
                 a: [u64; i],

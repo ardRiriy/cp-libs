@@ -55,11 +55,9 @@ fn janken(a: char, b: char) -> i32 {
     let ai = chg(a);
     let bi = chg(b);
 
-    let h = vec![
-        vec![2, 0, 1],
+    let h = [vec![2, 0, 1],
         vec![1, 2, 0],
-        vec![0, 1, 2]
-    ];
+        vec![0, 1, 2]];
 
     h[ai][bi]
 }
@@ -105,21 +103,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

@@ -5,7 +5,7 @@ fn solve() {
     }
 
     if n < 15 {
-        let k = (0..n).into_iter().fold(1u64, |acc, _| acc * 2);
+        let k = (0..n).fold(1u64, |acc, _| acc * 2);
         if k > n * n {
             println!("Yes");
         } else {
@@ -35,21 +35,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

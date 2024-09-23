@@ -13,11 +13,11 @@ fn solve() {
     //     _ => println!("error")
     // }
 
-    if c == "Red".to_string() {
+    if c == *"Red" {
         println!("{}", g.min(b));
-    } else if c == "Green".to_string() {
+    } else if c == *"Green" {
         println!("{}", r.min(b));
-    } else if c == "Blue".to_string() {
+    } else if c == *"Blue" {
         println!("{}", r.min(g));
     } else {
         println!("error");
@@ -43,21 +43,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

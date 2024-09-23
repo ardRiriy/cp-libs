@@ -1,6 +1,4 @@
-use core::slice;
 use std::collections::BTreeSet;
-use std::slice::Windows;
 
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
@@ -21,7 +19,7 @@ fn solve() {
     );
 
     let mut ans = INF as i64;
-    for v in (0..n).into_iter().permutations(n) {
+    for v in (0..n).permutations(n) {
         if v.windows(2).any(|c| {
             set.contains(&(c[0], c[1])) || set.contains(&(c[1], c[0]))
         }) {
@@ -63,19 +61,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

@@ -1,4 +1,4 @@
-use proconio::{input, marker::Chars};
+use proconio::input;
 
 fn solve() {
     input! {
@@ -7,7 +7,7 @@ fn solve() {
     }
 
     let cnt = s.iter().filter(|&str| *str == "For".to_string()).count();
-    println!{"{}", if cnt >= n / 2 + 1 { "Yes" } else { "No" }};
+    println!{"{}", if cnt > n / 2 { "Yes" } else { "No" }};
 
 }
 
@@ -31,19 +31,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

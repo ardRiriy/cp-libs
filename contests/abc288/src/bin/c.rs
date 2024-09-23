@@ -6,7 +6,7 @@ fn solve() {
         m: usize,
     }
 
-    let mut dsu = (0..m).into_iter().fold(Dsu::new(n), |mut acc, _| {
+    let mut dsu = (0..m).fold(Dsu::new(n), |mut acc, _| {
         input! {
             a: Usize1,
             b: Usize1
@@ -16,7 +16,7 @@ fn solve() {
     });
 
     let mut seen = vec![false; n];
-    let need = (0..n).into_iter().map(|i| 
+    let need = (0..n).map(|i| 
         if seen[dsu.leader(i)] {
             0
         } else {
@@ -71,21 +71,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

@@ -9,5 +9,5 @@ fn main() {
         edge: [(Usize1, Usize1); m]
     }
     let mut dsu = edge.iter().fold(Dsu::new(n), |mut dsu, &(u, v)| { dsu.merge(u, v); dsu});
-    println!("{}", (0..n).into_iter().fold(0, |acc, x| acc.max(dsu.size(x))));
+    println!("{}", (0..n).fold(0, |acc, x| acc.max(dsu.size(x))));
 }

@@ -16,7 +16,7 @@ fn solve() {
             g
         });
 
-    if (1..n).into_iter().all(|u| dsu.same(u, 0))
+    if (1..n).all(|u| dsu.same(u, 0))
         && n == m + 1
         && g.iter().filter(|v| v.len() == 1).count() == 2
         && g.iter().filter(|v| v.len() == 2).count() == n-2 {
@@ -48,19 +48,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

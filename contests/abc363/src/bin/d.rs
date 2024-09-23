@@ -1,7 +1,5 @@
-use std::fmt::format;
 
-use itertools::Itertools;
-use proconio::{input, marker::Usize1};
+use proconio::input;
 fn solve() {
     input!{
         n: usize,
@@ -94,21 +92,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

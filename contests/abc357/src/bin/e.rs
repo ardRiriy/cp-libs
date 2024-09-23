@@ -48,7 +48,6 @@ fn dfs(
         flag.1 = next;
 
         ans[pos] = dept[pos] + 1 - dept[next];
-        return;
     } else {
         dept[next] = dept[pos] + 1;
         dfs(next, g, ans, dept, flag);
@@ -83,21 +82,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

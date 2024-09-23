@@ -20,21 +20,21 @@ impl<T: Clone, F: Fn(&T, &T) -> T> UnionFind<T, F> {
         let elm: usize = self.vertex[u];
         if elm > self.vertex.len() {
             // 親ノードなので返却
-            return u;
+            u
         } else {
             // 子ノードなので親ノードを取得したのち、圧縮
             self.vertex[u] = self.leader(elm);
-            return self.vertex[u];
+            self.vertex[u]
         }
     }
 
     pub fn same(&mut self, u: usize, v: usize) -> bool {
-        return self.leader(u) == self.leader(v);
+        self.leader(u) == self.leader(v)
     }
 
     pub fn size(&mut self, u: usize) -> usize {
         let idx: usize = self.leader(u);
-        return !self.vertex[idx];
+        !self.vertex[idx]
     }
 
     pub fn merge(&mut self, u: usize, v: usize) -> bool {
@@ -69,7 +69,7 @@ impl<T: Clone, F: Fn(&T, &T) -> T> UnionFind<T, F> {
             };
         }
 
-        return true;
+        true
     }
 
     pub fn insert_data(&mut self, u: usize, value: T) {

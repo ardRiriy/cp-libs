@@ -26,7 +26,7 @@ fn solve() {
     let mut que = VecDeque::new();
     que.push_back((state, 0));
     while let Some((v, cnt)) = que.pop_front() {
-        if let Some(_) = seen.get(&v) {
+        if seen.get(&v).is_some() {
             continue;
         }
         seen.insert(v.clone(), cnt);
@@ -84,21 +84,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

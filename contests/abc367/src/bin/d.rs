@@ -6,11 +6,11 @@ fn main() {
         a: [usize; n]
     }
 
-    let mut v = vec![0u64; m as usize];
+    let mut v = vec![0u64; m];
     let mut sum = 0;
     for i in 0..n-1 {
         sum += a[i];
-        v[(sum % m) as usize] += 1;
+        v[sum % m] += 1;
     }
 
     let all_sum = a.iter().sum::<usize>();

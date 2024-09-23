@@ -7,10 +7,9 @@ fn solve() {
         v: [(u64, u64); n]
     }
 
-    let mut event = v
+    let event = v
         .iter()
-        .map(|&(l, r)| vec![(l, 0u64), (r, 1u64)])
-        .flatten()
+        .flat_map(|&(l, r)| vec![(l, 0u64), (r, 1u64)])
         .sorted()
         .collect_vec();
 
@@ -42,7 +41,7 @@ fn solve2() {
     let mut ans = 0;
 
     for (idx, &(l, r)) in rv.iter().enumerate() {
-        let mut left = {
+        let left = {
             // l min mitukeru
             let mut ng = -1;
             let mut ok = n as isize;
@@ -62,7 +61,7 @@ fn solve2() {
             let mut ok = n as isize;
             while (ng - ok).abs() > 1 {
                 let mid = (ng + ok) / 2;
-                if l_sorted[mid as usize].0 >= r + 1 {
+                if l_sorted[mid as usize].0 > r {
                     ok = mid;
                 } else {
                     ng = mid;
@@ -95,21 +94,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

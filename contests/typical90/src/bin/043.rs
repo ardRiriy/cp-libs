@@ -1,6 +1,5 @@
-use std::{cmp::Reverse, collections::{BinaryHeap, VecDeque}};
+use std::collections::VecDeque;
 
-use itertools::Itertools;
 use proconio::{input, marker::{Chars, Usize1}};
 
 fn solve() {
@@ -73,19 +72,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

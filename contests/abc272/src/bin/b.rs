@@ -6,7 +6,7 @@ fn solve() {
         m: usize,   
     }
 
-    let v = (0..m).into_iter().fold(vec![], |mut acc, _| {
+    let v = (0..m).fold(vec![], |mut acc, _| {
         input! {
             k: usize,
             v: [i32; k]
@@ -15,7 +15,7 @@ fn solve() {
         acc
     });
 
-    let ans = (1..=n).into_iter().all(|i| {
+    let ans = (1..=n).all(|i| {
         let vv = v
             .iter()
             .filter_map(|v| if v.contains(&(i as i32)) { Some(v) } else { None })
@@ -45,21 +45,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

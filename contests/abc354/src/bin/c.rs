@@ -24,13 +24,10 @@ fn solve() {
     }
 
     for &(a, c, idx) in cards.iter() {
-        match set.iter().max() {
-            Some(x) => {
-                if *x != a {
-                    ans[idx] = false;
-                }
+        if let Some(x) = set.iter().max() {
+            if *x != a {
+                ans[idx] = false;
             }
-            None => {}
         }
         set.remove(&a);
     }
@@ -64,21 +61,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

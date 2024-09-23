@@ -20,7 +20,7 @@ fn main() {
     doubling[0] = op;
 
     for i in 1..60 {
-        for j in 0..m as usize {
+        for j in 0..m {
             doubling[i][j] = doubling[i-1][doubling[i-1][j]];
         }
     }

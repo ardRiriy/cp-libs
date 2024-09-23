@@ -4,7 +4,7 @@ fn main() {
         n: usize,
     }
 
-    let arr = (0..n).into_iter()
+    let arr = (0..n)
         .fold(vec![], |mut v, _| {
             input! {
                 t: u64,

@@ -8,7 +8,7 @@ fn solve() {
 
     a.sort();
     let mut k = m;
-    let mut ans = 0;
+    let ans = 0;
 
     for (idx, &x) in a.iter().enumerate() {
         if x * (n - idx) as u64 <= k {
@@ -63,21 +63,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

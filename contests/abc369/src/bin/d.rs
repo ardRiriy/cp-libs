@@ -1,4 +1,3 @@
-use cps::consts::INF;
 use proconio::{input};
 fn main() {
     input!{

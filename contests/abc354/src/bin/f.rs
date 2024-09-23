@@ -1,4 +1,3 @@
-use std::collections::BTreeSet;
 
 use itertools::Itertools;
 use proconio::input;
@@ -9,7 +8,7 @@ fn solve() {
         a: [u64; n]
     }
 
-    let (_, mut r) = a.iter().enumerate().fold(
+    let (_, r) = a.iter().enumerate().fold(
         (vec![INF; n], vec![INF as usize; n]),
         |(mut dp, mut id), (idx, &x)| {
             let mut ng = !0;
@@ -81,21 +80,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

@@ -1,4 +1,3 @@
-use num_traits::Pow;
 use proconio::{input};
 fn solve() {
     input!{
@@ -13,13 +12,11 @@ fn solve() {
 
     let mut left = s - 2 * a;
 
-    let mut k = (0..60).into_iter().fold(1u64, |acc, _| acc * 2);
+    let mut k = (0..60).fold(1u64, |acc, _| acc * 2);
 
     for i in (0..=60).rev() {
-        if a >> i & 1 == 0 {
-            if left >= k {
-                left -= k;
-            }
+        if a >> i & 1 == 0 && left >= k {
+            left -= k;
         }
         k /= 2;
     }
@@ -50,21 +47,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

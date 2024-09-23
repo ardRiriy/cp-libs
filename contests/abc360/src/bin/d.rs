@@ -22,7 +22,7 @@ fn solve() {
 
     let after = before.iter().map(|&x| x - t).collect_vec();
 
-    if before.len() == 0 || migi.len() == 0 {
+    if before.is_empty() || migi.is_empty() {
         println!("0");
         return;
     }
@@ -73,21 +73,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

@@ -6,7 +6,7 @@ fn main() {
     input!{
         n: usize,
     }
-    let arr = (0..n).into_iter()
+    let arr = (0..n)
         .map(|_|{
             input!{
                 l: usize,

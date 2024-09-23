@@ -7,7 +7,7 @@ fn solve(rdr: &mut StdinReader<impl BufRead>) {
     let n :usize = rdr.r();
     let q :usize = rdr.r();
     let x :Vec<u64> = rdr.rv(n);
-    let g = (0..n-1).into_iter().fold(
+    let g = (0..n-1).fold(
         vec![vec![]; n],
         |mut g, _| {
             let u :usize = rdr.r();
@@ -25,7 +25,6 @@ fn solve(rdr: &mut StdinReader<impl BufRead>) {
     eprintln!("{}", ans.iter().map(|v| v.iter().join(" ")).join("\n"));
     println!("{}",
              (0..q)
-                 .into_iter()
                  .map(|_|
                      {
                          let v: usize = rdr.r();
@@ -77,21 +76,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

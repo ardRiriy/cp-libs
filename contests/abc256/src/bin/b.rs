@@ -4,7 +4,7 @@ fn main() {
         n: usize,
         a: [usize; n]
     }
-    let mut mass = vec![false; 4];
+    let mut mass = [false; 4];
     let mut res = 0;
 
     for &x in a.iter() {

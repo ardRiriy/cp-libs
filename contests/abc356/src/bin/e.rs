@@ -11,7 +11,7 @@ fn solve() {
     let mut dsu = Dsu::new(n);
     let mut seen = vec![INF as usize; 1e6 as usize + 1];
 
-    let sorted_a :Vec<u64> = a.iter().sorted().map(|x| *x).collect_vec();
+    let sorted_a :Vec<u64> = a.iter().sorted().copied().collect_vec();
 
 
     for (idx, &x) in sorted_a.iter().enumerate(){
@@ -61,19 +61,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

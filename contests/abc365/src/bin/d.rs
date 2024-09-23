@@ -7,18 +7,14 @@ fn solve() {
 
     // aが勝ったらtrue
     fn isWin(a: char, b: char) -> bool {
-        return if a == 'R' && b == 'S' {
+        if a == 'R' && b == 'S' {
             true
         } else if a == 'S' && b == 'P' {
             true
-        } else if a == 'P' && b == 'R' {
-            true
-        } else {
-            false
-        };
+        } else { a == 'P' && b == 'R' }
     }
 
-    let te = vec!['R', 'S', 'P'];
+    let te = ['R', 'S', 'P'];
     let mut dp = vec![vec![0u64; 3];n+1];
     for i in 0..n {
         for j in 0..3 {
@@ -78,21 +74,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

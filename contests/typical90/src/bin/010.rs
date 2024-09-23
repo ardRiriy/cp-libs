@@ -1,4 +1,4 @@
-use std::ops::{Range, RangeInclusive};
+use std::ops::Range;
 use itertools::Itertools;
 use num_traits::Num;
 use proconio::input;
@@ -17,7 +17,7 @@ fn solve() {
     let cs1 = CumulativeSum::new(&v1);
     let cs2 = CumulativeSum::new(&v2);
 
-    let ans = (0..q).into_iter().map(|_| {
+    let ans = (0..q).map(|_| {
         input! {
             a: Usize1,
             b: usize,
@@ -85,19 +85,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

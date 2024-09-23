@@ -6,7 +6,7 @@ fn solve() {
         t: Chars
     }
 
-    let tv = t.iter().map(|c| *c).collect_vec();
+    let tv = t.iter().copied().collect_vec();
     for w in 1..s.len() {
         for c in 0..w {
             let mut a = vec![];
@@ -46,21 +46,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

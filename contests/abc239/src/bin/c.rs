@@ -21,13 +21,12 @@ fn solve(rdr: &mut StdinReader<impl BufRead>) {
 
     if adder
         .iter()
-        .map(|p| {
+        .flat_map(|p| {
             adder
                 .iter()
                 .map(|pp| (pp.0 + p.0 + pos1.0, pp.1 + p.1 + pos1.1))
                 .collect_vec()
         })
-        .flatten()
         .collect_vec()
         .contains(&pos2)
     {
@@ -56,21 +55,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

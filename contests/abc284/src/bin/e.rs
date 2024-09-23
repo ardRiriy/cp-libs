@@ -4,7 +4,7 @@ fn solve() {
         n: usize,
         m: usize,
     }
-    let g = (0..m).into_iter().fold(vec![vec![];n], |mut acc, _| {
+    let g = (0..m).fold(vec![vec![];n], |mut acc, _| {
         input!{ a: Usize1, b: Usize1 };
         acc[a].push(b);
         acc[b].push(a);
@@ -54,21 +54,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

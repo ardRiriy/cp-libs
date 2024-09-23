@@ -12,16 +12,13 @@ fn solve() {
     let mut dp = vec![vec![ModInt1000000007::new(0); atcoder.len()]; n+1];
 
     for (idx, c) in s.iter().enumerate() {
-        match atcoder.iter().enumerate().find(|(_, &d)| *c == d) {
-            Some((j, c)) => {
-                if *c == 'a' {
-                    dp[idx][0] += 1;
-                } else {
-                    let tmp = dp[idx][j-1];
-                    dp[idx][j] += tmp;
-                }
-            },
-            None => { }
+        if let Some((j, c)) = atcoder.iter().enumerate().find(|(_, &d)| *c == d) {
+            if *c == 'a' {
+                dp[idx][0] += 1;
+            } else {
+                let tmp = dp[idx][j-1];
+                dp[idx][j] += tmp;
+            }
         }
         dp[idx+1] = dp[idx].clone();
     }
@@ -51,19 +48,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

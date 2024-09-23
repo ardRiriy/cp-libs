@@ -21,7 +21,7 @@ fn solve() {
     ans[0] = 1;
 
     let mut set = BTreeSet::new();
-    let mut que = VecDeque::from((2..=n as u64).into_iter().collect_vec());
+    let mut que = VecDeque::from((2..=n as u64).collect_vec());
     for &x in &a {
         set.insert(x);
     }
@@ -66,21 +66,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

@@ -26,10 +26,10 @@ fn main() {
     for &c in &stk {
         match c {
             'U' => {
-                current = current / 2;
+                current /= 2;
             }
             'L' => {
-                current = current * 2;
+                current *= 2;
             }
             'R' => {
                 current = current * 2 + 1;

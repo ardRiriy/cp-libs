@@ -1,6 +1,6 @@
 use std::{collections::{BTreeMap, BTreeSet}, vec};
 
-use ac_library::{Mod998244353, ModInt998244353, StaticModInt};
+use ac_library::ModInt998244353;
 use itertools::Itertools;
 use proconio::{input};
 
@@ -101,21 +101,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

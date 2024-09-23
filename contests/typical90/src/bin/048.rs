@@ -9,8 +9,7 @@ fn solve() {
     }
 
     let mut events = quiz.iter()
-        .map(|&(x, y)| vec![y, x-y])
-        .flatten()
+        .flat_map(|&(x, y)| vec![y, x-y])
         .sorted()
         .collect_vec();
 
@@ -42,19 +41,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

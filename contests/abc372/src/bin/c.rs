@@ -9,7 +9,7 @@ fn main() {
     let mut ans = 0u64;
     'i: for i in 0..n-2 {
         for j in 0..3 {
-            if !(s[i + j] == ('A' as u8 + j as u8) as char) {
+            if s[i + j] != (b'A' + j as u8) as char {
                 continue 'i;
             }
         }
@@ -31,7 +31,7 @@ fn main() {
                 if i + j >= n {
                     break 'i;
                 }
-                if !(s[i + j] == ('A' as u8 + j as u8) as char) {
+                if s[i + j] != (b'A' + j as u8) as char {
                     continue 'i;
                 }
             }
@@ -45,7 +45,7 @@ fn main() {
                 if i + j >= n {
                     break 'i;
                 }
-                if !(s[i + j] == ('A' as u8 + j as u8) as char) {
+                if s[i + j] != (b'A' + j as u8) as char {
                     continue 'i;
                 }
             }

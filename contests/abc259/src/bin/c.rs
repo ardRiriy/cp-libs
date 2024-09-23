@@ -9,7 +9,7 @@ fn solve() {
     let sv = s.iter().fold(
         vec![],
         |mut res:Vec<(char, u64)>, &c| {
-            if res.len() == 0 || res[res.len() - 1].0 != c {
+            if res.is_empty() || res[res.len() - 1].0 != c {
                 res.push((c, 1u64));
             } else {
                 let n = res.len();
@@ -22,7 +22,7 @@ fn solve() {
     let tv = t.iter().fold(
         vec![],
         |mut res: Vec<(char, u64)>, &c| {
-            if res.len() == 0 || res[res.len() - 1].0 != c {
+            if res.is_empty() || res[res.len() - 1].0 != c {
                 res.push((c, 1u64));
             } else {
                 let n = res.len();
@@ -62,19 +62,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

@@ -9,7 +9,7 @@ fn main() {
 
     let pos = |chr: char| -> (usize, usize) {
         let res = c.iter().flatten().position(|elm| *elm == chr).unwrap();
-        return (res / w, res % w);
+        (res / w, res % w)
     };
 
     let mut stk = vec![pos('s')];

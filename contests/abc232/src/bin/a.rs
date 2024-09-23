@@ -1,4 +1,3 @@
-use std::collections::VecDeque;
 
 use proconio::{input, marker::Chars};
 fn solve() {
@@ -6,7 +5,7 @@ fn solve() {
         s: Chars
     }
 
-    println!("{}", (s[0] as u8 - '0' as u8) * (s[2] as u8 - '0' as u8))
+    println!("{}", (s[0] as u8 - b'0') * (s[2] as u8 - b'0'))
 }
 
 /*
@@ -28,21 +27,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 

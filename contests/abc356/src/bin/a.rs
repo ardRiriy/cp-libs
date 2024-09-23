@@ -9,7 +9,7 @@ fn solve() {
         r: Usize1
     }
 
-    let mut ans = (1..=n).into_iter().collect_vec();
+    let mut ans = (1..=n).collect_vec();
     ans[l..=r].reverse();
     println!("{}", ans.iter().join(" "))
 }
@@ -34,19 +34,17 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return
-            if *self > elm {
+        if *self > elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return
-            if *self < elm {
+        if *self < elm {
                 *self = elm;
                 true
-            } else { false };
+            } else { false }
     }
 }
 

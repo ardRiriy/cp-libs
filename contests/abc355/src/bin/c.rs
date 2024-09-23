@@ -9,7 +9,7 @@ fn solve() {
 
     let mut tate = vec![0; n];
     let mut yoko = vec![0; n];
-    let mut naname = vec![0; 2];
+    let mut naname = [0; 2];
     for (idx, &x) in a.iter().enumerate() {
         let i = (x - 1) / n;
         let j = (x - 1) % n;
@@ -51,21 +51,21 @@ trait ChLibs<T: std::cmp::Ord> {
 
 impl<T: std::cmp::Ord> ChLibs<T> for T {
     fn chmin(&mut self, elm: T) -> bool {
-        return if *self > elm {
+        if *self > elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 
     fn chmax(&mut self, elm: T) -> bool {
-        return if *self < elm {
+        if *self < elm {
             *self = elm;
             true
         } else {
             false
-        };
+        }
     }
 }
 
