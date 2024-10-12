@@ -29,6 +29,7 @@ impl MinK {
 
         if self.cnt > self.k {
             let (&key, _) = self.small_k_map.last_key_value().unwrap();
+            // let (&key, _) = self.small_k_map.first_key_value().unwrap();
             remove_from_map(&mut self.small_k_map, key);
             self.cnt -= 1;
             *self.big_map.entry(key).or_insert(0) += 1;
