@@ -16,11 +16,8 @@ fn solve1(s: &[char]) {
             if ci == cj {
                 ans += adder[to_usize(ci)];
             }
-
             adder[to_usize(cj)] += cnt[to_usize(cj)];
         }
-
-
         cnt[to_usize(ci)] += 1;
     }
 
