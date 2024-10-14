@@ -29,6 +29,7 @@ impl MinK {
 
         if self.cnt > self.k {
             let (&key, _) = self.small_k_map.last_key_value().unwrap();
+            // 大きい方から管理したい場合は↓を使う
             // let (&key, _) = self.small_k_map.first_key_value().unwrap();
             remove_from_map(&mut self.small_k_map, key);
             self.cnt -= 1;
@@ -45,7 +46,7 @@ impl MinK {
             remove_from_map(&mut self.small_k_map, x);
             self.sum_small_k -= x;
 
-            if let Some((&key, _)) = self.big_map.first_key_value() {
+            if let Some((&key, _)) = self.big_map.first_key_value() { // 大きい方からK個を管理したい場合は、last_key_value()に書き換える
                 *self.small_k_map.entry(key).or_insert(0) += 1;
                 remove_from_map(&mut self.big_map, key);
                 self.sum_small_k += key;

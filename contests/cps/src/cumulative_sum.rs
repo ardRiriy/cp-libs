@@ -30,7 +30,7 @@ impl<T> CumulativeSum<T> where T: num_traits::Num + Clone {
         let end = match range.end_bound() {
             std::ops::Bound::Included(&e) => e + 1,
             std::ops::Bound::Excluded(&e) => e,
-            std::ops::Bound::Unbounded => self.sum.len(),
+            std::ops::Bound::Unbounded => self.sum.len()-1,
         };
 
         self.sum[end].clone() - self.sum[start].clone()
