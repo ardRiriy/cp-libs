@@ -14,4 +14,6 @@ actest() {
 acinit(){
   cargo compete new $1
   cd $1
+  cp ../template.py ./src/bin/a.py
+  cp ../template.py ./src/bin/b.py
 }
