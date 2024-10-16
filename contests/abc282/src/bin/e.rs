@@ -1,9 +1,6 @@
-use std::{collections::BinaryHeap, process::Output};
-
-use ac_library::Dsu;
-use itertools::{iproduct, Itertools};
-use num::Integer;
+use std::collections::BinaryHeap;
 use proconio::input;
+use cps::modpow::modpow;
 /*
 最大全域木を求める問題に帰着することができる。
 
@@ -51,18 +48,3 @@ fn main() {
     println!("{ans}");
 }
 
-// a^n % p を計算
-fn modpow<T>(a: T, n: T, p: T) -> T 
-where T: Integer + From<u64> + std::ops::Shr<usize, Output = T> + std::ops::BitAnd<Output = T> + Copy
-{
-    let mut x:T = a;
-    let mut res :T = T::from(1);
-    let one = T::from(1);
-    for i in 0..64 {
-        if (n >> i) & one == one {
-            res = (res * x) % p;
-        }
-        x = (x * x) % p;
-    }
-    res % p
-}
