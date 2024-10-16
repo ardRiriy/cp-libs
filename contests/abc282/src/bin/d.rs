@@ -1,5 +1,4 @@
-use std::collections::{BTreeMap, VecDeque};
-
+use std::collections::VecDeque;
 use cps::unionfind::UnionFind;
 use proconio::{input, marker::Usize1};
 fn main() {
@@ -45,7 +44,6 @@ fn main() {
         }
     }
 
-    // dbg!(&color);
     let mut cnt = vec![vec![0; 2]; n];
     for i in 0..n {
         cnt[uf.leader(i)][color[i]] += 1;

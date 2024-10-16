@@ -14,18 +14,6 @@ abc282-f = { alias = "f", problem = "https://atcoder.jp/contests/abc282/tasks/ab
 abc282-g = { alias = "g", problem = "https://atcoder.jp/contests/abc282/tasks/abc282_g" }
 
 [[bin]]
-name = "abc282-a"
-path = "src/bin/a.rs"
-
-[[bin]]
-name = "abc282-b"
-path = "src/bin/b.rs"
-
-[[bin]]
-name = "abc282-c"
-path = "src/bin/c.rs"
-
-[[bin]]
 name = "abc282-d"
 path = "src/bin/d.rs"
 
