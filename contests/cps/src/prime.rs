@@ -27,8 +27,6 @@ pub fn prime_factorization(n: u64) -> std::collections::BTreeMap<u64, u64> {
 /* nまでの素数を生成して配列で返す */
 pub fn create_primes(n: usize) -> Vec<u64> {
     let mut res = vec![];
-
-    let n = 1e6 as usize + 2;
     let mut ck = vec![false; n];
 
     let mut i = 2;
