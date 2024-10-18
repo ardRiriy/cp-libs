@@ -25,10 +25,6 @@ name = "abc359-c"
 path = "src/bin/c.rs"
 
 [[bin]]
-name = "abc359-d"
-path = "src/bin/d.rs"
-
-[[bin]]
 name = "abc359-e"
 path = "src/bin/e.rs"
 
@@ -81,5 +77,6 @@ text_io = "=0.1.8"
 whiteread = "=0.5.0"
 rustc-hash = "=1.1.0"
 smallvec = "=1.2.0"
+cps = { path="../cps" }
 
 [dev-dependencies]

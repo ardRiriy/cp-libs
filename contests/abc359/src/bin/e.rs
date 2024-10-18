@@ -1,53 +1,34 @@
-use proconio::{input};
-fn solve() {
-    input!{
-        
-    }
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
+use itertools::Itertools;
+use proconio::input;
 
 fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        a: [u64; n]
     }
+
+    let inf = 1u64 << 60;
+    let mut v = vec![(inf, 0)];
+    let mut ans_v = vec![];
+    let mut sum_t = 0;
+
+    for &x in a.iter() {
+        let mut len = 1;
+        let mut ans = x;
+        while let Some((lh, ll)) = v.pop() {
+            if lh <= x {
+                len += ll;
+                ans += (x - lh) * ll;
+            } else {
+                v.push((lh, ll));
+                break;
+            }
+        }
+        ans_v.push(sum_t + ans + 1);
+        sum_t += ans;
+        v.push((x, len));
+    }
+
+    println!("{}", ans_v.iter().join(" "));
 }
 
