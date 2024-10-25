@@ -59,6 +59,10 @@ impl MinK {
     pub fn ans(&self) -> u64 {
         self.sum_small_k
     }
+
+    pub fn size(&self) -> usize {
+        self.cnt
+    }
 }
 
 fn remove_from_map(map: &mut std::collections::BTreeMap<u64, u64>, key: u64) {

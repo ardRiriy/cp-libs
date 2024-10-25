@@ -9,3 +9,4 @@ pub mod unionfind;
 pub mod binary_index_tree;
 pub mod mink_sum;
 pub mod modpow;
+pub mod linked_list;
