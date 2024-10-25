@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 
-use cps::linked_list_like::Item;
+use cps::linked_list::Item;
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
 fn main() {

@@ -2,7 +2,7 @@ use proconio::input;
 /*
 3分探索の練習問題。
 操作をする回数は離散な値しか取れないのでusizeで持って考える。
-最後のm1, m2再計算を忘れずに。
+最後のm1, m2の再計算を忘れずに。
 */
 
 fn main() {
@@ -13,7 +13,6 @@ fn main() {
 
     let mut l = 0;
     let mut h = 1e16 as usize;
-    let mut ans = 1e100;
 
     let calc = |x: f64| -> f64 {
         b * x +  a / (x + 1.).sqrt()
