@@ -40,8 +40,8 @@ where T: num_traits::Num + Clone + Ord
 
     // key以上で最小のindexを返却する
     // a[i] > 0を期待して標準のbinary_searchを使う
-    pub fn binary_search(&self, key: T) -> usize {
-        self.sum.binary_search(&key).unwrap_or_else(|x| x)
+    pub fn binary_search(&self, key: T) -> Result<usize, usize> {
+        self.sum.binary_search(&key)
     }
 }
 
