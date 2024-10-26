@@ -1,9 +1,11 @@
 #[derive(Debug)]
 pub struct CumulativeSum<T> {
-    pub sum: Vec<T>
+    sum: Vec<T>
 }
 
-impl<T> CumulativeSum<T> where T: num_traits::Num + Clone {
+impl<T> CumulativeSum<T> 
+where T: num_traits::Num + Clone + Ord
+{
     pub fn new(init_vec: &Vec<T>) -> CumulativeSum<T> {
         let sum = init_vec
             .iter()
@@ -34,6 +36,12 @@ impl<T> CumulativeSum<T> where T: num_traits::Num + Clone {
         };
 
         self.sum[end].clone() - self.sum[start].clone()
+    }
+
+    // key以上で最小のindexを返却する
+    // a[i] > 0を期待して標準のbinary_searchを使う
+    pub fn binary_search(&self, key: T) -> usize {
+        self.sum.binary_search(&key).unwrap_or_else(|x| x)
     }
 }
 
