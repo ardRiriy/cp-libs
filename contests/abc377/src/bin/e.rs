@@ -1,3 +1,4 @@
+use cps::modpow::modpow;
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
 
@@ -7,29 +8,32 @@ fn main() {
         k: u64,
         p: [Usize1; n],
     }
-
-    let mut doubling = vec![vec![0; n]; 62];
+    let inf = 1 << 62;
+    let mut pos = vec![(inf, inf); n];
+    let mut cycles = vec![];
     for i in 0..n {
-        doubling[0][i] = p[i]; 
-    }
-
-    for j in 0..61 {
-        for i in 0..n {
-            doubling[j + 1][i] = doubling[j][doubling[j][i]];
+        if pos[i].0 != inf {
+            continue;
         }
-    }
-    let mut ans = p;
 
-    for i in 0..62 {
-        if (k >> i) & 1 == 1 {
-            let mut next = vec![0; n];
-            for j in 0..n {
-                next[j] = doubling[i][ans[j]];
+        let mut v = vec![];
+        let mut current = i;
+        loop {
+            v.push(current);
+            pos[current] = (cycles.len(), v.len() - 1);
+            current = p[current];
+            if current == i {
+                break;
             }
-            ans = next;
         }
+        cycles.push(v);
     }
 
-    dbg!(&doubling[1]);
-    println!("{}", ans.iter().map(|&x| x + 1).join(" "));
+    let mut ans = vec![];
+    for i in 0..n {
+        let m = cycles[pos[i].0].len();
+        let steps = modpow(2, k as u64, m as u64) as usize;
+        ans.push(cycles[pos[i].0][(pos[i].1 + steps) % m]);
+    }
+    println!("{}", ans.iter().map(|x| *x + 1).join(" "));
 }
