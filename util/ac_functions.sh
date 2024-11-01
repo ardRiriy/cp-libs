@@ -2,6 +2,9 @@
 util="$(cd "$(dirname "$0")" && pwd)"
 
 acsub() {
+  # contest_name = $(basename "$PWD")
+  # number = $1
+  # if [ $2 = "rs" ]; then
   python3 $util/file_marger.py $1
   cargo compete submit $1 || true
   python3 $util/after_submission.py $1
@@ -12,13 +15,20 @@ actest() {
 }
 
 acinit(){
-  cargo compete new $1
+  cargo new $1 --bin
   cd $1
-  cp ../template.py ./src/bin/a.py
-  cp ../template.py ./src/bin/b.py
-  cp ../template.py ./src/bin/c.py
-}
 
-pt() {
-  xsel -b | pypy3 src/bin/$1.py
+  # rustファイルの準備
+  for name in {a..g}; 
+  do
+    touch "src/bin/${name}.rs"
+    cat ../templates/template.rs >> "src/bin/${name}.rs"
+  done
+
+  # pythonファイルの準備
+  for name in {a..c};
+  do
+    touch "src/bin/${name}.py"
+    cat ../templates/template.py >> "src/bin/${name}.py"
+  done
 }
