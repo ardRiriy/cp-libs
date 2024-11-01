@@ -16,4 +16,9 @@ acinit(){
   cd $1
   cp ../template.py ./src/bin/a.py
   cp ../template.py ./src/bin/b.py
+  cp ../template.py ./src/bin/c.py
+}
+
+pt() {
+  xsel -b | pypy3 src/bin/$1.py
 }
