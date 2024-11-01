@@ -1,5 +1,4 @@
 use cps::cumulative_sum::CumulativeSum;
-use cps::veclibs::VecLibs;
 use proconio::input;
 fn main() {
     input!{
@@ -11,7 +10,7 @@ fn main() {
     let csum = CumulativeSum::new(&a);
     let left = x % sum;
 
-    let i = csum.sum.lower_bound(left+1);
+    let i = csum.binary_search(left+1).unwrap_or_else(|x| x);
     println!("{}", i + (x / sum) as usize * n);
 }
 

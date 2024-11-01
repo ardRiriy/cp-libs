@@ -1,36 +1,34 @@
 [package]
-name = "abc377"
+name = "arc186"
 version = "0.1.0"
 edition = "2018"
 
 [package.metadata.cargo-compete.bin]
-abc377-a = { alias = "a", problem = "https://atcoder.jp/contests/abc377/tasks/abc377_a" }
-abc377-b = { alias = "b", problem = "https://atcoder.jp/contests/abc377/tasks/abc377_b" }
-abc377-c = { alias = "c", problem = "https://atcoder.jp/contests/abc377/tasks/abc377_c" }
-abc377-d = { alias = "d", problem = "https://atcoder.jp/contests/abc377/tasks/abc377_d" }
-abc377-e = { alias = "e", problem = "https://atcoder.jp/contests/abc377/tasks/abc377_e" }
-abc377-f = { alias = "f", problem = "https://atcoder.jp/contests/abc377/tasks/abc377_f" }
-abc377-g = { alias = "g", problem = "https://atcoder.jp/contests/abc377/tasks/abc377_g" }
+arc186-a = { alias = "a", problem = "https://atcoder.jp/contests/arc186/tasks/arc186_a" }
+arc186-b = { alias = "b", problem = "https://atcoder.jp/contests/arc186/tasks/arc186_b" }
+arc186-c = { alias = "c", problem = "https://atcoder.jp/contests/arc186/tasks/arc186_c" }
+arc186-d = { alias = "d", problem = "https://atcoder.jp/contests/arc186/tasks/arc186_d" }
+arc186-e = { alias = "e", problem = "https://atcoder.jp/contests/arc186/tasks/arc186_e" }
 
 [[bin]]
-name = "abc377-c"
+name = "arc186-a"
+path = "src/bin/a.rs"
+
+[[bin]]
+name = "arc186-b"
+path = "src/bin/b.rs"
+
+[[bin]]
+name = "arc186-c"
 path = "src/bin/c.rs"
 
 [[bin]]
-name = "abc377-d"
+name = "arc186-d"
 path = "src/bin/d.rs"
 
 [[bin]]
-name = "abc377-e"
+name = "arc186-e"
 path = "src/bin/e.rs"
-
-[[bin]]
-name = "abc377-f"
-path = "src/bin/f.rs"
-
-[[bin]]
-name = "abc377-g"
-path = "src/bin/g.rs"
 
 [dependencies]
 ac-library-rs = "=0.1.1"

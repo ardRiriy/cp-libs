@@ -1,5 +1,6 @@
 use proconio::input;
 fn main() {
+    // solve できてない
     input!{
         n: usize,
         q: usize,
