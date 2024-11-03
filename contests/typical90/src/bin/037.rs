@@ -1,51 +1,46 @@
+use ac_library::{Monoid, Segtree};
 use proconio::input;
 
-fn solve() {
-    input! {
+const MIN_VAL:i64 = -(1 << 60);
+
+struct Max;
+impl Monoid for Max {
+    type S = i64;
+
+    fn identity() -> Self::S {
+        MIN_VAL
     }
 
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-                *self = elm;
-                true
-            } else { false }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-                *self = elm;
-                true
-            } else { false }
+    fn binary_operation(a: &Self::S, b: &Self::S) -> Self::S {
+        *a.max(b)
     }
 }
-
 
 fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        w: usize,
+        n: usize,
+        item: [(usize, usize, i64); n],
     }
+
+    let mut dp :Segtree<Max> = Segtree::new(w+1);
+    dp.set(0, 0);
+    for (l, r, v) in item {
+        for j in (0..=w).rev() {
+            if j < l {
+                break;
+            }
+            let upper = j - l;
+            let lower = if j > r { j - r } else { 0 };
+
+            let nxt = dp.prod(lower..=upper);
+            if nxt == MIN_VAL {
+                continue;
+            }
+            dp.set(j, (nxt + v).max(dp.get(j))); 
+        }
+    }
+
+    let ans = dp.get(w);
+    println!("{}", if ans == MIN_VAL { -1 } else { ans });
 }
