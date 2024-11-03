@@ -1,51 +1,24 @@
 use proconio::input;
 
-fn solve() {
-    input! {
-    }
-
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-                *self = elm;
-                true
-            } else { false }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-                *self = elm;
-                true
-            } else { false }
-    }
-}
-
-
 fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! { 
+        n: usize,
+        k: usize,
     }
+    
+    let mut v = vec![0; n+1];
+
+    for i in 2..=n {
+        if v[i] != 0 {
+            // 素数ではないので無視
+            continue;
+        }
+        let mut j = i;
+        while j <= n {
+            v[j] += 1;
+            j += i;
+        }
+    }
+
+    println!("{}", v.iter().filter(|&x| *x >= k).count());
 }
