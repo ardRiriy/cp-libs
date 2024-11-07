@@ -24,7 +24,7 @@ impl<T> BIT<T> where T: Num + Clone + std::ops::Neg<Output = T> + NumCast + From
         while idx < self.n {
             self.bit[p][idx] = self.bit[p][idx].clone() + x.clone();
 
-            idx += (idx as isize & (idx as isize * -1)) as usize;
+            idx += (idx as isize & -(idx as isize)) as usize;
         }
     }
 
@@ -37,7 +37,7 @@ impl<T> BIT<T> where T: Num + Clone + std::ops::Neg<Output = T> + NumCast + From
         let mut idx = i;
         while idx > 0 {
             s = s + self.bit[p][idx].clone();
-            idx -= (idx as isize & (idx as isize * -1)) as usize;
+            idx -= (idx as isize & -(idx as isize)) as usize;
         }
         s
     }

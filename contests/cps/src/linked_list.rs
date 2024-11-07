@@ -41,6 +41,14 @@ pub struct LinkedList<T> {
     tail: usize,
 }
 
+impl<T> Default for LinkedList<T>
+where T: Copy
+ {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> LinkedList<T> 
 where T: Copy
 {
@@ -62,7 +70,7 @@ where T: Copy
             self.tail = len;
         }
         self.vec[idx].update_next(Some(len));
-        return len;
+        len
     }
 
     // idxの前に要素を差し込み後、生成されたNodeのindexを返却
@@ -77,7 +85,7 @@ where T: Copy
             self.head = len;
         }
         self.vec[idx].update_prev(Some(len));
-        return len;
+        len
     }
 
     // idx番のnodeを削除する(といいつつ、実際には消さないのでMLEには注意)
