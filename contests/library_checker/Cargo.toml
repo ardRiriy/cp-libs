@@ -3,9 +3,6 @@ name = "library_checker"
 version = "0.1.0"
 edition = "2021"
 
-[dev]
-opt-level = 3
-
 [dependencies]
 ac-library-rs = "=0.1.1"
 num = "=0.2.1"
@@ -35,5 +32,13 @@ name = "shortest-path"
 path = "src/graph/shortest_path.rs"
 
 [[bin]]
-name = "factorize"
-path = "src/number_theory/factorize.rs"
+name = "a-plus-b"
+path = "src/sample/a_plus_b.rs"
+
+[[bin]]
+name = "many-a-plus-b"
+path = "src/sample/many_a_plus_b.rs"
+
+[[bin]]
+name = "many-a-plus-b-128bit"
+path = "src/sample/many_a_plus_b_128bit.rs"
