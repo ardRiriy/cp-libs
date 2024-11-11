@@ -1,4 +1,4 @@
-use cps::graph::dijkstra;
+use cps::dijkstra::Dijkstra;
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
 fn main() {
@@ -14,9 +14,8 @@ fn main() {
             acc[*v].push((*u, *w));
             acc
         });
+    let d0 = Dijkstra::new(0, &g);
+    let d1 = Dijkstra::new(n-1, &g);
 
-    let dist_from_zero = dijkstra(0, &g);
-    let dist_from_n = dijkstra(n-1, &g);
-
-    println!("{}", (0..n).map(|idx| dist_from_zero[idx] + dist_from_n[idx]).join("\n"));
+    println!("{}", (0..n).map(|idx| d0.get(idx) + d1.get(idx)).join("\n"));
 }

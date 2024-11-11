@@ -3,9 +3,6 @@ name = "abc379"
 version = "0.1.0"
 edition = "2021"
 
-[dev]
-opt-level = 3
-
 [dependencies]
 ac-library-rs = "=0.1.1"
 num = "=0.2.1"
