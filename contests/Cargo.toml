@@ -1,4 +1,0 @@
-[workspace]
-
-members = ["./*"]
-exclude = ["abc228", "temporaries", ".cargo", "target"]
