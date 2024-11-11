@@ -5,6 +5,7 @@ pub mod cumulative_sum;
 pub mod prime;
 pub mod veclibs;
 pub mod graph;
+pub mod dijkstra;
 pub mod warshall_floyd;
 pub mod unionfind;
 pub mod binary_index_tree;

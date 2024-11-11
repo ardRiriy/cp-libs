@@ -1,8 +1,5 @@
-use std::io::{stdout, BufWriter};
-use std::io::Write;
-use cps::graph::warshall_floyd;
-use cps::consts::INF;
 use cps::chlibs::ChLibs;
+use cps::warshall_floyd::{DefaultWFelm, WarshallFloyd};
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
 
@@ -13,60 +10,42 @@ fn main() {
         edges: [(Usize1, Usize1, u64); m],
         q: usize,
     }
-    let out = stdout();
-    let mut out = BufWriter::new(out.lock());
-
-    let g = edges.iter()
-        .fold(
-        vec![vec![]; n],
-            |mut acc, &(u, v, k)| {
-                acc[u].push((v, k));
-                acc[v].push((u, k));
-                acc
-            }
-        );
-
-    let distances = warshall_floyd(&g);
-
+    
+    let inf = 1u64 << 62;
+    let g = edges.iter().fold(vec![vec![]; n], |mut g, &(u, v, t)| { g[u].push((v, t)); g[v].push((u, t)); g });
+    let wf = WarshallFloyd::new(&g, DefaultWFelm);
+    
     for _ in 0..q {
         input! {
             k: usize,
-            lists: [Usize1; k]
+            b: [Usize1; k],
         }
+        let mut ans = inf;
+        for v in b.iter().copied().permutations(k) {
+            let mut dp = vec![vec![inf; 2]; k];
+            dp[0][0] = edges[v[0]].2 + wf.get(0, edges[v[0]].1);
+            dp[0][1] = edges[v[0]].2 + wf.get(0, edges[v[0]].0);
 
-        let ans = lists.iter()
-            .map(|idx| edges[*idx].2)
-            .sum::<u64>();
-        let mut min = INF;
-        for lists in lists.iter().copied().permutations(k) {
-            let lists = [
-                vec![vec![0, 0]],
-                lists.iter()
-                    .map(|idx| vec![edges[*idx].0, edges[*idx].1])
-                    .collect_vec(),
-                vec![vec![n-1, n-1]]
-            ].concat();
-            let k = lists.len();
+            for j in 1..k {
+                let initial_cost = edges[v[j]].2;
+                // f.0 -> t.0 -> t.1
+                let val = dp[j-1][0] + initial_cost + wf.get(edges[v[j-1]].0, edges[v[j]].0);
+                dp[j][1].chmin(val);
+                
+                // f.0 -> t.1 -> t.0
+                let val = dp[j-1][0] + initial_cost + wf.get(edges[v[j-1]].0, edges[v[j]].1);
+                dp[j][0].chmin(val);
 
-            let mut dp = vec![vec![INF; 2]; k];
-            dp[0][0] = 0;
-
-            for i in 0..k-1 {
-                for j in 0..2 {
-                    if dp[i][j] == INF {
-                        continue;
-                    }
-                    let from = lists[i][1-j];
-                    for l in 0..2 {
-                        let to = lists[i+1][l];
-                        let dist = distances[from][to];
-                        let adder = dp[i][j];
-                        dp[i+1][l].chmin(dist + adder);
-                    }
-                }
+                // f.1 -> t.0 -> t.1
+                let val = dp[j-1][1] + initial_cost + wf.get(edges[v[j-1]].1, edges[v[j]].0);
+                dp[j][1].chmin(val);
+                
+                // f.0 -> t.1 -> t.0
+                let val = dp[j-1][1] + initial_cost + wf.get(edges[v[j-1]].1, edges[v[j]].1);
+                dp[j][0].chmin(val);
             }
-            min.chmin(dp[k-1][0].min(dp[k-1][1]));
+            ans.chmin((dp[k-1][0] + wf.get(edges[v[k-1]].0, n-1)).min(dp[k-1][1] + wf.get(edges[v[k-1]].1, n-1))); 
         }
-        writeln!(out, "{}", ans + min).unwrap();
+        println!("{ans}");
     }
 }

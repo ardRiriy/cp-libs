@@ -18,14 +18,6 @@ name = "abc258-a"
 path = "src/bin/a.rs"
 
 [[bin]]
-name = "abc258-b"
-path = "src/bin/b.rs"
-
-[[bin]]
-name = "abc258-c"
-path = "src/bin/c.rs"
-
-[[bin]]
 name = "abc258-d"
 path = "src/bin/d.rs"
 
@@ -86,6 +78,6 @@ text_io = "=0.1.8"
 whiteread = "=0.5.0"
 rustc-hash = "=1.1.0"
 smallvec = "=1.2.0"
-cps = { path="../../cp-libraries" }
+cps = { path="../../cps" }
 
 [dev-dependencies]

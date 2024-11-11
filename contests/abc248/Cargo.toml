@@ -1,5 +1,5 @@
 [package]
-name = "rename_me"
+name = "abc248"
 version = "0.1.0"
 edition = "2021"
 
@@ -24,15 +24,11 @@ superslice = "=1.0.0"
 itertools = "=0.9.0"
 itertools-num = "=0.1.3"
 proconio = { version = "=0.3.6", features = ["derive"] }
-cps = { path="../../cp-libraries" }
+cps = { path="../../cps" }
 
 [[bin]]
 name = "a"
 path = "src/bin/a.rs"
-
-[[bin]]
-name = "b"
-path = "src/bin/b.rs"
 
 [[bin]]
 name = "c"

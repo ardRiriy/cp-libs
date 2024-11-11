@@ -1,11 +1,13 @@
+use cps::dijkstra::Dijkstra;
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
-use cps::graph::dijkstra;
+
 fn main() {
     input!{
         n: usize,
         edges: [(Usize1, Usize1, u64); n-1],
     }
+
 
     let g = edges.iter()
         .fold(vec![vec![]; n], |mut acc, (u, v, w)| {
@@ -14,13 +16,14 @@ fn main() {
         acc
     });
 
-    let dist0 = dijkstra(0, &g);
-    let idx = dist0.iter()
+    let d0 = Dijkstra::new(0, &g);
+    let idx = (0..n).map(|i| d0.get(i))
         .position_max()
         .unwrap();
 
-    let dist1 = dijkstra(idx, &g);
-    let max = *dist1.iter()
+    let d1 = Dijkstra::new(idx, &g);
+    let max = (0..n)
+        .map(|i| d1.get(i))
         .max()
         .unwrap();
 
