@@ -2,7 +2,7 @@ import os
 import re
 import sys
 
-def process_rust_file(source_file_name, cps_dir='../cps/src/'):
+def process_rust_file(source_file_name, cps_dir='../../cps/src/'):
     # カレントディレクトリからの相対パスでファイルパスを構築
     current_dir = os.getcwd()
     source_file_path = os.path.join(current_dir, 'src/bin', f'{source_file_name}.rs')
