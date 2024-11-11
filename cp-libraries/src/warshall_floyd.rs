@@ -28,6 +28,7 @@ where T: Copy + num::PrimInt {
     }
 }
 
+#[allow(dead_code)]
 pub struct WarshallFloyd<T, O>
 where
     T: Copy,
@@ -66,6 +67,11 @@ where
     
     pub fn get(&self, from: usize, to: usize) -> T {
         self.dist[from][to]
+    }
+    
+    #[allow(dead_code)]
+    fn add(&mut self) {
+        todo!();
     }
 }
 
