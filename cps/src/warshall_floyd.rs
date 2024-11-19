@@ -16,11 +16,15 @@ where T: Copy + num::PrimInt {
     }
 
     fn add(&self, a: T, b: T) -> T {
-        a + b
+        if a == self.infinity() || b == self.infinity() {
+            self.infinity()
+        } else {
+            a + b
+        }
     }
 
     fn infinity(&self) -> T {
-        T::max_value() >> 2
+        T::max_value()
     }
 
     fn identity(&self) -> T {
@@ -28,7 +32,6 @@ where T: Copy + num::PrimInt {
     }
 }
 
-#[allow(dead_code)]
 pub struct WarshallFloyd<T, O>
 where
     T: Copy,
