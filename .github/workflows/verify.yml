@@ -3,7 +3,7 @@ name: verify
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
 
 jobs:
@@ -20,18 +20,30 @@ jobs:
       run: pip3 install -U online-judge-verify-helper
 
     - name: Set up Rust (1.70.0)
-      run: |
-        rustup set profile minimal
-        rustup install 1.70.0
-        rustup override set nightly
+      uses: dtolnay/rust-toolchain@v1
+
+    - name: Cache Cargo registry
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/bin
+        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-registry-
+
+    - name: Cache Cargo build
+      uses: actions/cache@v3
+      with:
+        path: target
+        key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-build-
 
     - name: Run tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
-      working-directory: libary-verify-problems
-      steps:
-        - uses: dtolnay/rust-toolchain@stable
-        - uses: Swatinem/rust-cache@v2
-        - run: oj-verify run
+      working-directory: library-verify-problems
+      run: oj-verify run
