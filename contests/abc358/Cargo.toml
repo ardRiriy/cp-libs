@@ -3,41 +3,32 @@ name = "abc358"
 version = "0.1.0"
 edition = "2018"
 
-[package.metadata.cargo-compete.bin]
-abc358-a = { alias = "a", problem = "https://atcoder.jp/contests/abc358/tasks/abc358_a" }
-abc358-b = { alias = "b", problem = "https://atcoder.jp/contests/abc358/tasks/abc358_b" }
-abc358-c = { alias = "c", problem = "https://atcoder.jp/contests/abc358/tasks/abc358_c" }
-abc358-d = { alias = "d", problem = "https://atcoder.jp/contests/abc358/tasks/abc358_d" }
-abc358-e = { alias = "e", problem = "https://atcoder.jp/contests/abc358/tasks/abc358_e" }
-abc358-f = { alias = "f", problem = "https://atcoder.jp/contests/abc358/tasks/abc358_f" }
-abc358-g = { alias = "g", problem = "https://atcoder.jp/contests/abc358/tasks/abc358_g" }
-
 [[bin]]
-name = "abc358-a"
+name = "a"
 path = "src/bin/a.rs"
 
 [[bin]]
-name = "abc358-b"
+name = "b"
 path = "src/bin/b.rs"
 
 [[bin]]
-name = "abc358-c"
+name = "c"
 path = "src/bin/c.rs"
 
 [[bin]]
-name = "abc358-d"
+name = "d"
 path = "src/bin/d.rs"
 
 [[bin]]
-name = "abc358-e"
+name = "e"
 path = "src/bin/e.rs"
 
 [[bin]]
-name = "abc358-f"
+name = "f"
 path = "src/bin/f.rs"
 
 [[bin]]
-name = "abc358-g"
+name = "g"
 path = "src/bin/g.rs"
 
 [dependencies]
