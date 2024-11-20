@@ -3,7 +3,7 @@ name: verify
 on:
   push:
     branches:
-      - main
+    - main
   pull_request:
 
 jobs:
@@ -24,24 +24,6 @@ jobs:
         rustup set profile minimal
         rustup install 1.70.0
         rustup override set nightly
-
-    - name: Cache Cargo registry
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cargo/registry
-          ~/.cargo/bin
-        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-cargo-registry-
-
-    - name: Cache Cargo build
-      uses: actions/cache@v3
-      with:
-        path: target
-        key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-cargo-build-
 
     - name: Run tests
       env:
