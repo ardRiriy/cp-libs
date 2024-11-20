@@ -3,41 +3,32 @@ name = "abc356"
 version = "0.1.0"
 edition = "2018"
 
-[package.metadata.cargo-compete.bin]
-abc356-a = { alias = "a", problem = "https://atcoder.jp/contests/abc356/tasks/abc356_a" }
-abc356-b = { alias = "b", problem = "https://atcoder.jp/contests/abc356/tasks/abc356_b" }
-abc356-c = { alias = "c", problem = "https://atcoder.jp/contests/abc356/tasks/abc356_c" }
-abc356-d = { alias = "d", problem = "https://atcoder.jp/contests/abc356/tasks/abc356_d" }
-abc356-e = { alias = "e", problem = "https://atcoder.jp/contests/abc356/tasks/abc356_e" }
-abc356-f = { alias = "f", problem = "https://atcoder.jp/contests/abc356/tasks/abc356_f" }
-abc356-g = { alias = "g", problem = "https://atcoder.jp/contests/abc356/tasks/abc356_g" }
-
 [[bin]]
-name = "abc356-a"
+name = "a"
 path = "src/bin/a.rs"
 
 [[bin]]
-name = "abc356-b"
+name = "b"
 path = "src/bin/b.rs"
 
 [[bin]]
-name = "abc356-c"
+name = "c"
 path = "src/bin/c.rs"
 
 [[bin]]
-name = "abc356-d"
+name = "d"
 path = "src/bin/d.rs"
 
 [[bin]]
-name = "abc356-e"
+name = "e"
 path = "src/bin/e.rs"
 
 [[bin]]
-name = "abc356-f"
+name = "f"
 path = "src/bin/f.rs"
 
 [[bin]]
-name = "abc356-g"
+name = "g"
 path = "src/bin/g.rs"
 
 [dependencies]
@@ -81,5 +72,6 @@ text_io = "=0.1.8"
 whiteread = "=0.5.0"
 rustc-hash = "=1.1.0"
 smallvec = "=1.2.0"
+cps = { path="../../cps" }
 
 [dev-dependencies]

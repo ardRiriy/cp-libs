@@ -1,86 +1,41 @@
-use ac_library::Dsu;
-use itertools::Itertools;
+use ac_library::FenwickTree;
 use proconio::input;
 
-fn solve() {
+fn main() {
     input! {
         n: usize,
-        a: [u64; n]
+        mut a: [usize; n]
     }
 
-    let mut dsu = Dsu::new(n);
-    let mut seen = vec![INF as usize; 1e6 as usize + 1];
+    let m = 1e6 as usize + 3;
+    a.sort_unstable();
 
-    let sorted_a :Vec<u64> = a.iter().sorted().copied().collect_vec();
-
-
-    for (idx, &x) in sorted_a.iter().enumerate(){
-        if seen[x as usize] != INF as usize{
-            dsu.merge(idx, seen[x as usize]);
-        }
-
-        let mut k = x as usize;
-        while k < 1e6 as usize + 1 {
-            seen[k] = idx;
-            k += x as usize;
-        }
+    let mut ft :FenwickTree<i64> = FenwickTree::new(m, 0);
+    for &xi in a.iter() {
+        ft.add(xi, 1);
     }
 
+    let mut memo = vec![None; m];
     let mut ans = 0;
-    let mut sum = sorted_a.iter().sum::<u64>();
-    let mut cnt = vec![0; n];
+    for &ai in a.iter() {
+        ft.add(ai, -1);
+        if let Some(val) = memo[ai] {
+            memo[ai] = Some(val - 1);
+            ans += val - 1;
+            continue;
+        }
 
-    for (idx, &x) in sorted_a.iter().enumerate() {
-        sum -= x;
-        ans += sum / x;
-        cnt[dsu.leader(idx)] += 1;
-        ans -= (n + cnt[dsu.leader(idx)] - dsu.size(idx) - idx - 1) as u64;
+        let mut k = 1;
+        let mut s = 0;
+        while ai * k < m {
+            let val = ft.sum(ai*k..(ai*(k+1)).min(m));
+            s += val * k as i64;
+            k += 1;
+        }
+        ans += s;
+        memo[ai] = Some(s);
     }
-
+    
     println!("{ans}");
 
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-                *self = elm;
-                true
-            } else { false }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-                *self = elm;
-                true
-            } else { false }
-    }
-}
-
-
-fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
-    }
 }
