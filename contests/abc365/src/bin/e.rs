@@ -1,5 +1,7 @@
-use proconio::{input};
-fn solve() {
+use proconio::input;
+static INF: u64 = 1 << 60;
+
+fn main() {
     input!{
         n: usize,
         a: [u64; n]
@@ -7,7 +9,7 @@ fn solve() {
 
     let mut k = 1u64;
     let mut ans = 0u64;
-    for i in 0..60{
+    for i in 0..60 {
         let mut dp = vec![vec![INF; 2]; n+1];
         let mut sum = 0;
 
@@ -30,72 +32,3 @@ fn solve() {
     }
     println!("{}", ans);
 }
-
-/*
-鹿のardririy, arDeeriy
-　　　　　　　　　　　　 　 　 　 　 　 　 ／
-　　　　　　　　　　　　　　　　　 　 　 //
-　　　　　　　　　 　 　 　 　 　 　 　 //　 　 　 　 |:
-　　　　　　　　　　　　　　　　　 　 // 　 　 　 　 .|i
-　　　　　　　　　 　 　 　 　 　 　 //　 　 　 　 　 ||
-　　　　　　　　　　　　　　　　　　l i　　　　　　 　 ||
-　　　　　.　´￣￣｀ｰ　、　　　　 | l　 　 　 　 　 ∥
-　　　 ／　 . 　 　 　_＞─- ､ 　 l |　　　　　　 .∥
-　　　i　 〆　 　 ／　 　 　 　 ＼.i | 　 　 　 　 ∥
-　　　| /　 　 ／ 　 　 　 　 　 　 l |　ﾊ　　　　.′
-　 　 ; :　 　 .′　　　　　　　　　 ヾゝi !　　　/.′
-　　 《　　　 :　　　 　 　 r─-､　　 i ﾘ:l　　 //　　　　 　 　 、
-　 　 |　　　　 　 　 　 　 ｀ヾ.　＼ r‐’:ﾚ=‐' .ゝ...ノ＿＿＼＿))
-　　 弋　 　 　 　 　 　 　 　 ∨ソ`ー''`ー---一　‐─‐-､)¨´
-　　 　 } 、　　　　　　　　　　 i_..ノ _,　　　　ハ'
-　　 　 ∨＞､　iゝ.. 　 　 　 　 　 弋);;,ゞ..ノ　.′
-　　　　 ∨::::| 7!:::..ヾ.　　　　.′ヽ.　` 　 　 /
-　　　　　∨::|.′::::::ixxr, 　 /　　　:　　　　 I.
-　 　 　 　 }:::|..:ｉ..::::::|　i,,　　"'' ´ヾ.i 　 　 　 ﾊ
-　　　　 　 ::::|:::|::::::/　 }ヾ.　　　　ﾐゝ.　 ,、..:::::)
-　　　　 　 i:::|ヾ:::::i　 /.::::|｀ヾ..,,　..ノ＼ヾ..＿/
-　 　 　 　 |:::l　}:. {　 |::::..′　　　　　　 `ー''
-　 　 　 　 |:::| /.:/l　 !.:::l
-　　　　　 ﾉ..:ﾚ.:::ｉ::l　ﾉ..::|
-　　　 　 (人7.::::|:::V.::::::|
-　　　　　`''/ .:::::!ｰ:::::::::ﾊ
-　　　　　 /..::::::::| (_/＼__)
-　　　 　 (__/(,＿)
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
-
-fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
-    }
-}
-
