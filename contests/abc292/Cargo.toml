@@ -1,5 +1,5 @@
 [package]
-name = "abc379"
+name = "abc292"
 version = "0.1.0"
 edition = "2021"
 
@@ -22,6 +22,14 @@ itertools = "=0.13.0"
 itertools-num = "=0.1.3"
 proconio = { version = "=0.3.6", features = ["derive"] }
 cps = { path="../../cps" }
+
+[[bin]]
+name = "a"
+path = "src/bin/a.rs"
+
+[[bin]]
+name = "b"
+path = "src/bin/b.rs"
 
 [[bin]]
 name = "c"

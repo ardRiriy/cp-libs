@@ -5,7 +5,7 @@ acsub() {
     rm -rf test
     oj d $3
     if [ $1 = "rs" ]; then
-        oj t -c "cargo run --bin $2" || return 1
+        oj t -c "cargo run --features local --bin $2" || return 1
         python3 ../../util/file_merger.py $2
         oj s $3 src/bin/$2.rs -y
         python3 ../../util/after_submission.py $2

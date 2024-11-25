@@ -27,6 +27,8 @@ def process_rust_file(source_file_name, cps_dir='../../cps/src/'):
     # 各行を確認して、必要な変更を行う
     for line in lines:
         if line.startswith('use cps::'):
+            if line == 'use cps::dbg;':
+                continue
             # モジュール名と関数名を抽出
             match = re.match(r'use cps::(\w+)::.*;', line)
             if match:
@@ -38,8 +40,9 @@ def process_rust_file(source_file_name, cps_dir='../../cps/src/'):
                         modules_to_append.append(mod_file.read())
                 # 元の行は追加しない
                 continue
-        # 通常の行はそのまま追加
-        new_lines.append(line)
+        else:
+            # 通常の行はそのまま追加
+            new_lines.append(line)
 
     # モジュールの内容をファイルの末尾に追加
     new_lines.extend(modules_to_append)

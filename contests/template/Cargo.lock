@@ -202,6 +202,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itertools-num"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -566,7 +575,7 @@ version = "0.1.0"
 dependencies = [
  "ac-library-rs",
  "cps",
- "itertools 0.9.0",
+ "itertools 0.13.0",
  "itertools-num",
  "lazy_static",
  "libm",

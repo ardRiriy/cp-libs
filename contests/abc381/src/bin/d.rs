@@ -1,4 +1,8 @@
 use cps::chlibs::ChLibs;
+#[allow(unused_imports)]
+use cps::debug::*;
+#[allow(unused_imports)]
+use cps::dbg;
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
 fn main() {
