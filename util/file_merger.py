@@ -27,7 +27,8 @@ def process_rust_file(source_file_name, cps_dir='../../cps/src/'):
     # 各行を確認して、必要な変更を行う
     for line in lines:
         if line.startswith('use cps::'):
-            if line == 'use cps::dbg;':
+            if line == 'use cps::lg;':
+                # lgマクロはdebugに内包されているのでcontinueしておく
                 continue
             # モジュール名と関数名を抽出
             match = re.match(r'use cps::(\w+)::.*;', line)

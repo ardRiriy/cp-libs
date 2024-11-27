@@ -27,15 +27,45 @@ impl<T: std::fmt::Debug + std::fmt::Display> Debuggable for Vec<T> {
     }
 }
 
-#[macro_export]
-macro_rules! dbg {
-    ($val:expr) => {
-        #[cfg(feature="local")]
-        {
-            use Debuggable;
-            let val = &$val;
-            eprintln!("{}", val.debug_string());
-            val
-        }
-    };
+impl<T: std::fmt::Debug + std::fmt::Display> Debuggable for std::collections::BTreeSet<T> {
+    fn debug_string(&self) -> String {
+        use itertools::Itertools;
+        format!("{{ {} }}", self.iter().join(", "))
+    }
 }
+
+impl<T, U> Debuggable for std::collections::BTreeMap<T, U> 
+where T: std::fmt::Debug + std::fmt::Display, U: std::fmt::Debug + std::fmt::Display
+{
+    fn debug_string(&self) -> String {
+        use itertools::Itertools;
+        format!(
+            "{{\n{}\n }}", self.iter()
+                .map(|(k, v)| format!("{k} -> {v}, "))
+                .join("\n")
+        )
+    }
+}
+
+// lg! マクロの定義
+#[macro_export]
+macro_rules! lg {
+    ($val:expr) => {
+        #[cfg(feature = "local")]
+        {
+            {
+                use Debuggable;
+                let val = &$val;
+                eprintln!(
+                    "[{}:{}] {} = {}",
+                    file!(),
+                    line!(),
+                    stringify!($val),
+                    val.debug_string()
+                );
+                val
+            }
+        }
+    }
+}
+    
