@@ -13,3 +13,4 @@ pub mod mink_sum;
 pub mod modpow;
 pub mod linked_list;
 pub mod debug;
+pub mod multiset;
