@@ -57,7 +57,7 @@ macro_rules! lg {
                 use Debuggable;
                 let val = &$val;
                 eprintln!(
-                    "[{}:{}] {} = {}",
+                    "[{}:{}] {} = \n{}",
                     file!(),
                     line!(),
                     stringify!($val),

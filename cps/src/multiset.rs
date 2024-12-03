@@ -40,7 +40,7 @@ where T: Ord + Copy, U: num::PrimInt + std::ops::AddAssign
         }
     }
 
-    pub fn size(&self) -> usize {
+    pub fn len(&self) -> usize {
         self.map.len()
     }
 }
