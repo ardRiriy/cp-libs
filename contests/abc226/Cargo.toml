@@ -3,47 +3,40 @@ name = "abc226"
 version = "0.1.0"
 edition = "2018"
 
-[package.metadata.cargo-compete.bin]
-abc226-a = { alias = "a", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_a" }
-abc226-b = { alias = "b", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_b" }
-abc226-c = { alias = "c", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_c" }
-abc226-d = { alias = "d", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_d" }
-abc226-e = { alias = "e", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_e" }
-abc226-f = { alias = "f", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_f" }
-abc226-g = { alias = "g", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_g" }
-abc226-h = { alias = "h", problem = "https://atcoder.jp/contests/abc226/tasks/abc226_h" }
+[features]
+local = []
 
 [[bin]]
-name = "abc226-a"
+name = "a"
 path = "src/bin/a.rs"
 
 [[bin]]
-name = "abc226-b"
+name = "b"
 path = "src/bin/b.rs"
 
 [[bin]]
-name = "abc226-c"
+name = "c"
 path = "src/bin/c.rs"
 
 [[bin]]
-name = "abc226-d"
+name = "d"
 path = "src/bin/d.rs"
 
 [[bin]]
-name = "abc226-e"
+name = "e"
 path = "src/bin/e.rs"
 
 [[bin]]
-name = "abc226-f"
+name = "f"
 path = "src/bin/f.rs"
 
 [[bin]]
-name = "abc226-g"
+name = "g"
 path = "src/bin/g.rs"
 
 [[bin]]
-name = "abc226-h"
-path = "src/bin/h.rs"
+name = "ex"
+path = "src/bin/ex.rs"
 
 [dependencies]
 ac-library-rs = "=0.1.1"
