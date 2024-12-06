@@ -17,7 +17,6 @@ fn main() {
     for i in 0..m {
         map.insert(d[i].clone(),p[i+1]);
     }
-
     let ans :u64 = c.iter()
         .map(|s| 
             if let Some(v) = map.get(s) {
