@@ -4,4 +4,6 @@ members = [
     "library_checker",
     "aoj",
 ]
-exclude = [ ".verify-helper" ]
+exclude = [ 
+  ".verify-helper",
+]
