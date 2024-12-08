@@ -32,4 +32,4 @@ jobs:
         GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         cd ./library-verify-problems
-        oj-verify all
+        oj-verify run
