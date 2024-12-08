@@ -1,0 +1,7 @@
+[workspace]
+resolver = "2"
+members = [
+    "library_checker",
+    "aoj",
+]
+exclude = [ ".verify-helper" ]
