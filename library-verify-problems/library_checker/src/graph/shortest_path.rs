@@ -12,7 +12,7 @@ fn main() {
         e: [(usize, usize, u64); m],
     }
     
-    let g=  e.iter().fold(vec![vec![]; n], |mut g, &(u, v, w)| { g[u].push((v, w)); g });
+    let g = e.iter().fold(vec![vec![]; n], |mut g, &(u, v, w)| { g[u].push((v, w)); g });
     
     let dijkstra = Dijkstra::new(s, &g);
     match dijkstra.path(t) {
