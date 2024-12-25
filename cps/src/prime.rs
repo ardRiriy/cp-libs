@@ -52,7 +52,7 @@ pub fn divisors(n: u64) -> Vec<u64> {
     while i * i <= n {
         if n % i == 0 {
             res.push(i);
-            if i != n / i && i != 1{
+            if i != n / i {
                 res.push(n / i);
             }
         }
