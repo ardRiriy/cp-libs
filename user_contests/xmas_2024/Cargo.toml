@@ -1,0 +1,16 @@
+[package]
+name = "xmas_2024"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "b"
+path = "src/b.rs"
+
+[[bin]]
+name = "d"
+path = "src/d.rs"
+
+[dependencies]
+proconio = "*"
+itertools = "*"
