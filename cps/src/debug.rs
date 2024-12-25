@@ -7,7 +7,8 @@ impl<T: std::fmt::Debug + std::fmt::Display> Debuggable for Vec<T> {
         use itertools::Itertools;
         use std::iter::repeat;
         if let Some(max_size) = self.iter()
-            .map(|x| format!("{:?}", x).len())
+            .enumerate()
+            .map(|(i, x)| (format!("{:?}", x).len()).max(format!("{:?}", i).len()))
             .max() {
                 let mut idx = String::from("idx |");   
                 let mut val = String::from("val |");   
