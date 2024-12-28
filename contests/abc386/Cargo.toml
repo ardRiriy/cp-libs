@@ -27,14 +27,6 @@ proconio = { version = "=0.3.6", features = ["derive"] }
 cps = { path="../../cps" }
 
 [[bin]]
-name = "a"
-path = "src/bin/a.rs"
-
-[[bin]]
-name = "b"
-path = "src/bin/b.rs"
-
-[[bin]]
 name = "c"
 path = "src/bin/c.rs"
 
