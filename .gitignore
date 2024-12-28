@@ -28,3 +28,8 @@
 **/*.js
 **/package-lock.json
 **/node_modules/
+
+in.txt
+out.txt
+dbg.txt
+a.out
