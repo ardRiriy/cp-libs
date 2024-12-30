@@ -1,7 +1,4 @@
-use std::cmp::Reverse;
-
-use ac_library::FenwickTree;
-use itertools::Itertools;
+use cps::veclibs::VecLibs;
 use proconio::input;
 
 fn main() {
@@ -10,16 +7,16 @@ fn main() {
         a: [u64; n],
     }
 
-    let mut bit = FenwickTree::new(n, 0u64);
-    let mut ans = 0;
-    
-    for (idx, &x) in a.iter().enumerate().sorted_by_key(|x| (x.1, Reverse(x.0))) {
-        let val = bit.sum(0..idx);
-        if val == 0 {
-            ans += 1;
-        }
-        bit.add(idx, 1);
-    }
-    println!("{}", ans);
-}
+    let mut v = vec![];
 
+    for &ai in a.iter().rev() {
+        if v.is_empty() || *v.last().unwrap() <= ai {
+            v.push(ai);
+            continue;
+        }
+
+        let i = v.lower_bound(ai+1);
+        v[i] = ai;
+    }
+    println!("{}", v.len());
+}
