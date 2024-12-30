@@ -33,3 +33,5 @@ in.txt
 out.txt
 dbg.txt
 a.out
+
+*.vscode
