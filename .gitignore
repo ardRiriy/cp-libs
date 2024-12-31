@@ -35,3 +35,5 @@ dbg.txt
 a.out
 
 *.vscode
+
+.venv

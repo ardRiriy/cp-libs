@@ -1,0 +1,10 @@
+[project]
+name = "cp-libs"
+version = "0.1.0"
+description = "競技プログラミング用(python)"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "online-judge-tools>=11.5.1",
+    "setuptools>=75.6.0",
+]
