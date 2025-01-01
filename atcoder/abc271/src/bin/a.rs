@@ -1,53 +1,22 @@
-use proconio::{input};
-fn solve() {
-    input!{
-        
-    }
-}
+use std::convert::TryInto;
 
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
+use proconio::input;
 
 fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: i32,
     }
+    let a = n/16;
+    let b = n%16;
+    let ac :char = if a < 10 {
+        (b'0' + TryInto::<u8>::try_into(a).unwrap()) as char
+    } else {
+        (b'A' + TryInto::<u8>::try_into(a-10).unwrap()) as char
+    };
+    let bc :char = if b < 10 {
+        (b'0' + TryInto::<u8>::try_into(b).unwrap()) as char
+    } else {
+        (b'A' + TryInto::<u8>::try_into(b-10).unwrap()) as char
+    };
+    println!("{}{}", ac, bc);
 }
-
