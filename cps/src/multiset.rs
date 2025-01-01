@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct MultiSet<T, U> {
     map: std::collections::BTreeMap<T, U>,
 }
@@ -30,6 +31,10 @@ where T: Ord + Copy, U: num::PrimInt + std::ops::AddAssign
         } else {
             None
         }
+    }
+
+    pub fn max_key(&mut self) -> Option<(&T, &U)> {
+        self.map.last_key_value()
     }
 
     pub fn get(&self, key: T) -> Option<U> {
