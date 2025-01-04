@@ -8,7 +8,7 @@ fn main() {
     // これは出力用
     let mut k = 1u64;
     let mut ans = vec![];
-    for i in 0..3 {
+    for _ in 0..3 {
         for j in 0..=100 {
             if k * j != 0 {
                 ans.push(k * j);
