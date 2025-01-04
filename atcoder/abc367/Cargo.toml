@@ -3,42 +3,8 @@ name = "abc367"
 version = "0.1.0"
 edition = "2018"
 
-[package.metadata.cargo-compete.bin]
-abc367-a = { alias = "a", problem = "https://atcoder.jp/contests/abc367/tasks/abc367_a" }
-abc367-b = { alias = "b", problem = "https://atcoder.jp/contests/abc367/tasks/abc367_b" }
-abc367-c = { alias = "c", problem = "https://atcoder.jp/contests/abc367/tasks/abc367_c" }
-abc367-d = { alias = "d", problem = "https://atcoder.jp/contests/abc367/tasks/abc367_d" }
-abc367-e = { alias = "e", problem = "https://atcoder.jp/contests/abc367/tasks/abc367_e" }
-abc367-f = { alias = "f", problem = "https://atcoder.jp/contests/abc367/tasks/abc367_f" }
-abc367-g = { alias = "g", problem = "https://atcoder.jp/contests/abc367/tasks/abc367_g" }
-
-[[bin]]
-name = "abc367-a"
-path = "src/bin/a.rs"
-
-[[bin]]
-name = "abc367-b"
-path = "src/bin/b.rs"
-
-[[bin]]
-name = "abc367-c"
-path = "src/bin/c.rs"
-
-[[bin]]
-name = "abc367-d"
-path = "src/bin/d.rs"
-
-[[bin]]
-name = "abc367-e"
-path = "src/bin/e.rs"
-
-[[bin]]
-name = "abc367-f"
-path = "src/bin/f.rs"
-
-[[bin]]
-name = "abc367-g"
-path = "src/bin/g.rs"
+[features]
+local = []
 
 [dependencies]
 ac-library-rs = "=0.1.1"
