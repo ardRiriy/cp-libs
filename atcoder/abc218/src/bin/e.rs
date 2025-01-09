@@ -1,53 +1,21 @@
-use proconio::{input};
-fn solve() {
-    input!{
-        
-    }
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
-
+use ac_library::Dsu;
+use itertools::Itertools;
+use proconio::{input, marker::Usize1};
 fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input!{
+        n: usize,
+        m: usize,
+        e: [(Usize1, Usize1, i64); m]        
     }
-}
 
+    let mut uf = Dsu::new(n);
+    let mut ans = 0;
+    for &(u, v, w) in e.iter().sorted_by_key(|&(_, _, w)| *w) {
+        if w <= 0 || !uf.same(u, v) {
+            uf.merge(u, v);
+        } else {
+            ans += w;
+        }
+    }
+    println!("{}", ans);
+}
