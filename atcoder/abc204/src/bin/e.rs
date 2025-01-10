@@ -1,6 +1,5 @@
 use std::{cmp::Reverse, collections::BinaryHeap};
 
-use cps::chlibs::ChLibs;
 use cps::consts::INF;
 #[allow(unused_imports)]
 use cps::debug::*;
@@ -37,23 +36,12 @@ fn main() {
                 continue;
             }
 
-            let mut l = t;
-            let mut r = INF/10; 
+            // f(t) = t + C + floor(D/(t+1)) を最小にするtは、round(√D)-1 となる
+            
+            let t_fmin = (d as f64).sqrt().round() as u64;
+            let t = if t + 1 <= t_fmin { t_fmin - 1 } else { t }; 
+            let min_t = t + c + d/(t+1);
 
-            while r - l > 2 {
-                let m1 = l + (r - l) / 3;
-                let m2 = r - (r - l) / 3;
-
-                if d / (t + 1 + m1) + m1 > d / (t + 1 + m2) + m2 {
-                    l = m1;
-                } else {
-                    r = m2;
-                }
-            }
-            let mut min_t = INF;
-            for i in l..=r {
-                min_t.chmin(t+c+d/(t+1+i)+i);
-            }
             pq.push(Reverse((min_t, ni)));
         }
     }
