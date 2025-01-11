@@ -3,47 +3,8 @@ name = "abc253"
 version = "0.1.0"
 edition = "2018"
 
-[package.metadata.cargo-compete.bin]
-abc253-a = { alias = "a", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_a" }
-abc253-b = { alias = "b", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_b" }
-abc253-c = { alias = "c", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_c" }
-abc253-d = { alias = "d", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_d" }
-abc253-e = { alias = "e", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_e" }
-abc253-ex = { alias = "ex", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_h" }
-abc253-f = { alias = "f", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_f" }
-abc253-g = { alias = "g", problem = "https://atcoder.jp/contests/abc253/tasks/abc253_g" }
-
-[[bin]]
-name = "abc253-a"
-path = "src/bin/a.rs"
-
-[[bin]]
-name = "abc253-b"
-path = "src/bin/b.rs"
-
-[[bin]]
-name = "abc253-c"
-path = "src/bin/c.rs"
-
-[[bin]]
-name = "abc253-d"
-path = "src/bin/d.rs"
-
-[[bin]]
-name = "abc253-e"
-path = "src/bin/e.rs"
-
-[[bin]]
-name = "abc253-ex"
-path = "src/bin/ex.rs"
-
-[[bin]]
-name = "abc253-f"
-path = "src/bin/f.rs"
-
-[[bin]]
-name = "abc253-g"
-path = "src/bin/g.rs"
+[features]
+local = []
 
 [dependencies]
 ac-library-rs = "=0.1.1"
