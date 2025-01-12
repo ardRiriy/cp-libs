@@ -59,7 +59,6 @@ fn solve() {
 */
 
 static INF: u64 = 1e18 as u64;
-
 trait ChLibs<T: std::cmp::Ord> {
     fn chmin(&mut self, elm: T) -> bool;
     fn chmax(&mut self, elm: T) -> bool;
@@ -93,4 +92,5 @@ fn main() {
         i -= 1;
     }
 }
+
 

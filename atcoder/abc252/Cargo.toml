@@ -3,6 +3,9 @@ name = "abc252"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+local = []
+
 [dependencies]
 ac-library-rs = "=0.1.1"
 num = "=0.2.1"
@@ -24,27 +27,3 @@ proconio = { version = "=0.3.6", features = ["derive"] }
 cps = { path="../../cps" }
 
 [dev-dependencies]
-
-[[bin]]
-name = "abc252-b"
-path = "src/bin/b.rs"
-
-[[bin]]
-name = "abc252-d"
-path = "src/bin/d.rs"
-
-[[bin]]
-name = "abc252-e"
-path = "src/bin/e.rs"
-
-[[bin]]
-name = "abc252-f"
-path = "src/bin/f.rs"
-
-[[bin]]
-name = "abc252-g"
-path = "src/bin/g.rs"
-
-[[bin]]
-name = "abc252-ex"
-path = "src/bin/ex.rs"
