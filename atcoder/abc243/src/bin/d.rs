@@ -2,7 +2,7 @@ use proconio::{input, marker::Chars};
 
 fn main() {
     input! {
-        n: usize,
+        _n: usize,
         x: usize,
         s: Chars,
     }
