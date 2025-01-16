@@ -75,7 +75,7 @@ where
     pub fn add(&mut self, x: usize, y: usize, w: T) {
         self.dist[x][y] = self.op.min(self.dist[x][y], w);
         self.dist[y][x] = self.op.min(self.dist[y][x], w);
-        for k in vec![x, y] {
+        for &k in &[x, y] {
             for i in 0..self.dist.len() {
                 for j in 0..self.dist.len() {
                     self.dist[i][j] = self.op.min(self.dist[i][j], self.op.add(self.dist[i][k], self.dist[k][j]));
