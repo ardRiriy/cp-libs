@@ -1,53 +1,29 @@
-use proconio::{input};
-fn solve() {
-    input!{
-        
-    }
-}
+use std::collections::VecDeque;
 
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
+use proconio::{input, marker::Usize1};
 
 fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        q: usize,
+        e: [(Usize1, usize); q],
     }
+    let g = e.iter().fold(vec![vec![]; n+1], |mut g, &(u, v)| {
+            g[u].push(v);
+            g[v].push(u);
+            g
+        });
+    let mut seen = vec![false; n+1];
+    let mut que = VecDeque::new();
+    que.push_back(0);
+    seen[0]=true;
+    while let Some(p) = que.pop_front() {
+        for &ni in g[p].iter() {
+            if !seen[ni] {
+                seen[ni] = true;
+                que.push_back(ni);
+            }
+        }
+    }
+    println!("{}", if seen[n]{"Yes"}else{"No"});
 }
-
