@@ -33,9 +33,13 @@ where T: Ord + Copy, U: num::PrimInt + std::ops::AddAssign
         }
     }
 
-    pub fn max_key(&mut self) -> Option<(&T, &U)> {
+    pub fn max_key(&self) -> Option<(&T, &U)> {
         self.map.last_key_value()
     }
+
+    pub fn min_key(&self) -> Option<(&T, &U)> {
+        self.map.first_key_value()
+    } 
 
     pub fn get(&self, key: T) -> Option<U> {
         if let Some(&v) = self.map.get(&key) {
