@@ -1,27 +1,38 @@
 // 素因数分解
-/* n = 1e12ぐらいまでじゃないとTLEするので注意 */
 pub fn prime_factorization(n: u64) -> std::collections::BTreeMap<u64, u64> {
-    let mut res = std::collections::BTreeMap::new();
-
-    let mut i = 2;
-    let mut k = n;
-    while i * i <= n {
-        let mut cnt = 0;
-        while k % i == 0 {
-            k /= i;
-            cnt += 1;
+    return if let Ok(output) = std::process::Command::new("factor")
+        .arg(n.to_string())
+        .output()
+    {
+        let output = String::from_utf8(output.stdout).unwrap().trim_start_matches(&format!("{}: ", n)).trim().to_string();
+        let mut res = std::collections::BTreeMap::new();
+        for s in output.split(" ") {
+            *res.entry(s.parse::<u64>().unwrap()).or_insert(0) += 1;
         }
-        if cnt != 0 {
-            res.insert(i, cnt);
+        res
+    } else {
+        /* n = 1e12ぐらいまでじゃないとTLEするので注意 */
+        let mut res = std::collections::BTreeMap::new();
+
+        let mut i = 2;
+        let mut k = n;
+        while i * i <= n {
+            let mut cnt = 0;
+            while k % i == 0 {
+                k /= i;
+                cnt += 1;
+            }
+            if cnt != 0 {
+                res.insert(i, cnt);
+            }
+            i += 1;
         }
-        i += 1;
-    }
 
-    if k != 1 {
-        res.insert(k, 1);
-    }
-
-    res
+        if k != 1 {
+            res.insert(k, 1);
+        }
+        res
+    };
 }
 
 /* nまでの素数を生成して配列で返す */

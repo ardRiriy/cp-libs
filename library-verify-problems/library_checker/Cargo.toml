@@ -19,6 +19,10 @@ name = "shortest-path"
 path = "src/graph/shortest_path.rs"
 
 [[bin]]
+name = "factorize"
+path = "src/number_theory/factorize.rs"
+
+[[bin]]
 name = "a-plus-b"
 path = "src/sample/a_plus_b.rs"
 
