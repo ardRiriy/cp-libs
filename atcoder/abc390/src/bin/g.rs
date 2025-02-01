@@ -3,8 +3,5 @@ use cps::debug::*;
 use proconio::input;
 
 fn main() {
-    input!{
-
-    }
+    input! {}
 }
-
