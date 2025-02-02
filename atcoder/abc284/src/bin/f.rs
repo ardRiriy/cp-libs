@@ -1,53 +1,37 @@
-use proconio::{input};
-fn solve() {
-    input!{
-        
-    }
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
+use ac_library::z_algorithm;
+use itertools::Itertools;
+use proconio::input;
+use proconio::marker::Chars;
 
 fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        t: Chars,
     }
+
+    let a = t[0..n].iter().copied().collect_vec();
+    let b = t[n..2*n].iter().rev().copied().collect_vec();
+    let x = a.iter()
+        .chain(&b)
+        .copied()
+        .collect::<String>();
+    let y = b.iter()
+        .chain(&a)
+        .copied()
+        .collect::<String>();
+
+    let zx = z_algorithm(&x);
+    let zy = z_algorithm(&y);
+
+    for i in 0..=n {
+        if (i==0 || zx[2*n-i] >= i) && (i==n || zy[n+i] >= n-i) {
+            let a = &t[0..i];
+            let b = &t[n+i..2*n];
+            println!("{}{}", a.iter().join(""), b.iter().join(""));
+            println!("{i}");
+            return;
+        }
+    }
+    println!("-1");
 }
 
