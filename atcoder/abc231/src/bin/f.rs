@@ -1,4 +1,4 @@
-use std::{cmp::Reverse, collections::{BinaryHeap, HashMap}, hash::Hash};
+use std::{cmp::Reverse, collections::{BinaryHeap, HashMap}};
 
 use ac_library::FenwickTree;
 use itertools::Itertools;
@@ -12,10 +12,10 @@ fn main() {
     }
     let indicate = (0..n).sorted_by_key(|i| (Reverse(a[*i]), b[*i], *i)).collect_vec();
     let mut bit = FenwickTree::new(n, 0i64);
-    let mut map = HashMap::new();
+    let mut map :HashMap<u64, BinaryHeap<_>> = HashMap::new();
     let sorted_b = b.iter().copied().sorted().collect_vec();
     for i in 0..n {
-        map.entry(sorted_b[i]).or_insert(BinaryHeap::new()).push(Reverse(i));
+        map.entry(sorted_b[i]).or_default().push(Reverse(i));
         bit.add(i, 1);
     }
 
@@ -34,10 +34,8 @@ fn main() {
             }
         }
 
-        *(a_map.entry(a[i]).or_insert(HashMap::new())).entry(b[i]).or_insert(0) += 1;
+        *(a_map.entry(a[i]).or_default()).entry(b[i]).or_insert(0) += 1;
     }
-
-
 
     println!("{}", ans);
 }
