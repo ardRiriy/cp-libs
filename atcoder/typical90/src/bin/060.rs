@@ -1,51 +1,33 @@
+use cps::chlibs::ChLibs;
+use cps::consts::INF; 
+use cps::veclibs::VecLibs;
+use itertools::Itertools;
 use proconio::input;
 
-fn solve() {
-    input! {
+fn lis(a: &[u64]) -> Vec<u64> {
+    // aのi番目の要素までの最長増加部分の長さを返す
+    let n = a.len();
+    let mut res = vec![INF; n];
+    let mut dp = vec![INF; n];
+    let mut len = 0;
+    for (i, ai) in a.iter().enumerate() {
+        let idx = dp.lower_bound(*ai);
+        dp[idx] = *ai;
+        len.chmax(idx+1);
+        res[i] = len as u64;
     }
 
+    return res;
 }
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-                *self = elm;
-                true
-            } else { false }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-                *self = elm;
-                true
-            } else { false }
-    }
-}
-
 
 fn main() {
-    // input! { i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        a: [u64; n],
     }
+    let rev_a = a.iter().copied().rev().collect_vec();
+
+    let va = lis(&a);
+    let vr = lis(&rev_a).iter().copied().rev().collect_vec();
+    println!("{}", (0..n).map(|i| va[i]+vr[i]-1).max().unwrap());
 }
