@@ -1,11 +1,63 @@
 use std::collections::VecDeque;
 
-#[allow(unused_imports)]
-use cps::debug::*;
+use cps::potentiality_unionfind::{PotentialMergeOp, PotentialityUnionfind};
 use itertools::Itertools;
 use proconio::{input, marker::Usize1};
 
-fn main() {
+#[derive(Default)]
+struct XorSum;
+impl PotentialMergeOp<i64> for XorSum {
+    fn identity() -> i64 {
+        0
+    }
+
+    fn merge(a: i64, b: i64) -> i64 {
+        a^b
+    }
+
+    fn invert(a: i64) -> i64 {
+        a
+    }
+}
+
+fn solve2() {
+    input!{
+        n: usize,
+        m: usize,
+        e: [(Usize1, Usize1, i64); m],
+    }
+
+    let mut ans = vec![0; n];
+
+    for i in 0..32 {
+        let mut uf = PotentialityUnionfind::new(n, Some(XorSum));
+        for &(u, v, w) in &e {
+            if let Err(_) = uf.merge(u, v, (w>>i)&1) {
+                println!("-1");
+                return;
+            }
+        }
+        let mut cnt = vec![0; n];
+        for i in 0..n {
+            let leader = uf.leader(i);
+            cnt[leader] += uf.diff(i, leader).unwrap();
+        }
+        for j in 0..n {
+            let leader = uf.leader(j);
+            let one = cnt[leader];
+            let zero = uf.size(leader) as i64 - one;
+            if one > zero && uf.diff(j, leader).unwrap() == 0 {
+                ans[j] |= 1 << i;
+            } else if one <= zero && uf.diff(j, leader).unwrap() == 1 {
+                ans[j] |= 1 << i;
+            }
+        }
+    }
+    println!("{}", ans.iter().join(" "));
+}
+
+#[allow(dead_code)]
+fn solve1() {
     input!{
         n: usize,
         m: usize,
@@ -67,5 +119,9 @@ fn main() {
         }
     }
     println!("{}", ans.iter().join(" "));
+}
+
+fn main() {
+    solve2();
 }
 
