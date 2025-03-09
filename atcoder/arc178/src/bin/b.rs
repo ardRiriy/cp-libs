@@ -1,73 +1,36 @@
 use std::mem::swap;
 
-use ac_library::modint::ModIntBase;
+use itertools::Itertools;
 use proconio::input;
+use ac_library::ModInt998244353 as Mint;
 
-fn solve() {
+fn solve() -> Mint {
     input! {
-        mut a1: usize,
-        mut a2: usize,
-        a3: usize,
+        mut a1: u64,
+        mut a2: u64,
+        a3: u64,
     }
-
     if a1 > a2 {
-        swap(&mut a1, &mut a2)
+        swap(&mut a1, &mut a2);
+    }
+    if a2 + 1 < a3 {
+        return Mint::new(0);
     }
 
     if a2 == a3 {
-        let mut ans = ac_library::ModInt998244353::new(0);
-        let pow_a2 = ac_library::ModInt998244353::new(10).pow(a2 as u64);
-        let pow_a1 = ac_library::ModInt998244353::new(10).pow(a1 as u64);
-
-        ans += (pow_a2 - pow_a1) * (pow_a1 - pow_a1 / 10);
-        ans += (pow_a1 - 1 + pow_a1 / 10) * (pow_a1 - pow_a1 / 10 - 1) / 2;
-
-        println!("{}", ans);
-    }
-}
-
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
+        // 繰り上がらない場合の数
+        
+    } else {
+        // 繰り上がる場合
     }
 
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
+    Mint::new(0)
 }
 
 fn main() {
-    input! { mut i: usize }
-    // let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        t: usize
     }
+    let ans = (0..t).map(|_| solve()).join("\n");
+    println!("{}", ans);
 }

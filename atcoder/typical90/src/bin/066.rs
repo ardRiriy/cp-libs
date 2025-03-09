@@ -1,4 +1,3 @@
-use num_rational::Ratio;
 use proconio::input;
 
 fn main() {
