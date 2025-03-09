@@ -3,7 +3,7 @@ pub struct PotentialityUnionfind<T> {
     diff_weights: Vec<T>, 
 }
 
-impl<T: num::PrimInt> PotentialityUnionfind<T> {
+impl<T: num::PrimInt + std::ops::Neg<Output=T> + std::fmt::Display> PotentialityUnionfind<T> {
     pub fn new(size: usize) -> Self {
         Self {
             vertex: vec![!1; size],
@@ -17,8 +17,8 @@ impl<T: num::PrimInt> PotentialityUnionfind<T> {
             u
         } else {
             let parent = self.leader(elm);
-            // TODO: ここの結合則は後から変えられるようにする 
-            self.diff_weights[u] = self.diff_weights[u] + self.diff_weights[self.vertex[u]];
+            // TODO: ここの結合則は後から変えられるようにする
+            self.diff_weights[u] = self.diff_weights[u] + self.diff_weights[elm];
             self.vertex[u] = parent;
             self.vertex[u]
         }
@@ -33,6 +33,7 @@ impl<T: num::PrimInt> PotentialityUnionfind<T> {
     // 矛盾する場合はErrを返す
     pub fn merge(&mut self, u: usize, v: usize, w: T) -> Result<T, T> {
         if let Ok(diff) = self.diff(u, v) {
+            eprintln!("u: {}, v: {}, w: {}, diff: {}", u, v, w, diff);
             return if w == diff {
                 Ok(diff)
             } else {
@@ -42,20 +43,22 @@ impl<T: num::PrimInt> PotentialityUnionfind<T> {
 
         // size(u) >= size(v) となるようにswap
         if self.size(u) < self.size(v) {
-            self.merge(v, u, w)?;
-            return Ok(w);
+            self.merge(v, u, -w)?;
+            return Ok(-w);
         }
 
+        // TODO: マージテクでなんとかする
         // 重みの差分を修正(ここも結合則によって変わる)
         let w_sub = w + self.weight(u) - self.weight(v);
 
-        // vをuにマージ
-        let u_leader = self.leader(u);
+        // vの親をuに変更
         let v_leader = self.leader(v);
+        let u_leader = self.leader(u);
         let merged_size = !(self.size(u) + self.size(v));
-        self.vertex[v_leader] = merged_size;
-        self.vertex[u_leader] = v_leader;
-        self.diff_weights[u_leader] = w_sub;
+        self.vertex[v_leader] = u_leader;
+        self.diff_weights[v_leader] = w_sub;
+        self.vertex[u_leader] = merged_size;
+
 
         Ok(w)
     }
@@ -68,7 +71,7 @@ impl<T: num::PrimInt> PotentialityUnionfind<T> {
     // u, vが違う集合の場合はErrとして返す
     pub fn diff(&mut self, u: usize, v: usize) -> Result<T, ()> {
         if self.same(u, v) {
-            Ok(self.weight(u) - self.weight(v))
+            Ok(self.weight(v) - self.weight(u))
         } else {
             Err(())
         }
