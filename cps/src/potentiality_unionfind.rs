@@ -33,7 +33,6 @@ impl<T: num::PrimInt + std::ops::Neg<Output=T> + std::fmt::Display> Potentiality
     // 矛盾する場合はErrを返す
     pub fn merge(&mut self, u: usize, v: usize, w: T) -> Result<T, T> {
         if let Ok(diff) = self.diff(u, v) {
-            eprintln!("u: {}, v: {}, w: {}, diff: {}", u, v, w, diff);
             return if w == diff {
                 Ok(diff)
             } else {
