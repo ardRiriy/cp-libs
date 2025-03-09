@@ -15,4 +15,4 @@ pub mod linked_list;
 pub mod debug;
 pub mod multiset;
 pub mod zobrist_hash;
-pub mod potentialized_unionfind;
+pub mod potentiality_unionfind;
