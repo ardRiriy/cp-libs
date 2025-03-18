@@ -1,5 +1,10 @@
 #!/bin/zsh
 
+gpp(){
+	g++ $1 -std=c++23 -O2 -W -Wall || return 1
+	./a.out
+}
+
 acsub() {
     echo "usage: acsub <language> <problem> <url>"
     rm -rf test
