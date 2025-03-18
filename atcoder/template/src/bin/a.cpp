@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
+#include <atcoder/all>
+
 using namespace std;
+using namespace atcoder;
 
 #define all(v) v.begin(),v.end()
 #define resort(v) sort(v.rbegin(),v.rend())
@@ -9,6 +12,7 @@ using vll=vector<ll>;
 using vvll = vector<vector<ll>>;
 using P = pair<ll,ll>;
 using vp=vector<pair<ll, ll>>;
+using djks=priority_queue<P, vp, greater<P>>;
 
 const ll inf=1ll<<60;
 #define mod10 (ll)1e9+7
@@ -28,15 +32,14 @@ ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
 void solve() {
-    int n, a, b; cin >> n >> a >> b;
-    if(abs(b-a)%2==0) cout << "YES\n";
-    else cout << "NO\n";
 }
 
 int main() {
     cin.tie(0);
     ios::sync_with_stdio(false);
-    int t;
-    cin >> t;
+    int t=1;
+    //cin >> t;
     while(t--)solve();
 }
+
+
