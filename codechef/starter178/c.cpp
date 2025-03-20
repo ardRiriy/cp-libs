@@ -36,15 +36,13 @@ void solve() {
     vector<int> dp(n+1, 1<<30);
     dp[0] = 0;
     rep(i, n) {
-        dp[i+1] = dp[i] + 1;
-        if (fi.find(a[i]) == fi.end()) {
+        dp[i+1] = dp[i]+1;
+        if(fi.find(a[i])==fi.end()){
             fi[a[i]] = 1<<30;
         }
-        chmin(dp[i+1], fi[a[i]] + 1);
-        chmin(fi[a[i]], dp[i]);
+        chmin(dp[i+1], fi[a[i]]);
+        fi[a[i]] = min(fi[a[i]], dp[i+1]);
     }
-    
-    
 
     cout << dp[n] << '\n';
 }
