@@ -1,75 +1,47 @@
-use proconio::{input};
-fn solve() {
-    input!{
-        
-    }
-}
-
-/*
-鹿のardririy, arDeeriy
-　　　　　　　　　　　　 　 　 　 　 　 　 ／
-　　　　　　　　　　　　　　　　　 　 　 //
-　　　　　　　　　 　 　 　 　 　 　 　 //　 　 　 　 |:
-　　　　　　　　　　　　　　　　　 　 // 　 　 　 　 .|i
-　　　　　　　　　 　 　 　 　 　 　 //　 　 　 　 　 ||
-　　　　　　　　　　　　　　　　　　l i　　　　　　 　 ||
-　　　　　.　´￣￣｀ｰ　、　　　　 | l　 　 　 　 　 ∥
-　　　 ／　 . 　 　 　_＞─- ､ 　 l |　　　　　　 .∥
-　　　i　 〆　 　 ／　 　 　 　 ＼.i | 　 　 　 　 ∥
-　　　| /　 　 ／ 　 　 　 　 　 　 l |　ﾊ　　　　.′
-　 　 ; :　 　 .′　　　　　　　　　 ヾゝi !　　　/.′
-　　 《　　　 :　　　 　 　 r─-､　　 i ﾘ:l　　 //　　　　 　 　 、
-　 　 |　　　　 　 　 　 　 ｀ヾ.　＼ r‐’:ﾚ=‐' .ゝ...ノ＿＿＼＿))
-　　 弋　 　 　 　 　 　 　 　 ∨ソ`ー''`ー---一　‐─‐-､)¨´
-　　 　 } 、　　　　　　　　　　 i_..ノ _,　　　　ハ'
-　　 　 ∨＞､　iゝ.. 　 　 　 　 　 弋);;,ゞ..ノ　.′
-　　　　 ∨::::| 7!:::..ヾ.　　　　.′ヽ.　` 　 　 /
-　　　　　∨::|.′::::::ixxr, 　 /　　　:　　　　 I.
-　 　 　 　 }:::|..:ｉ..::::::|　i,,　　"'' ´ヾ.i 　 　 　 ﾊ
-　　　　 　 ::::|:::|::::::/　 }ヾ.　　　　ﾐゝ.　 ,、..:::::)
-　　　　 　 i:::|ヾ:::::i　 /.::::|｀ヾ..,,　..ノ＼ヾ..＿/
-　 　 　 　 |:::l　}:. {　 |::::..′　　　　　　 `ー''
-　 　 　 　 |:::| /.:/l　 !.:::l
-　　　　　 ﾉ..:ﾚ.:::ｉ::l　ﾉ..::|
-　　　 　 (人7.::::|:::V.::::::|
-　　　　　`''/ .:::::!ｰ:::::::::ﾊ
-　　　　　 /..::::::::| (_/＼__)
-　　　 　 (__/(,＿)
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
+use cps::chlibs::ChLibs;
+use cps::warshall_floyd::{DefaultWFelm, WarshallFloyd};
+use proconio::{input, marker::Usize1};
 
 fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        m: usize,
+        e: [(Usize1, Usize1, i64); m],
+    }
+
+    let g = e.iter()
+        .fold(vec![vec![]; n], |mut g, &(u,v, w)| {
+            g[u].push((v, w));
+            g
+        });
+
+    let wf = WarshallFloyd::new(&g, DefaultWFelm);
+
+    static INF :i64 = 1<<60;
+    let mut dp = vec![vec![INF; n]; 1<<n];
+    for i in 0..n {
+        dp[1<<i][i] = 0;
+    }
+
+    for i in 0..1<<n {
+        for j in 0..n {
+            if dp[i][j] == INF {
+                continue;
+            }
+            
+            for k in 0..n {
+                if wf.get(j, k) == i64::max_value() {
+                    continue;
+                }
+                let val = dp[i][j] + wf.get(j, k);
+                dp[i|(1<<k)][k].chmin(val);
+            }
+        }
+    }
+
+    if dp[(1<<n)-1].iter().all(|vi| vi == &INF) {
+        println!("No");
+    } else {
+        println!("{}", dp[(1<<n)-1].iter().min().unwrap());
     }
 }
-
