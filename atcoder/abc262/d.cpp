@@ -19,10 +19,10 @@ const ll inf=1ll<<60;
 #define mod99 (ll)998244353
 const double PI = acos(-1);
 
-#define rep(i,n) for (ll i=0;i<ll(n);++i)
+#define rep(i,n) for (ll i=0;i<n;++i)
 #define per(i,n) for(ll i=n-1;i>=0;--i)
-#define rep2(i,a,n) for (ll i=a;i<ll(n);++i)
-#define per2(i,a,n) for (ll i=n-1;i>=ll(a);--i)
+#define rep2(i,a,n) for (ll i=a;i<n;++i)
+#define per2(i,a,n) for (ll i=n-1;i>=a;--i)
 
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return true; } return false; }
@@ -31,33 +31,29 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return true; } r
 ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
+
+using mint = modint998244353;
+
 void solve() {
-    int n; cin >> n;
-    string s, t;
-    cin >> s >> t;
-    vll g(26, inf);
-    dsu uf(26);
-    rep(i, n) {
-        ll si = s[i]-'a';
-        ll ti = t[i]-'a';
-        if(g[si] == inf) {
-            g[si] = ti;
-            uf.merge(si,ti);
-        } else if(g[si] != ti) {
-            cout << "-1\n";
-            return;
+    int n;cin>>n;
+    vll a(n); rep(i,n) cin>>a[i];
+
+    mint ans = 0;
+    // O(N^4)はC++なら通ってほしいな~
+    rep2(m, 1, n+1){
+        // m個選んで、和を取ってmで割ったあまりが0になるものの個数
+        vector<vector<mint>> dp(m+1, vector<mint>(m, 0));
+        dp[0][0] = 1;
+        rep(i, n) {
+            per(j, m) {
+                per(k, m) {
+                    dp[j+1][(k+a[i])%m] += dp[j][k];
+                }
+            }
         }
+        ans += dp[m][0];
     }
-
-    scc_graph sg(26);
-
-    rep(i, 26) {
-        if(g[i]!=inf) sg.add_edge(i, g[i]);
-    }
-    bool flag = false;
-    rep(i, 26) {
-
-    }
+    cout << ans.val() << '\n';
 }
 
 int main() {

@@ -19,10 +19,10 @@ const ll inf=1ll<<60;
 #define mod99 (ll)998244353
 const double PI = acos(-1);
 
-#define rep(i,n) for (ll i=0;i<ll(n);++i)
+#define rep(i,n) for (ll i=0;i<n;++i)
 #define per(i,n) for(ll i=n-1;i>=0;--i)
-#define rep2(i,a,n) for (ll i=a;i<ll(n);++i)
-#define per2(i,a,n) for (ll i=n-1;i>=ll(a);--i)
+#define rep2(i,a,n) for (ll i=a;i<n;++i)
+#define per2(i,a,n) for (ll i=n-1;i>=a;--i)
 
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return true; } return false; }
@@ -32,32 +32,40 @@ ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
 void solve() {
-    int n; cin >> n;
-    string s, t;
-    cin >> s >> t;
-    vll g(26, inf);
-    dsu uf(26);
-    rep(i, n) {
-        ll si = s[i]-'a';
-        ll ti = t[i]-'a';
-        if(g[si] == inf) {
-            g[si] = ti;
-            uf.merge(si,ti);
-        } else if(g[si] != ti) {
-            cout << "-1\n";
-            return;
+    int n, k; cin >> n >> k;
+    vp ops(n);
+    rep(i,n){
+        int t,y;cin>>t>>y;
+        ops[i]={t,y};
+    }
+
+    ll ans = -inf;
+    ll sum = 0;
+    priority_queue<ll> pq;
+    per(i,n) {
+        auto [t,y] = ops[i];
+
+        if(t==1) {
+            chmax(ans, y+sum);
+            if(--k<0){
+                break;
+            }            
+        } else {
+            if(y>=0) sum+=y;
+            else {
+                pq.push(y);
+            }
+        }
+
+        while(pq.size()>k) {
+            ll val = pq.top(); pq.pop();
+            sum += val;
         }
     }
-
-    scc_graph sg(26);
-
-    rep(i, 26) {
-        if(g[i]!=inf) sg.add_edge(i, g[i]);
+    if(k>=0){
+        chmax(ans, sum);
     }
-    bool flag = false;
-    rep(i, 26) {
-
-    }
+    cout << ans << '\n';
 }
 
 int main() {

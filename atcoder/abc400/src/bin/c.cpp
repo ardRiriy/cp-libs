@@ -19,10 +19,10 @@ const ll inf=1ll<<60;
 #define mod99 (ll)998244353
 const double PI = acos(-1);
 
-#define rep(i,n) for (ll i=0;i<ll(n);++i)
+#define rep(i,n) for (ll i=0;i<n;++i)
 #define per(i,n) for(ll i=n-1;i>=0;--i)
-#define rep2(i,a,n) for (ll i=a;i<ll(n);++i)
-#define per2(i,a,n) for (ll i=n-1;i>=ll(a);--i)
+#define rep2(i,a,n) for (ll i=a;i<n;++i)
+#define per2(i,a,n) for (ll i=n-1;i>=a;--i)
 
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return true; } return false; }
@@ -32,32 +32,21 @@ ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
 void solve() {
-    int n; cin >> n;
-    string s, t;
-    cin >> s >> t;
-    vll g(26, inf);
-    dsu uf(26);
-    rep(i, n) {
-        ll si = s[i]-'a';
-        ll ti = t[i]-'a';
-        if(g[si] == inf) {
-            g[si] = ti;
-            uf.merge(si,ti);
-        } else if(g[si] != ti) {
-            cout << "-1\n";
-            return;
+    ll n; cin >> n;
+    ll ans = 0;
+    __int128_t cur = 2;
+    while(cur <= n){
+        __int128_t ok = 1;
+        __int128_t ng = 1e9+1;
+        while(ng-ok>1){
+            __int128_t mid = (ok+ng)/2;
+            if(cur*mid*mid<=n)ok = mid;
+            else ng = mid;
         }
+        ans += (ok+1)/2;
+        cur *= 2;
     }
-
-    scc_graph sg(26);
-
-    rep(i, 26) {
-        if(g[i]!=inf) sg.add_edge(i, g[i]);
-    }
-    bool flag = false;
-    rep(i, 26) {
-
-    }
+    cout << ans << '\n';
 }
 
 int main() {

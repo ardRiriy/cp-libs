@@ -1,18 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using ll=long long;
 // --------------------------- //
-constexpr ll gcd(ll a, ll b) {
+constexpr long long gcd(long long a, long long b) {
     return b == 0 ? a : gcd(b, a%b);
 }
 
 class Rational {        
     public:
-        ll num;
-        ll den;
+        long long num;
+        long long den;
 
-        Rational(ll numer, ll denom) : num(numer), den(denom) {
+        Rational(long long numer, long long denom) : num(numer), den(denom) {
             assert(den != 0);
             reduce();
         }
@@ -42,7 +41,7 @@ class Rational {
         }
     private:
         void reduce() {
-            ll g = gcd(num, den);
+            long long g = gcd(num, den);
             num /= g;
             den /= g;
             if(den<0){

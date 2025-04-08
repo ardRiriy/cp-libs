@@ -18,6 +18,10 @@ acsub() {
         uv run oj t -c "uv run python3 src/bin/$2.py" || return 1
         # pypyで提出
         uv run oj s $3 src/bin/$2.py -l 5078
+    elif [ $1 = "cpp" ]; then
+	g++ $2.cpp -std=c++23 -O2 -W -Wall
+	uv run oj t || return 1
+	uv run oj s $3 $2.cpp
     else
         echo "language $1 is not exist!"
     fi
