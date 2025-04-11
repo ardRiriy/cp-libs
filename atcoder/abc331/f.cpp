@@ -30,68 +30,86 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return true; } r
 
 ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
-using u128 = __uint128_t;
 
-const u128 modulo = (1LL << 62) -1;
-using S = u128;
-S op(S a, S b){ return (a+b)%modulo; };
-S e(){ return 0; }
+template<int MOD>
+struct ModInt {
+    int value;
 
+    ModInt() : value(0) {}
+    ModInt(int value) : value(value % MOD) {
+        if (this->value < 0) this->value += MOD;
+    }
 
-u128 hs(segtree<S, op, e>& seg, vector<u128>& power, int l, int r) {
-    u128 val1 = seg.prod(0, r);
-    u128 val2 = seg.prod(0, l);
-    return (val1 - power[r-l] * val2) % modulo;
-}
+    ModInt operator+(const ModInt& other) const {
+        return ModInt((value + other.value) % MOD);
+    }
+
+    ModInt operator-(const ModInt& other) const {
+        return ModInt((value - other.value + MOD) % MOD);
+    }
+
+    ModInt operator*(const ModInt& other) const {
+        return ModInt((1LL * value * other.value) % MOD);
+    }
+
+    ModInt operator/(const ModInt& other) const {
+        return *this * other.inv();
+    }
+
+    ModInt inv() const {
+        int a = value, b = MOD, u = 1, v = 0;
+        while (b) {
+            int t = a / b;
+            a -= t * b; std::swap(a, b);
+            u -= t * v; std::swap(u, v);
+        }
+        return ModInt(u);
+    }
+};
+
+const ll modulo = 1000000009;
+const ll base = 411;
+using mint = ModInt<modulo>;
+using S = mint;
+S op(S a, S b) { return a+b; }
+S e() { return 0; }
 
 void solve() {
-    random_device seed_gen;
-    mt19937 engine(seed_gen());
-    int base = engine();
     int n, q; cin >> n >> q;
-
-    vector<u128> b(n, 1);
-    per2(i, 1, n) {
-        b[i-1] = (b[i] * base) % modulo;
-    }
-
-    vector<u128> power(n, 1);
-    rep(i, n) {
-        power[i+1] = (power[i] * base) % modulo;
-    }
-
-    string s, rev_s; cin >> s;
-    rev_s = s;
-    reverse(all(s));
-
+    string s; cin >> s;
+    string revs=s; reverse(all(revs));
     segtree<S, op, e> seg(n), rseg(n);
-    rep(i, n) {
-        seg.set(i, (s[i] * b[i]) % modulo);
-        rseg.set(i, (rev_s[i] * b[i]) % modulo);
+
+    vector<mint> b(n);
+    b[n-1] = 1;
+    per(i, n-1) {
+        b[i] = b[i+1] * base;
+    } 
+
+    rep(i,n) {
+        seg.set(i, mint(int(s[i]))*b[i]);
+        rseg.set(i, mint(int(revs[i]))*b[i]);
     }
 
     rep(_, q) {
         int t; cin >> t;
         if(t==1) {
-            int x; cin >> x;
-            char c; cin >> c;
-            seg.set(x-1, (b[x-1]*c)%modulo);
-            rseg.set(n-(x-1), (b[x-1]*c)%modulo);
+            int x; char c; cin >> x >> c;
+            x--;
+            seg.set(x, mint(int(c))*b[x]);
+            rseg.set(n-x-1, mint(int(c))*b[n-x-1]);
         } else {
             int l, r; cin >> l >> r;
-            l--; r;
-            if(l==r) {
-                cout << "Yes\n";
-                continue;
-            }
+
+            l--;
             int m = (r+l)/2;
-            u128 h1 = hs(seg, power, l, m);
-            u128 h2 = hs(rseg, power, n-r, n-m);
-            
-            cout << ((h1==h2)?"Yes\n":"No\n");
+            int m2 = ((r-l)%2==0)?n-m:n-m-1;
+
+            mint h1 = seg.prod(l, m) / b[m];
+            mint h2 = rseg.prod(n-r, m2) / b[m2];
+            cout << ((h1.value==h2.value) ? "Yes\n" : "No\n");
         }
     }
-
 }
 
 int main() {
