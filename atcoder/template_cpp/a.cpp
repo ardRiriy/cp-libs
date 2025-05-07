@@ -2,8 +2,14 @@
 #include "input.hpp"
 
 using namespace std;
-
 // using namespace atcoder;
+
+#ifdef ADRY
+#include <dbg.h>
+#else
+// DO NOTHING
+#define dbg(x)
+#endif
 
 #define all(v) v.begin(),v.end()
 #define resort(v) sort(v.rbegin(),v.rend())

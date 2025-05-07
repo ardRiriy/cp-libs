@@ -1,0 +1,56 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "C++ Build",
+        "type": "shell",
+        "command": "g++",
+        "args": [
+          "-DADRY",
+          "-std=c++23",
+          "-W",
+          "-Wall", 
+          "-fsanitize=undefined",
+          "-I/home/ardririy/repos/cp-libs/libraries-cpp",
+          "-I/home/ardririy/repos/cp-libs/util/include",
+          "${file}",
+          "-o",
+          "${fileDirname}/${fileBasenameNoExtension}.out"
+        ],
+        "group": "build",
+        "problemMatcher": "$gcc"
+      },
+      {
+        "label": "C++ Run",
+        "type": "shell",
+        "command": "${fileDirname}/${fileBasenameNoExtension}.out",
+        "args": [],
+        "dependsOn": "C++ Build",
+        "group": "test",
+        "presentation": {
+          "reveal": "always"
+        },
+        "options": {
+          "shell": {
+            "executable": "bash",
+            "args": ["-c"]
+          },
+          "cwd": "${fileDirname}"
+        },
+        "problemMatcher": [],
+        "linux": {
+          "args": ["<", "in.txt", ">", "out.txt", "2>", "dbg.txt"]
+        }
+      },
+      {
+        "label": "C++ Build and Run",
+        "dependsOrder": "sequence",
+        "dependsOn": ["C++ Build", "C++ Run"],
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        },
+        "problemMatcher": []
+      }
+    ]
+  }

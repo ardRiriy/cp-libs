@@ -41,3 +41,6 @@ dbg.txt
 
 **/pahcer/
 **/tools/
+
+util/include
+!atcoder/template_cpp/.vscode
