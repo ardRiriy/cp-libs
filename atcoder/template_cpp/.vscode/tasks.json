@@ -51,6 +51,14 @@
           "isDefault": true
         },
         "problemMatcher": []
+      },
+      {
+        "label": "Generate Submit Source Code",
+        "type": "shell",
+        "command": "uv run oj-bundle -I /home/ardririy/repos/cp-libs/libraries-cpp -I /home/ardririy/repos/cp-libs/util/include ${file}",
+        "linux": {
+          "args": [">", "submit.cpp"],
+        }
       }
     ]
   }

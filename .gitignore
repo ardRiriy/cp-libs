@@ -43,4 +43,5 @@ dbg.txt
 **/tools/
 
 util/include
+submit.cpp
 !atcoder/template_cpp/.vscode
