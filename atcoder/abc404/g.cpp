@@ -5,6 +5,13 @@ using namespace std;
 
 // using namespace atcoder;
 
+#ifdef ADRY
+#include <dbg.h>
+#else
+// DO NOTHING
+#define dbg(x)
+#endif
+
 #define all(v) v.begin(),v.end()
 #define resort(v) sort(v.rbegin(),v.rend())
 using ll = long long;
@@ -32,8 +39,45 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return true; } r
 ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
-void solve() {
+bool bellman_ford(vector<vector<pair<int,ll>>>& g, vll& dist, int m) {
+    int n = g.size();
+    int cnt = 1;
+    while(true) {
+        bool isUpdated = false;
+        rep(i,n) {
+            if(dist[i]==inf) continue;
+            for(auto [ni, w]: g[i]) {
+                isUpdated = chmin(dist[ni], dist[i]+w) || isUpdated;
+            }
+        }
+        if(cnt>n && isUpdated) {
+            return false; // 不閉路が存在
+        } else if(!isUpdated) {
+            break;
+        }
+        cnt++;
+    }
 
+    return true;
+}
+
+void solve() {
+    int n, m; cin >> n >> m;
+    int l, r; ll s;
+    vector<vector<pair<int,ll>>> g(n+1);
+    rep(i,n) g[i+1].push_back({i, -1});
+    rep(i,m) {
+        cin >> l >> r >> s;
+        l--;
+        g[r].push_back({l,-s});
+        g[l].push_back({r,s});
+    }
+
+    vll dist(n+1, inf);
+    dist[n] = 0;
+    bool res = bellman_ford(g,dist,m);
+
+    cout << ((res)?-dist[0]:-1) << '\n';
 }
 
 int main() {
