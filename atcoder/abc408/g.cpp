@@ -8,7 +8,7 @@ using namespace std;
 #include <dbg.h>
 #else
 // DO NOTHING
-#define dbg(x)
+#define dbg(...)
 #endif
 
 #define all(v) v.begin(),v.end()
@@ -38,15 +38,38 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return true; } r
 ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
+using i128 = __uint128_t;
 void solve() {
+    ll a,b,c,d;cin>>a>>b>>c>>d;
 
+    // p/q, r/s
+    // スターンブロコットツリーを正の実数全体に拡張する
+    i128 p=0,q=1,r=1,s=0;
+    i128 t, u;
+
+    while(true) {
+        t = (p+r);
+        u = (q+s);
+        if(t*b<=u*a) {
+            auto k = (q*a-p*b)/(r*b-s*a);
+            p+=k*r;
+            q+=k*s;
+        } else if(u*c<=t*d) {
+            auto k = (r*d-s*c)/(q*c-p*d);
+            r+=k*p;
+            s+=k*q;
+        } else {
+            break;
+        }
+    }
+    cout << ll(q+s) << '\n';
 }
 
 int main() {
     cin.tie(0);
     ios::sync_with_stdio(false);
     int t=1;
-    //cin >> t;
+    cin >> t;
     while(t--)solve();
 }
 
