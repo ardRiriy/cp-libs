@@ -8,7 +8,7 @@ using namespace atcoder;
 #include <dbg.h>
 #else
 // DO NOTHING
-#define dbg(x)
+#define dbg(...)
 #endif
 
 #define all(v) v.begin(),v.end()
@@ -40,23 +40,86 @@ ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
 void solve() {
     int n,m;cin >> n >> m;
-    vp edges(m);
+    vector<pair<int,int>> edges(m);
 
     rep(i,m) {
         cin >> edges[i].first >> edges[i].second;
-        edges[i].first --;
-        edges[i].second --;
+        edges[i].first--;
+        edges[i].second--;
     }
 
-    vector<set<pair<int,int>>> vs(n);
-    rep(i,m) {
-        auto [u,v]= edges[i];
-        vs[u].insert({i,v});
-        vs[v].insert({i,u});
+    vector<set<int>> group(n), graph(n);
+    for(auto [u,v]: edges) {
+        graph[u].insert(v);
+        graph[v].insert(u);
     }
+    rep(i,n) {
+        group[i].insert(i);
+    }
+
+    vector<int> parent(n);
+    iota(all(parent), 0);
 
     ll ans = m;
-    dsu uf(n);
+    int q; cin >> q;
+
+    auto zaatu = [&](auto self, int u) -> int {
+        if(parent[u]==u) return u;
+        return parent[u] = self(self,parent[u]);
+    };
+
+    rep(i,q) {
+        int x; cin >> x;
+        auto [a,b] = edges[x-1];
+        int u = parent[a];
+        int v = parent[b];
+        if(u==v) {
+            cout << ans << '\n';
+            continue;
+        }
+
+        // 頂点集合のマージ
+        if(group[u].size()>group[v].size()) {
+            swap(u,v);
+        }
+     
+        for(auto to: graph[u]) {
+            if(to==v) {
+                continue;
+            }
+            if(graph[to].contains(v)) {
+                graph[to].erase(u);
+                ans--;
+            } else {
+                graph[to].erase(u);
+                graph[to].insert(v);
+                graph[v].insert(to);
+            }
+        }
+
+        for(auto to: graph[u]) {
+            if(to==v) {
+                ans--;
+                graph[v].erase(u);
+            }
+        }
+
+        for(auto to: group[u]) {
+            group[v].insert(to);
+            parent[to] = v;
+        }
+     
+        group[u].clear();
+        graph[u].clear();
+
+        dbg(group);
+        dbg(graph);
+        dbg("====");
+
+        cout << ans << '\n';
+
+    }
+}
 
 
 int main() {
@@ -66,5 +129,3 @@ int main() {
     //cin >> t;
     while(t--)solve();
 }
-
-
