@@ -1,53 +1,39 @@
-use proconio::{input};
-fn solve() {
-    input!{
-        
-    }
-}
+use cps::cumulative_sum::CumulativeSum;
+use proconio::input;
 
-/*
-
-            ▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-     ▄▄██▌█            宅急便です！
-▄▄▄▌▐██▌█ Rating +25 :) をお届けに参りました！
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-▀(⊙)▀▀▀▀(⊙)(⊙)▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀(⊙
-
-*/
-
-static INF: u64 = 1e18 as u64;
-
-trait ChLibs<T: std::cmp::Ord> {
-    fn chmin(&mut self, elm: T) -> bool;
-    fn chmax(&mut self, elm: T) -> bool;
-}
-
-impl<T: std::cmp::Ord> ChLibs<T> for T {
-    fn chmin(&mut self, elm: T) -> bool {
-        if *self > elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-
-    fn chmax(&mut self, elm: T) -> bool {
-        if *self < elm {
-            *self = elm;
-            true
-        } else {
-            false
-        }
-    }
-}
 
 fn main() {
-    // input! { mut i: usize }
-    let mut i = 1;
-    while i != 0 {
-        solve();
-        i -= 1;
+    input! {
+        n: usize,
+        k: usize,
+        a: [u64; n],
+    }
+
+    let mut v = vec![];
+    let mut idxs = vec![];
+    let mut used = vec![false; n];
+    let mut cur = 0;
+    while !used[cur%n] {
+        used[cur%n] = true;
+        v.push(a[cur%n] as usize);
+        idxs.push(cur%n);
+
+        cur += a[cur%n] as usize;
+    }
+
+    let base = idxs.iter().position(|&val| val == cur%n).unwrap();
+    let length = v.len()-base;
+    let csum = CumulativeSum::new(&v);
+
+    if k <= v.len() {
+        println!("{}", csum.get(0..k));
+    } else {
+        let k = k - v.len();
+        dbg!(base);
+        dbg!(&v);
+        dbg!(base+(k%length));
+        let ans = csum.get(0..v.len()) + csum.get(base..v.len()) * (k/length) + csum.get(base..base+(k%length));
+        println!("{}", ans);
     }
 }
 
