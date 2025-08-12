@@ -45,3 +45,4 @@ dbg.txt
 util/include
 submit.cpp
 !atcoder/template_cpp/.vscode
+ac_config.toml

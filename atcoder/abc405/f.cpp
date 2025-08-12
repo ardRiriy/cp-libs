@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "input.hpp"
-
+#include "atcoder/segtree.hpp"
 using namespace std;
 // using namespace atcoder;
 
@@ -8,7 +8,7 @@ using namespace std;
 #include <dbg.h>
 #else
 // DO NOTHING
-#define dbg(x)
+#define dbg(...)
 #endif
 
 #define all(v) v.begin(),v.end()
@@ -38,18 +38,96 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return true; } r
 ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
+using S = ll;
+S op(S a, S b) { return min(a,b); }
+S e() { return inf; }
+
+
 void solve() {
-    int n; cin >> n;
-    auto a = i64_vec_IN(n);
-    vll csum(n+1,0);
-    rep(i,n) csum[i+1] = csum[i] + a[i];
+    int n, m; cin >> n >> m;
 
-    ll ans = 0;
-    rep(i,n-1) {
-        ans += a[i] * (csum[n] - csum[i+1]);
+    vector<pair<int,int>> ab(m);
+    for(auto& [u,v]: ab) {
+        cin >> u >> v;
     }
-    cout << ans << '\n';
 
+    vector<int> points(2*n,1<<30);
+    rep(i,m) {
+        auto [u,v] = ab[i];
+        dbg(u,v);
+        points[u-1] = i;
+        points[v-1] = ~i;
+    }
+    dbg(points);
+    vector<vector<int>> g(m+1);
+    stack<int> stk;
+    // for(auto [e, x, idx]: event) {
+    //     if(x==1) {
+    //         stk.push(idx);
+    //     } else {
+    //         stk.pop();
+    //         //parent[idx] = ((stk.empty()) ? -1 : stk.top());
+    //         g[(stk.empty()) ? 0 : stk.top()].emplace_back(idx);
+    //     }
+    // }
+    rep(i,2*n) {
+        if(i%2==1) {
+            if(points[i] >= 0) {
+                if(points[i]==(1<<30)) continue;
+                stk.push(points[i]);
+            } else {
+                stk.pop();
+                dbg(stk.empty()?m:stk.top());
+                g[stk.empty()?m:stk.top()].emplace_back(~points[i]);
+            }
+        } else {
+            points[i] = stk.empty() ? m : stk.top();
+        }
+    }
+
+    dbg(g);
+
+    // euler tour
+    vector<int> dept(m+1,-1);
+    vector<int> trace;
+    vector<int> in_t(m+1,0);
+    vector<int> out_t(m+1,0);
+    auto euler = [&](auto self, int p, int d, int& t)->void {
+        dbg(p);
+        dept[p] = d;
+        in_t[p] = t++;
+        trace.emplace_back(p);
+        for(auto ni: g[p]) {
+            self(self,ni,d+1,t);
+            trace.emplace_back(p);
+        }
+        out_t[p] = t++;
+        return;
+    };
+
+    {
+        int t = 0;
+        euler(euler, m, 0,t);
+    }
+    atcoder::segtree<S,op,e> seg(trace.size());
+    rep(i,trace.size()) {
+        seg.set(i, dept[trace[i]]);
+    }
+
+
+    dbg(dept);
+    int q; cin >> q;
+    rep(_, q) {
+        int u, v; cin >> u >> v;
+        u--;
+        v--;
+        int lca = seg.prod(min(in_t[points[u]], in_t[points[v]]), max(out_t[points[u]], out_t[points[v]]));
+        dbg(lca);
+        dbg(dept[points[u]]);
+        dbg(dept[points[v]]);
+        cout << dept[points[u]]-lca + dept[points[v]]-lca << '\n';
+    }
+    
 }
 
 int main() {

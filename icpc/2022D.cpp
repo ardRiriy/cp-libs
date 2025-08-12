@@ -7,6 +7,14 @@ using namespace std;
 
 using namespace atcoder;
 
+#ifdef ADRY
+#include <dbg.h>
+#else
+// DO NOTHING
+#define dbg(...)
+#endif
+
+
 #define all(v) v.begin(),v.end()
 #define resort(v) sort(v.rbegin(),v.rend())
 using ll = long long;
@@ -35,11 +43,21 @@ ll dx[] = {1, 0, -1, 0, -1, 1, -1, 1};
 ll dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
 
 using mint = modint998244353;
+
+vector<mint> fact(20000, 1);
+mint nck(int n, int k) {
+    if(n<k) return 0;
+    return fact[n] / fact[n-k] / fact[k];
+}
+
+
 unordered_map<int, int> mp;
 vector<int> s, t, q;
 void solve(int n, int k) {
+    dbg("===");
     int a;
     
+    mp.clear();
     s.clear();
     rep(i,n) {
         cin >> a;
@@ -60,36 +78,83 @@ void solve(int n, int k) {
     rep(i,n){
         q.emplace_back(mp[s[i]]);
     }
+    dbg(q);
 
-    vector<vector<mint>> dp(2, vector<mint>(k+1,0));
-    int cur = 0;
-    dp[cur][0] = 1;
-    
-    rep(i,n) {
-        int nxt = 1-cur;
-        bool flag = i>0 && q[i-1] < q[i];
-        bool flag2 = i==0 || q[i-1] > q[i] || s[i-1] < s[i];
-        rep(j,k) {
-            if(flag2) dp[nxt][j+1] += dp[cur][j];
-            if(flag) dp[nxt][j] += dp[cur][j];
+    vll pos;
+    rep(i,n-1) {
+        if(q[i] > q[i+1]) {
+            pos.emplace_back(i+1);
         }
-        if(flag) dp[nxt][k] += dp[cur][k];
-        
-        // rep(j,k+1) cerr << "dp[" << i+1 << "][" << j << "]=" << dp[nxt][j].val() << '\n';
-        
-        fill(all(dp[cur]), 0);
-        cur = nxt;
     }
-    mint sum = 0;
-    rep(i,k){
-        sum+=dp[cur][i+1];
+    pos.emplace_back(n);
+
+    {
+        // check
+        dbg(pos.size());
+        vll indicates(pos.size(),0);
+        rep(i,pos.size()-1){
+            indicates[i+1] = pos[i];
+        }
+        
+        djks pq;
+        rep(i,indicates.size()) {
+            pq.push({s[indicates[i]], i});
+        }
+
+        ll cur = 0;
+        while(!pq.empty()) {
+            dbg(pq);
+            auto [val, idx] = pq.top();
+            pq.pop();
+            if(t[cur]==val) cur++;
+            else break;
+
+            if(indicates[idx]+1<pos[idx]) {
+                indicates[idx]++;
+                pq.push({s[indicates[idx]], idx});
+            }
+        }
+        if(cur!=n) {
+            cout << "0\n";
+            return;
+        }
     }
-    cout << sum.val() << '\n';
+
+    ll cnt = 0;
+
+    
+    if(pos.size()>k){
+        cout << "0\n";
+        return;
+    }
+    k -= pos.size();
+
+    ll l = 0;
+    for(auto r: pos) {
+        ll maximam = s[l];
+        rep2(i,l+1,r) {
+            if(maximam<s[i]) cnt++;
+            chmax(maximam, ll(s[i]));
+        }
+        l = r;
+    }
+    
+    mint ans = 0;
+    rep(i, k+1) {
+        ans += nck(cnt, i);
+    }
+    cout << ans.val() << '\n';
+
 }
 
 int main() {
     cin.tie(0);
     ios::sync_with_stdio(false);
+
+    rep(i,20000-1) {
+        fact[i+1] = fact[i] * (i+1);
+    }
+
     int n, k;
     cin >> n >> k;
     while(n) {

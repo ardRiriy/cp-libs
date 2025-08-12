@@ -1,0 +1,13 @@
+[package]
+name = "abc418"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+local = []
+
+[dependencies]
+proconio = "*"
+ac-library-rs = "=0.1.1"
+library = { path="../../../adry_library/library" }
+num-rational = "=0.2.4" 

@@ -1,6 +1,6 @@
 use std::{collections::VecDeque};
 
-use cps::consts::{DI, DJ, INF};
+use adry_library::consts::{DI, DJ, INF};
 #[allow(unused_imports)]
 use proconio::input;
 use proconio::marker::Usize1;

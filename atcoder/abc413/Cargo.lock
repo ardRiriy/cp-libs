@@ -7,7 +7,7 @@ name = "abc423"
 version = "0.1.0"
 dependencies = [
  "ac-library-rs",
- "cps",
+ "adry_library",
  "itertools 0.13.0",
  "itertools-num",
  "lazy_static",
@@ -31,6 +31,30 @@ name = "ac-library-rs"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09e1ead7b72f44698f97266946c0576d00c9e2010858f5aba47aa4660177ef73"
+
+[[package]]
+name = "adry_library"
+version = "0.1.0"
+dependencies = [
+ "ac-library-rs",
+ "alga",
+ "getrandom 0.1.14",
+ "itertools 0.9.0",
+ "itertools-num",
+ "libm",
+ "nalgebra",
+ "ndarray",
+ "num",
+ "num-bigint",
+ "num-complex",
+ "num-derive",
+ "num-integer",
+ "num-iter",
+ "num-rational",
+ "num-traits",
+ "proconio",
+ "rand 0.8.5",
+]
 
 [[package]]
 name = "alga"
@@ -75,30 +99,6 @@ name = "cfg-if"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9555578bc9e57714c812a1f84e4fc5b4d21fcb063490c624de019f7464c91268"
-
-[[package]]
-name = "cps"
-version = "0.1.0"
-dependencies = [
- "ac-library-rs",
- "alga",
- "getrandom 0.1.14",
- "itertools 0.9.0",
- "itertools-num",
- "libm",
- "nalgebra",
- "ndarray",
- "num",
- "num-bigint",
- "num-complex",
- "num-derive",
- "num-integer",
- "num-iter",
- "num-rational",
- "num-traits",
- "proconio",
- "rand 0.8.5",
-]
 
 [[package]]
 name = "either"

@@ -24,4 +24,4 @@ superslice = "=1.0.0"
 itertools = "=0.13.0"
 itertools-num = "=0.1.3"
 proconio = { version = "=0.3.6", features = ["derive"] }
-cps = { path="../../cps" }
+adry_library = { path="../../../adry_library/adry_library" }

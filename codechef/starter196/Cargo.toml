@@ -1,0 +1,10 @@
+[package]
+name = "starter196"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+local = []
+
+[dependencies]
+library = { path="../../../adry_library/library" }

@@ -13,6 +13,8 @@ acsub() {
         uv run oj t -c "cargo run --features local --bin $2" || return 1
         uv run python3 ../../util/file_merger.py $2
         # uv run oj s $3 src/bin/$2.rs -y
+	cat src/bin/$2.rs | nkf -w16L | clip.exe
+	echo "\nAll Tests passed. Code was copied to clipboard!"
         uv run python3 ../../util/after_submission.py $2
     elif [ $1 = "py" ]; then
         uv run oj t -c "uv run python3 src/bin/$2.py" || return 1
