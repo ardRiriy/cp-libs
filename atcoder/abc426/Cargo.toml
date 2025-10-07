@@ -1,0 +1,11 @@
+[package]
+name = "abc426"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+local = []
+
+[dependencies]
+ac-library-rs = "=0.1.1"
+library = { git="https://github.com/ardRiriy/adry_library.git", rev="1bd6878a69e23e484958e2dec8a1d92bcc293cda" }
