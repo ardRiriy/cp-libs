@@ -24,12 +24,11 @@ fn solve(ip: &mut Input) {
     let state = s
         .iter()
         .enumerate()
-        .map(|(i, r)| {
+        .flat_map(|(i, r)| {
             r.iter()
                 .enumerate()
                 .filter_map(move |(j, c)| if c == &'#' { Some((i, j)) } else { None })
         })
-        .flatten()
         .collect::<BTreeSet<_>>();
 
     let op = |s: &BTreeSet<(usize, usize)>, r: usize| -> Option<BTreeSet<(usize, usize)>> {

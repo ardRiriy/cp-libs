@@ -22,7 +22,7 @@ fn func(v: &Vec<u32>, m: u32) -> Vec<HashMap<u32, u64>> {
         dp = ndp;
     }
 
-    return dp;
+    dp
 }
 
 fn solve(ip: &mut Input) {

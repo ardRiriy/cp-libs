@@ -7,7 +7,7 @@ fn f(x: u64) -> u64 {
         res += k % 10;
         k /= 10;
     }
-    return res;
+    res
 }
 
 fn solve(ip: &mut Input) {
