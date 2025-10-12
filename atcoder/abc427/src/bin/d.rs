@@ -1,21 +1,5 @@
 use library::utils::input::Input;
 
-fn dfs(p: usize, l: usize, g: &Vec<Vec<usize>>, dp: &mut Vec<Vec<Option<bool>>>)  {
-    // 先手勝ち → true
-    if let Some(_val) = dp[p][l] {
-        return;
-    }
-    
-    let mut res = false;
-    for &ni in g[p].iter() {
-        dfs(ni, l-1, g, dp);
-        if !dp[ni][l-1].unwrap() {
-            res = true;
-        }
-    }
-
-    dp[p][l] = Some(res);
-}
 
 fn solve(ip: &mut Input) {
     let (n,m,k) = ip.triple::<usize>();
@@ -24,15 +8,18 @@ fn solve(ip: &mut Input) {
     let g = ip.graph(n, m, true);
 
     // dp[i][j] := 残りjターンで頂点iから始めたときに先手が勝てるか
-    let mut dp = vec![vec![None; (2*k)+1]; n];
+    let mut dp = vec![vec![false; 2*k+1]; n];
     for i in 0..n {
-        dp[i][0] = Some(
-            s[i] == 'A'
-        );
+        dp[i][0] = s[i] == 'A';
+    }
+    
+    for j in 1..=2*k {
+        for i in 0..n {
+            dp[i][j] = g[i].iter().any(|ni| !dp[*ni][j-1]);
+        }
     }
 
-    let _ = dfs(0, 2*k, &g, &mut dp);
-    println!("{}", if dp[0][2*k].unwrap() { "Alice" } else { "Bob" });
+    println!("{}", if dp[0][2*k] { "Alice" } else { "Bob" });
 }
 
 fn main() {
