@@ -1,0 +1,11 @@
+[package]
+name = "starter205"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+local = []
+
+[dependencies]
+ac-library-rs = "=0.1.1"
+library = { git="https://github.com/ardRiriy/adry_library.git", rev="1a368b0929bb3e6e15fabaaec362abbb355f482f" }

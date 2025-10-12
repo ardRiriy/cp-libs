@@ -40,7 +40,7 @@ checksum = "433bfe06b8c75da9b2e3fbea6e5329ff87748f0b144ef75306e674c3f6f7c13f"
 [[package]]
 name = "library"
 version = "0.1.0"
-source = "git+https://github.com/ardRiriy/adry_library.git?rev=1bd6878a69e23e484958e2dec8a1d92bcc293cda#1bd6878a69e23e484958e2dec8a1d92bcc293cda"
+source = "git+https://github.com/ardRiriy/adry_library.git?rev=1a368b0929bb3e6e15fabaaec362abbb355f482f#1a368b0929bb3e6e15fabaaec362abbb355f482f"
 dependencies = [
  "rand",
 ]

@@ -8,4 +8,4 @@ local = []
 
 [dependencies]
 ac-library-rs = "=0.1.1"
-library = { git="https://github.com/ardRiriy/adry_library.git", rev="c0b225b9e8cc0a1bb958f2c8703987626ba4e9e3" }
+library = { git="https://github.com/ardRiriy/adry_library.git", rev="1a368b0929bb3e6e15fabaaec362abbb355f482f" }

@@ -1,7 +1,6 @@
 use library::utils::{
-    chlibs::ChLibs,
     input::Input,
-    iterlibs::{collect::CollectIter, dedup::RleItertor},
+    iterlibs::dedup::RleItertor,
 };
 
 fn solve(ip: &mut Input) {
@@ -11,30 +10,12 @@ fn solve(ip: &mut Input) {
     let zero_cnt = s.iter().filter(|ci| ci == &&'0').count();
     let one_cnt = n - zero_cnt;
 
-    let rs = s.iter().copied().rle().collect_vec();
-
-    let mut ans = if rs.len() == 1 { 0 } else { 1 << 60 };
-
-    for i in 0..rs.len() - 1 {
-        let (cnt1, c1) = rs[i];
-        let (cnt2, c2) = rs[i + 1];
-
-        let cost = (n - cnt1 - cnt2)
-            + (cnt1
-                + if c1 == '0' {
-                    one_cnt - cnt2
-                } else {
-                    zero_cnt - cnt2
-                })
-            .min(
-                cnt2 + if c2 == '0' {
-                    one_cnt - cnt1
-                } else {
-                    zero_cnt - cnt1
-                },
-            );
-        ans.chmin(cost);
-    }
+    let ans = s
+        .iter()
+        .rle()
+        .map(|(cnt, c)| (n - cnt) + if c == &'0' { zero_cnt } else { one_cnt } - cnt)
+        .min()
+        .unwrap();
 
     println!("{}", ans);
 }

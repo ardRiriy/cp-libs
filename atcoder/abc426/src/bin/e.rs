@@ -6,8 +6,23 @@ fn dist(a: (f64, f64), b: (f64, f64)) -> f64 {
     ((a.0 - b.0).powi(2) + (a.1 - b.1).powi(2)).sqrt()
 }
 
-fn f(a: (f64, f64), v: (f64, f64), t: f64) -> (f64, f64) {
-    (a.0 + v.0 * t, a.1 + v.1 * t)
+fn ternary_search(alpha: (f64, f64), beta: (f64, f64), sl: f64, sr: f64) -> f64 {
+    let func = |t: f64| -> f64 { (t * alpha.0 + beta.0).powi(2) + (t * alpha.1 + beta.1).powi(2) };
+    let mut l = sl;
+    let mut r = sr;
+
+    for _ in 0..50 {
+        let t1 = l + (r - l) / 3.;
+        let t2 = r - (r - l) / 3.;
+        let d1 = func(t1);
+        let d2 = func(t2);
+        if d1 > d2 {
+            l = t1;
+        } else {
+            r = t2;
+        }
+    }
+    return func(l).sqrt();
 }
 
 fn solve(ip: &mut Input) {
@@ -28,47 +43,13 @@ fn solve(ip: &mut Input) {
     let vt = ((tg.0 - tst.0) / t_dist, (tg.1 - tst.1) / t_dist);
     let va = ((ag.0 - ast.0) / a_dist, (ag.1 - ast.1) / a_dist);
 
-    let mut l = 0.;
-    let mut r = t_dist;
+    let alpha = (va.0 - vt.0, va.1 - vt.1);
+    let beta = (ast.0 - tst.0, ast.1 - tst.1);
 
-    for _ in 0..50 {
-        let t1 = l + (r - l) / 3.;
-        let t2 = r - (r - l) / 3.;
+    let ans1 = ternary_search(alpha, beta, 0., t_dist.min(a_dist));
 
-        let tp1 = f(tst, vt, t1);
-        let ap1 = f(ast, va, t1);
-        let d1 = dist(tp1, ap1);
-
-        let tp2 = f(tst, vt, t2);
-        let ap2 = f(ast, va, t2);
-        let d2 = dist(tp2, ap2);
-
-        if d1 > d2 {
-            l = t1;
-        } else {
-            r = t2;
-        }
-    }
-    let ans1 = dist(f(tst, vt, l), f(ast, va, l));
-
-    // tgが固定
-    let mut l = t_dist;
-    let mut r = a_dist;
-    for _ in 0..50 {
-        let t1 = l + (r - l) / 3.;
-        let t2 = r - (r - l) / 3.;
-
-        let ap1 = f(ast, va, t1);
-        let d1 = dist(tg, ap1);
-        let ap2 = f(ast, va, t2);
-        let d2 = dist(tg, ap2);
-        if d1 > d2 {
-            l = t1;
-        } else {
-            r = t2;
-        }
-    }
-    let ans2 = dist(tg, f(ast, va, l));
+    let beta = (ast.0 - tg.0, ast.1 - tg.1);
+    let ans2 = ternary_search(va, beta, t_dist.min(a_dist), t_dist.max(a_dist));
     println!("{}", ans1.min(ans2));
 }
 
