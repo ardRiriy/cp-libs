@@ -1,5 +1,5 @@
 [package]
-name = "rename_me"
+name = "edpc"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,20 +8,4 @@ local = []
 
 [dependencies]
 ac-library-rs = "=0.1.1"
-num = "=0.2.1"
-num-bigint = "=0.2.6"
-num-complex = "=0.2.4"
-num-integer = "=0.1.42"
-num-iter = "=0.1.40"
-num-rational = "=0.2.4"
-num-traits = "=0.2.11"
-num-derive = "=0.3.0"
-libm = "=0.2.1"
-lazy_static = "=1.4.0"
-ordered-float = "=1.0.2"
-permutohedron = "=0.2.4"
-superslice = "=1.0.0"
-itertools = "=0.13.0"
-itertools-num = "=0.1.3"
-proconio = { version = "=0.3.6", features = ["derive"] }
-cps = { path="../../cps" }
+library = { git="https://github.com/ardRiriy/adry_library.git", rev="3a135bcdaf5f00f8eefa2de58700b883dc13e68d" }

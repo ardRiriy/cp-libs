@@ -3,6 +3,14 @@
 version = 4
 
 [[package]]
+name = "abc430"
+version = "0.1.0"
+dependencies = [
+ "ac-library-rs",
+ "library",
+]
+
+[[package]]
 name = "ac-library-rs"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -11,12 +19,4 @@ checksum = "09e1ead7b72f44698f97266946c0576d00c9e2010858f5aba47aa4660177ef73"
 [[package]]
 name = "library"
 version = "0.1.0"
-source = "git+https://github.com/ardRiriy/adry_library.git?rev=ac1ec2af1352ea2e5151d4f61b372f163264e047#ac1ec2af1352ea2e5151d4f61b372f163264e047"
-
-[[package]]
-name = "rename_me"
-version = "0.1.0"
-dependencies = [
- "ac-library-rs",
- "library",
-]
+source = "git+https://github.com/ardRiriy/adry_library.git?rev=c0b225b9e8cc0a1bb958f2c8703987626ba4e9e3#c0b225b9e8cc0a1bb958f2c8703987626ba4e9e3"

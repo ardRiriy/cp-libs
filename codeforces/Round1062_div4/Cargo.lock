@@ -9,7 +9,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09e1ead7b72f44698f97266946c0576d00c9e2010858f5aba47aa4660177ef73"
 
 [[package]]
-name = "edpc"
+name = "cf1062_div4"
 version = "0.1.0"
 dependencies = [
  "ac-library-rs",
@@ -19,4 +19,4 @@ dependencies = [
 [[package]]
 name = "library"
 version = "0.1.0"
-source = "git+https://github.com/ardRiriy/adry_library.git?rev=3a135bcdaf5f00f8eefa2de58700b883dc13e68d#3a135bcdaf5f00f8eefa2de58700b883dc13e68d"
+source = "git+https://github.com/ardRiriy/adry_library.git?rev=402e01b76ed43fda33c45966d0672f7d2fd0ca92#402e01b76ed43fda33c45966d0672f7d2fd0ca92"
